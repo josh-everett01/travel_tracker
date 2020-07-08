@@ -1,11 +1,5 @@
-
 * {
   box-sizing: border-box;
-}
-
-i {
-  color: #bc4123;
-  background-color: #094479;
 }
 
 body {
@@ -16,10 +10,27 @@ body {
   background-color: #0b172a;
 }
 
-#main-section {
-  display: grid;
-  place-items: center;
-  margin-top: 3em;
+button {
+  background-color: #bc4123;
+}
+
+i {
+  color: #bc4123;
+  background-color: #094479;
+}
+
+#footer {
+  margin-top: 5em;
+  text-align: center;
+}
+
+#header-section {
+  text-align: center;
+  background-color: #094479;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 1px;
+  margin-bottom: 10px;
 }
 
 #login-form {
@@ -34,27 +45,14 @@ body {
   width: 450px;
 }
 
+#main-section {
+  display: grid;
+  place-items: center;
+  margin-top: 3em;
+}
+
 #password {
   margin-top: 10px;
-}
-
-#username {
-  margin-top: -20px;
-}
-
-
-#header-section {
-  text-align: center;
-  background-color: #094479;
-  width: 100%;
-  padding-top: 10px;
-  padding-bottom: 1px;
-  margin-bottom: 10px;
-}
-
-#footer {
-  margin-top: 5em;
-  text-align: center;
 }
 
 #signin {
@@ -72,8 +70,8 @@ body {
   margin-top: 20px;
 }
 
-button {
-  background-color: #bc4123;
+#username {
+  margin-top: -20px;
 }
 
 @media (min-width: 376px max-width: 768px) {
@@ -82,18 +80,16 @@ button {
     display: flex;
   }
 
-  #login-form {
-    width: 745px;
-  }
-
   #footer {
     position: absolute;
     bottom: 0;
     left: 34%;
   }
+
+  #login-form {
+    width: 745px;
+  }
 }
-
-
 
 @media (max-width: 375px) {
   body {
@@ -101,14 +97,13 @@ button {
     display: flex;
   }
 
-  #login-form {
-    width: 359px;
-  }
-
   #footer {
     position: absolute;
     bottom: 0;
     left: 3.8em;
   }
-}
 
+  #login-form {
+    width: 359px;
+  }
+}
