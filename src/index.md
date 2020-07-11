@@ -15,7 +15,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <link rel="stylesheet" href="/src/css/login.css" />
+    <link rel="stylesheet" href="/src/css/style_two.css" />
 
     <title>Travel Tracker</title>
   </head>
@@ -43,7 +43,7 @@
               placeholder="Please enter your password"
             /><br />
           </div>
-          <button type="button" id="submit">SUBMIT</button>
+          <button type="button" onclick="authPW()" id="submit">SUBMIT</button>
         </form>
       </div>
 
@@ -51,7 +51,6 @@
         <h3>Travel Tracker LLC 2020</h3>
       </footer>
     </div>
-    <script src="/src/javascripts/helpers/login_helper.js"></script>
-    <script src="/src/javascripts/index.js"></script>
+    <script src="/src/index.js"></script>
   </body>
 </html>
