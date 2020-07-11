@@ -14,8 +14,8 @@ function authPW() {
     var h = document.createElement("H1");
     var t = document.createTextNode("AGENT");
     h.appendChild(t);
-
     document.body.appendChild(h);
+
   } else if
     (password.value == travPw && username.value == travUn) {
     document.getElementById('site-container').style.display = "none";
