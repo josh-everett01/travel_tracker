@@ -1,21 +1,11 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
-// import './src/css/base.scss';
-// import './css'
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html
-
-// export
-
 var password = document.getElementById('input-password');
 var username = document.getElementById('input-username');
 var agentPw = 'travel2020';
 var agentUn = 'agency';
 var travPw = 'travel2020';
 var travUn = 'traveler50';
-var noTravUn = 'traveler650'
+var noTravUn = 'traveler650';
+var button = document.getElementById('submit');
 
 function authPW() {
   if
