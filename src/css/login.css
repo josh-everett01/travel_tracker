@@ -1,0 +1,109 @@
+#footer {
+  margin-top: 5em;
+  text-align: center;
+}
+
+#header-section {
+  text-align: center;
+  background-color: #094479;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 1px;
+  margin-bottom: 10px;
+}
+
+#login-form {
+  position: relative;
+  border-top: 50px solid #bc4123;
+  border-left: 3px solid #bc4123;
+  border-right: 3px solid #bc4123;
+  border-bottom: 3px solid #bc4123;
+  border-radius: 2%;
+  padding-bottom: 20px;
+  text-align: center;
+  width: 450px;
+}
+
+#main-section {
+  display: grid;
+  place-items: center;
+  margin-top: 3em;
+}
+
+#password {
+  margin-top: 10px;
+}
+
+#signin {
+  position: absolute;
+  top: -45px;
+  left: 38%;
+}
+
+#submit {
+  text-align: center;
+  color: #fff;
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#username {
+  margin-top: -20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  font-size: 28px;
+  font-family: "Oxygen", sans-serif;
+  color: #fff;
+  background-color: #0b172a;
+}
+
+button {
+  background-color: #bc4123;
+}
+
+i {
+  color: #bc4123;
+  background-color: #094479;
+}
+
+@media (min-width: 376px max-width 768px) {
+  body {
+    font-size: 18px;
+    display: flex;
+  }
+
+  #footer {
+    position: absolute;
+    bottom: 0;
+    left: 34%;
+  }
+
+  #login-form {
+    width: 745px;
+  }
+}
+
+@media (max-width: 375px) {
+  body {
+    font-size: 18px;
+    display: flex;
+  }
+
+  #footer {
+    position: absolute;
+    bottom: 0;
+    left: 3.8em;
+  }
+
+  #login-form {
+    width: 359px;
+  }
+}
