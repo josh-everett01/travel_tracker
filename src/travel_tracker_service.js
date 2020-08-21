@@ -35,4 +35,14 @@ async function getAllTrips(travelerId) {
   return tripArr;
 }
 
-export { isValidTraveler, getSingleTraveler, getAllTrips }
+async function getAllDestinations(travelerId) {
+  const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations';
+  let response = await fetch(url);
+  let destinationsArr = await response.json();
+  console.log(destinationsArr.destinations[3])
+  return destinationsArr;
+}
+
+
+
+export { isValidTraveler, getSingleTraveler, getAllTrips, getAllDestinations }

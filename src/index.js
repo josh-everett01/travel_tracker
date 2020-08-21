@@ -1,11 +1,11 @@
 import './css/base.scss';
-import { isValidTraveler, getSingleTraveler, getAllTrips } from './travel_tracker_service.js'
+import { isValidTraveler, getSingleTraveler, getAllTrips, getAllDestinations } from './travel_tracker_service.js'
 import { isValidAgency, renderSuccessfulAgencyLogin, renderSuccessfulTravelerLogin, loginError, isValidPassword } from './login_helper.js';
-import { getTripsArr, getTravelerInfo } from './traveler_dashboard.js'
+import { getTripsArr, getTravelerInfo, matchTravToTrip } from './traveler_dashboard.js'
 
 let button = document.getElementById('submit');
 
-button.onclick = getTravelerInfo;
+button.onclick = matchTravToTrip;
 
 // button.onclick = function processLogin() {
 //   let usernameInput = document.getElementById('input-username').value;
