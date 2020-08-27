@@ -40,7 +40,7 @@ async function getAllTrips(travelerId) {
   return { trips };
 }
 // This function is going to getTravelerDestinations and needs to be renamed later
-async function getAllDestinations(travelerTrips) {
+async function getTravelerDestinations(travelerTrips) {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations';
   let response = await fetch(url);
   let destinationsResponse = await response.json();
@@ -51,7 +51,7 @@ async function getAllDestinations(travelerTrips) {
   let i;
   for (i = 0; i < destinations.length; i++) {
     if (tripDestinationIds.includes(destinations[i].id)) {
-      travelerDestinations.push(destinations[i].id);
+      travelerDestinations.push(destinations[i]);
     }
 
   }
@@ -59,6 +59,40 @@ async function getAllDestinations(travelerTrips) {
   return { travelerTrips, travelerDestinations }
 }
 
+async function getTripTotals(travelerDestinations, travelerTrips) {
 
 
-export { isValidTraveler, getSingleTraveler, getAllTrips, getAllDestinations }
+
+  let lodgingCosts = [];
+  let i;
+  for (i = 0; i < travelerDestinations.length; i++) {
+    lodgingCosts.push(travelerDestinations[i].estimatedLodgingCostPerDay * travelerTrips[i].duration)
+  }
+
+  let flightCosts = [];
+  for (i = 0; i < travelerDestinations.length; i++) {
+    flightCosts.push(
+      travelerDestinations[i].estimatedFlightCostPerPerson * travelerTrips[i].travelers)
+  }
+
+  let flightsPlusLodging = []
+  for (i = 0; i < travelerDestinations.length; i++) {
+    flightsPlusLodging.push(lodgingCosts[i] + flightCosts[i])
+  }
+
+  var totalAmountCustHasSpentTotal = flightsPlusLodging.reduce((accumulator, currentValue, currentIndex, array) => accumulator + currentValue) * 1.1;
+
+
+  return { lodgingCosts, flightCosts, flightsPlusLodging, totalAmountCustHasSpentTotal }
+
+
+
+
+  // Flight Costs = Estimated flight cost per person * travelers
+  // As we loop, add the flight cost and lodging costs to the total cost 
+  // After the loop; multiply total cost * 1.1 to add travel agents fee          
+}
+
+
+
+export { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals }

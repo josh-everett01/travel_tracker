@@ -1,5 +1,5 @@
 import './css/base.scss';
-import { isValidTraveler, getSingleTraveler, getAllTrips, getAllDestinations } from './travel_tracker_service.js'
+import { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals } from './travel_tracker_service.js'
 import { isValidAgency, renderSuccessfulAgencyLogin, renderSuccessfulTravelerLogin, loginError, isValidPassword } from './login_helper.js';
 import { getTripsArr, getTravelerInfo, matchTravToTrip } from './traveler_dashboard.js'
 
@@ -30,49 +30,22 @@ button.onclick = function processLogin() {
             for (j = 0; j < travelerTrips.length; j++) {
 
               var node = document.createElement("div");
-              var textnode = document.createTextNode('ID: ' + travelerTrips[j].id + ' , ' + ' User Id: ' + travelerTrips[j].userID + ' , ' + ' Destination Id: ' + travelerTrips[j].destinationID + ' , ' + ' Travelers: ' + travelerTrips[j].travelers + ' , ' + ' Date: ' + travelerTrips[j].date + ' , ' + ' Duration: ' + travelerTrips[j].duration + ' , ' + ' Status: ' + travelerTrips[j].status + ' , ' + ' Suggested Activities: ' + travelerTrips[j].suggestedActivities);         // Create a text node
-              node.appendChild(textnode);                              // Append the text to <li>
-              document.getElementById("test-Id").appendChild(node);     // Append <li> to <ul> with id="myList"
+              var textnode = document.createTextNode('ID: ' + travelerTrips[j].id + ' , ' + ' User Id: ' + travelerTrips[j].userID + ' , ' + ' Destination Id: ' + travelerTrips[j].destinationID + ' , ' + ' Travelers: ' + travelerTrips[j].travelers + ' , ' + ' Date: ' + travelerTrips[j].date + ' , ' + ' Duration: ' + travelerTrips[j].duration + ' , ' + ' Status: ' + travelerTrips[j].status + ' , ' + ' Suggested Activities: ' + travelerTrips[j].suggestedActivities);
+              node.appendChild(textnode);
+              document.getElementById("test-Id").appendChild(node);
 
             }
 
 
 
-            getAllDestinations(travelerTrips).then(function (result) {
-              debugger;
-              // make a destinations variable out of the result destinations
-              // make a trips variable out of the result trips
-              // call an async function getTripTotals(destinations, trips)
-              // this function will calculate the stuff below
-              // in the .then I should have all my data
+            getTravelerDestinations(travelerTrips).then(function (result) {
+              var destinations = result.travelerDestinations;
+              var trips = result.travelerTrips;
 
-
-
-
-              // Lodging Costs = the destination lodging cost per day * trip duration 
-              // Flight Costs = Estimated flight cost per person * travelers
-              // As we loop, add the flight cost and lodging costs to the total cost 
-              // After the loop; multiply total cost * 1.1 to add travel agents fee
-
-
-
-
-
-
-
-
-
-
-
-
-
+              getTripTotals(destinations, trips).then(function (result) {
+                console.log(result);
+              })
             })
-
-
-
-
-
-
           })
         );
       } else if
