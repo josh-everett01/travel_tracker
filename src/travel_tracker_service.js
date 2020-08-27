@@ -46,8 +46,15 @@ async function getAllDestinations(travelerTrips) {
   let destinationsResponse = await response.json();
   let destinations = destinationsResponse.destinations;
   let tripDestinationIds = [];
+  let travelerDestinations = [];
   travelerTrips.forEach(trip => tripDestinationIds.push(trip.destinationID));
-  debugger
+  let i; i < destinations.length; i++;
+  debugger;
+  if (tripDestinationIds.includes(destinations.id)) {
+    console.log('ys');
+  }
+
+
   // for each destination; if the destination.id is included in tripDestinationIds add to an array called travelerDestinations
   // return the travelerTrips array and the travelerDestinationsArray
 
