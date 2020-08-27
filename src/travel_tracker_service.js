@@ -39,11 +39,18 @@ async function getAllTrips(travelerId) {
   let trips = tripArr.trips
   return { trips };
 }
-
-async function getAllDestinations(travelerId) {
+// This function is going to getTravelerDestinations and needs to be renamed later
+async function getAllDestinations(travelerTrips) {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations';
   let response = await fetch(url);
-  let destinationsArr = await response.json();
+  let destinationsResponse = await response.json();
+  let destinations = destinationsResponse.destinations;
+  let tripDestinationIds = [];
+  travelerTrips.forEach(trip => tripDestinationIds.push(trip.destinationID));
+  debugger
+  // for each destination; if the destination.id is included in tripDestinationIds add to an array called travelerDestinations
+  // return the travelerTrips array and the travelerDestinationsArray
+
   return { destinationsArr };
 }
 

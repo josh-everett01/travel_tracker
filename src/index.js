@@ -15,7 +15,6 @@ button.onclick = function processLogin() {
     isValidTraveler(usernameInput).then(function (result) {
       if (result === true) {
         renderSuccessfulTravelerLogin(
-
           getAllTrips().then(function (result) {
             let travelerTrips = [];
             var i;
@@ -26,106 +25,53 @@ button.onclick = function processLogin() {
                 travelerTrips.push(trip);
               }
             }
-            //Pt. 1
-            // Put all the trip data on the page with HTML and styling
+
             var j;
             for (j = 0; j < travelerTrips.length; j++) {
 
-              var node = document.createElement("div");                 // Create a <li> node
-
-              // var textnode = document.createTextNode(JSON.stringify(travelerTrips[j]));         // Create a text node
-              // node.appendChild(textnode);                              // Append the text to <li>
-              // document.getElementById("test-Id").appendChild(node);     // Append <li> to <ul> with id="myList"
+              var node = document.createElement("div");
               var textnode = document.createTextNode('ID: ' + travelerTrips[j].id + ' , ' + ' User Id: ' + travelerTrips[j].userID + ' , ' + ' Destination Id: ' + travelerTrips[j].destinationID + ' , ' + ' Travelers: ' + travelerTrips[j].travelers + ' , ' + ' Date: ' + travelerTrips[j].date + ' , ' + ' Duration: ' + travelerTrips[j].duration + ' , ' + ' Status: ' + travelerTrips[j].status + ' , ' + ' Suggested Activities: ' + travelerTrips[j].suggestedActivities);         // Create a text node
               node.appendChild(textnode);                              // Append the text to <li>
               document.getElementById("test-Id").appendChild(node);     // Append <li> to <ul> with id="myList"
 
             }
 
-            // 
-            //
-            //Pt. 2
-            // Put all of the traveler trips destination ID's in an array
-
-            let destinationIdArray = [];
-            let g;
-            for (g = 0; g < travelerTrips.length; g++) {
-
-              destinationIdArray.push(travelerTrips[g].destinationID)
-            }
-
-            console.log(destinationIdArray);
-            // call an async function to get all destinations
-
-            getAllDestinations().then(function (result) {
-              // Then loop through the destinations array
-
-              let destinationsArray = [];
-              var d;
-              for (d = 0; d < result.destinationsArr.destinations.length; d++) {
-                let destination = result.destinationsArr.destinations[d];
-                destinationsArray.push(destination);
 
 
-                let g;
-                for (g = 0; g < travelerTrips.length; g++)
-                  // if destination.Id included in the traveler trip destination ID Arr
+            getAllDestinations(travelerTrips).then(function (result) {
+              // make a destinations variable out of the result destinations
+              // make a trips variable out of the result trips
+              // call an async function getTripTotals(destinations, trips)
+              // this function will calculate the stuff below
+              // in the .then I should have all my data
 
-                  if (destinationsArray[d].id === destinationIdArray[g]) {
-                    var costArr = [];
-                    console.log('Lodging: ' + destinationsArray[d].estimatedLodgingCostPerDay, 'Flights: ' + destinationsArray[d].estimatedFlightCostPerPerson)
 
-                  };
 
-              }
+
+              // Lodging Costs = the destination lodging cost per day * trip duration 
+              // Flight Costs = Estimated flight cost per person * travelers
+              // As we loop, add the flight cost and lodging costs to the total cost 
+              // After the loop; multiply total cost * 1.1 to add travel agents fee
+
+
+
+
+
+
+
+
+
+
 
 
 
             })
 
 
-            // getAllTrips().then(function (result) {
-            //   let tripDestinationsArr = [];
-            //   var i;
-            //   for (i = 0; i < result.trips.length; i++) {
-            //     let trip = result.trips[i];
-
-            //     if (i < result.trips.length) {
-            //       tripDestinationsArr.push(trip);
-            //     }
-            //   }
-
-            //   console.log(tripDestinationsArr);
-            //   getAllDestinations().then(function (result) {
-            //     let destinationsIdsArr = [];
-            //     var l;
-            //     for (l = 0; l < result.destinations.length; l++) {
-            //       let destination = result.destinations[l];
-
-            //       if (l < result.destinations.length) {
-            //         destinationsIdsArr.push(destination);
-
-
-            //       }
 
 
 
 
-            //     }
-            //   }
-
-
-
-
-
-            //   )})
-            // call an async function to get all destinations
-            // then loop through the destinations array
-            // if destination.Id included in the traveler trip destination ID
-            // put that destination price in an array and then 
-            // add sum of price 
-
-            console.log(travelerTrips);
           })
         );
       } else if
