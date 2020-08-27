@@ -39,6 +39,7 @@ button.onclick = function processLogin() {
 
 
             getAllDestinations(travelerTrips).then(function (result) {
+              debugger;
               // make a destinations variable out of the result destinations
               // make a trips variable out of the result trips
               // call an async function getTripTotals(destinations, trips)
