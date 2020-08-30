@@ -88,11 +88,28 @@ async function getTripTotals(travelerDestinations, travelerTrips) {
 
 
 
-  // Flight Costs = Estimated flight cost per person * travelers
-  // As we loop, add the flight cost and lodging costs to the total cost 
-  // After the loop; multiply total cost * 1.1 to add travel agents fee          
+
+}
+
+
+async function getApprovedTripsForAgent() {
+  const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips';
+  let response = await fetch(url);
+  let tripsResponse = await response.json();
+  let trips = tripsResponse.trips;
+  return { trips };
+}
+
+async function getDestinationsForAgent() {
+  const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations';
+  let response = await fetch(url);
+  let destinationsResponse = await response.json();
+  let destinations = destinationsResponse.destinations;
+  return { destinations };
 }
 
 
 
-export { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals }
+
+
+export { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent }

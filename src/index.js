@@ -1,5 +1,5 @@
 import './css/base.scss';
-import { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals } from './travel_tracker_service.js'
+import { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent } from './travel_tracker_service.js'
 import { isValidAgency, renderSuccessfulAgencyLogin, renderSuccessfulTravelerLogin, loginError, isValidPassword } from './login_helper.js';
 import { getTripsArr, getTravelerInfo, matchTravToTrip } from './traveler_dashboard.js'
 
@@ -32,6 +32,7 @@ button.onclick = function processLogin() {
               var node = document.createElement("div");
               var textnode = document.createTextNode('ID: ' + travelerTrips[j].id + ' , ' + ' User Id: ' + travelerTrips[j].userID + ' , ' + ' Destination Id: ' + travelerTrips[j].destinationID + ' , ' + ' Travelers: ' + travelerTrips[j].travelers + ' , ' + ' Date: ' + travelerTrips[j].date + ' , ' + ' Duration: ' + travelerTrips[j].duration + ' , ' + ' Status: ' + travelerTrips[j].status + ' , ' + ' Suggested Activities: ' + travelerTrips[j].suggestedActivities);
               node.appendChild(textnode);
+
               document.getElementById("test-Id").appendChild(node);
 
             }
@@ -44,6 +45,17 @@ button.onclick = function processLogin() {
 
               getTripTotals(destinations, trips).then(function (result) {
                 console.log(result);
+                // Call a function renderSuccessfulTravelerLogin(result)
+                // This function will spit out styled HTML to display all the trips and traveler information
+                var node = document.createElement("div");
+                var textnode = document.createTextNode('Total Amount Spent On Trips: ' + '$' + result.totalAmountCustHasSpentTotal);
+                node.appendChild(textnode);
+
+                document.getElementById("test-Id").style.border = '3px solid white';
+                document.getElementById("test-Id").style.textAlign = 'center';
+                document.getElementById("test-Id").style.padding = '5%';
+                document.getElementById("test-Id").style.margin = '3%', '3%', '5%', '3%';
+                document.getElementById("test-Id").appendChild(node);
               })
             })
           })
