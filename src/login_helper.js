@@ -25,9 +25,13 @@ function renderSuccessfulAgencyLogin(agencyDashboardData) {
 
 function renderSuccessfulTravelerLogin(travelerDashboardData) {
   // travelerDashboardData.destinations
-  // tripHeaders =  travelerDashboardData.trips.forEach(trip => 
-  //  create element H1 , create text node w/ trip.
-  // )
+  // This function will take all the destinations, trips, and traveler data. 
+  // All of this data will be dynamically assigned to HTML
+  // We will add classes to this HTML in this function
+  // In our CSS file, we will add styling to these classes
+  // Now a styled meaningful traveler login displays on the screen
+
+  //
   var userId = usernameInput.value.slice(8);
   document.getElementById('site-container').style.display = "none";
   var h = document.createElement("H1");

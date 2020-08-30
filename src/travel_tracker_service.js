@@ -32,14 +32,20 @@ function addNumbers() {
   1 + 8 + 52 + 6 + 12 + 32 + 43 + 21 + 1 + 54
 };
 
-async function getAllTrips(travelerId) {
+// We can rename this function getTravelerTrips(traveler)
+// This function will spit out the travelers trips and the traveler object
+async function getAllTrips(traveler) {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips';
   let response = await fetch(url);
   let tripArr = await response.json();
-  let trips = tripArr.trips
+  let trips = tripArr.trips;
+  // return traveler
+  // return array travelerTrips (this is the loop logic from index.js josh)
+  // return { travelerTrips, traveler }
   return { trips };
 }
-// This function is going to getTravelerDestinations and needs to be renamed later
+
+// getTravelerDestinations(travelerTrips, traveler)
 async function getTravelerDestinations(travelerTrips) {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations';
   let response = await fetch(url);
@@ -55,7 +61,7 @@ async function getTravelerDestinations(travelerTrips) {
     }
 
   }
-
+  // return { travelerTrips, traveler, travelerDestinations }
   return { travelerTrips, travelerDestinations }
 }
 
