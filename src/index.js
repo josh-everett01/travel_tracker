@@ -93,7 +93,62 @@ button.onclick = function processLogin() {
 
       } else if
         (isValidAgency(usernameInput)) {
-        renderSuccessfulAgencyLogin();
+        renderSuccessfulAgencyLogin(
+          getAllTrips().then(function (result) {
+            let i;
+            let pendingTripsArr = [];
+            for (i = 0; i < result.trips.length; i++) {
+              let pendingTrips = result.trips[i].status;
+              let toJson = JSON.stringify(result.trips[i]);
+              if (pendingTrips === 'pending') {
+                pendingTripsArr.push(`${toJson}`)
+
+              }
+
+            };
+            var node = document.createElement("div");
+            var textnode = document.createTextNode(pendingTripsArr);
+            node.appendChild(textnode);
+
+            document.getElementById("test-Id").style.border = '3px solid white';
+            document.getElementById("test-Id").style.textAlign = 'center';
+            document.getElementById("test-Id").style.padding = '5%';
+            document.getElementById("test-Id").style.margin = '3%', '3%', '10%', '3%';
+            document.getElementById("test-Id").style.fontSize = '20px';
+            document.getElementById("test-Id").appendChild(node);
+
+            getApprovedTripsForAgent().then(function (result) {
+              let i;
+              let approvedTripsArr = [];
+              for (i = 0; i < result.trips.length; i++) {
+                let status = result.trips[i].status;
+                let approvedTrips = result.trips[i];
+                if (status === 'approved') { approvedTripsArr.push(approvedTrips) }
+              };
+
+              getDestinationsForAgent(approvedTripsArr).then(function (result) {
+                result;
+                approvedTripsArr;
+                let destinations = result;
+                let i;
+                for (i = 0; i < approvedTripsArr.length; i++) {
+                  let tripCostArray = [];
+
+                  debugger;
+
+                  let estimatedFlightCost = destinations.destinations[i].estimatedFlightCostPerPerson;
+                  let estimatedLodgingCost = destinations.destinations[i].estimatedLodgingCostPerDay;
+                  let tripCost = toString(estimatedFlightCost + estimatedLodgingCost);
+                  tripCostArray.push(tripCost);
+
+                }
+                console.log(tripCostArray);
+              })
+
+            })
+          })
+
+        );
       } else {
         loginError();
       }
