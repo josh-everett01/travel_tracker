@@ -1,5 +1,5 @@
 import './css/base.scss';
-import { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent } from './travel_tracker_service.js'
+import { isValidTraveler, getSingleTraveler, getTravelerTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent } from './travel_tracker_service.js'
 import { isValidAgency, renderSuccessfulAgencyLogin, renderSuccessfulTravelerLogin, loginError, isValidPassword } from './login_helper.js';
 import { getTripsArr, getTravelerInfo, matchTravToTrip } from './traveler_dashboard.js'
 
@@ -25,71 +25,72 @@ button.onclick = function processLogin() {
 
         // slice the user Id from the username Input
         // let travelerId = the Id from step 17
+        var travelerId = usernameInput.slice(8);
         // we need to define async function getSingleTraveler(travelerId) in travel tracker service 
         // have the function return the traveler object
         // call getSingleTraveler(travelerId) 
-        // then 
-        // let traveler = result.traveler 
-        // we should pass the traveler object / result down the chain
-        // pass traveler to getAllTrips(traveler)
+        getSingleTraveler(travelerId).then(function (result) {
+          let traveler = result.traveler;
 
 
-        getAllTrips().then(function (result) {
-          // Where getAllTrips() is defined; remember to return the traveler as well
+          getTravelerTrips(traveler).then(function (result) {
+            // Where getAllTrips() is defined; remember to return the traveler as well
+            let travelerTrips = result.travelerTrips;
 
-          // After renaming this function getTravelerTrips()
-          // we can move all the below loop logic into where function is defined
-          let travelerTrips = [];
-          var i;
-          for (i = 0; i < result.trips.length; i++) {
-            let trip = result.trips[i];
-            let travelerId = usernameInput.slice(8);
-            if (travelerId == trip.userID) {
-              travelerTrips.push(trip);
-            }
-          }
-
-          // var j; ** THIS IS NOT NEEDED**
-          // for (j = 0; j < travelerTrips.length; j++) {
-
-          //   var node = document.createElement("div");
-          //   var textnode = document.createTextNode('ID: ' + travelerTrips[j].id + ' , ' + ' User Id: ' + travelerTrips[j].userID + ' , ' + ' Destination Id: ' + travelerTrips[j].destinationID + ' , ' + ' Travelers: ' + travelerTrips[j].travelers + ' , ' + ' Date: ' + travelerTrips[j].date + ' , ' + ' Duration: ' + travelerTrips[j].duration + ' , ' + ' Status: ' + travelerTrips[j].status + ' , ' + ' Suggested Activities: ' + travelerTrips[j].suggestedActivities);
-          //   node.appendChild(textnode);
-
-          //   document.getElementById("test-Id").appendChild(node);
-
-          // }
+            // After renaming this function getTravelerTrips()
+            // we can move all the below loop logic into where function is defined
 
 
-          // getTravelerDestinations(travelerTrips, traveler)
-          // 
-          getTravelerDestinations(travelerTrips).then(function (result) {
-            var destinations = result.travelerDestinations;
-            var trips = result.travelerTrips;
+            // var j; ** THIS IS NOT NEEDED**
+            // for (j = 0; j < travelerTrips.length; j++) {
+
+            //   var node = document.createElement("div");
+            //   var textnode = document.createTextNode('ID: ' + travelerTrips[j].id + ' , ' + ' User Id: ' + travelerTrips[j].userID + ' , ' + ' Destination Id: ' + travelerTrips[j].destinationID + ' , ' + ' Travelers: ' + travelerTrips[j].travelers + ' , ' + ' Date: ' + travelerTrips[j].date + ' , ' + ' Duration: ' + travelerTrips[j].duration + ' , ' + ' Status: ' + travelerTrips[j].status + ' , ' + ' Suggested Activities: ' + travelerTrips[j].suggestedActivities);
+            //   node.appendChild(textnode);
+
+            //   document.getElementById("test-Id").appendChild(node);
+
+            // }
 
 
-            // getTripTotals(traveler, destinations, trips)
-            getTripTotals(destinations, trips).then(function (result) {
+            // getTravelerDestinations(travelerTrips, traveler)
+            // 
+            getTravelerDestinations(travelerTrips, traveler).then(function (result) {
 
-              // BEFORE BUILDING HTML verify getTripTotals() returns all teh psuedo-coded data
+              var destinations = result.travelerDestinations;
+              var trips = result.travelerTrips;
 
-              console.log(result);
-              // Call a function renderSuccessfulTravelerLogin(result)
 
-              // This function will spit out styled HTML to display all the trips and traveler information
+              // getTripTotals(traveler, destinations, trips)
+              getTripTotals(traveler, destinations, trips).then(function (result) {
 
-              // var node = document.createElement("div");
-              // var textnode = document.createTextNode('Total Amount Spent On Trips: ' + '$' + result.totalAmountCustHasSpentTotal);
-              // node.appendChild(textnode);
+                // BEFORE BUILDING HTML verify getTripTotals() returns all teh psuedo-coded data
 
-              // document.getElementById("test-Id").style.border = '3px solid white';
-              // document.getElementById("test-Id").style.textAlign = 'center';
-              // document.getElementById("test-Id").style.padding = '5%';
-              // document.getElementById("test-Id").style.margin = '3%', '3%', '5%', '3%';
-              // document.getElementById("test-Id").appendChild(node);
+
+
+                // Call a function renderSuccessfulTravelerLogin(result)
+                renderSuccessfulTravelerLogin(result);
+                // This function will spit out styled HTML to display all the trips and traveler information
+
+                // var node = document.createElement("div");
+                // var textnode = document.createTextNode('Total Amount Spent On Trips: ' + '$' + result.totalAmountCustHasSpentTotal);
+                // node.appendChild(textnode);
+
+                // document.getElementById("test-Id").style.border = '3px solid white';
+                // document.getElementById("test-Id").style.textAlign = 'center';
+                // document.getElementById("test-Id").style.padding = '5%';
+                // document.getElementById("test-Id").style.margin = '3%', '3%', '5%', '3%';
+                // document.getElementById("test-Id").appendChild(node);
+              })
             })
           })
+
+
         })
+
+
+
+
 
       } else if
         (isValidAgency(usernameInput)) {

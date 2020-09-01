@@ -19,13 +19,13 @@ async function isValidTraveler(usernameInput) {
   return valid;
 }
 
-async function getSingleTraveler() {
+async function getSingleTraveler(travelerId) {
   let fullUsername = document.getElementById('input-username');
   const travelerIdNumber = fullUsername.value.slice(8);
   const url = `https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${travelerIdNumber}`;
   let response = await fetch(url);
-  let travelerInfo = await response.json();
-  return travelerInfo;
+  let traveler = await response.json();
+  return { traveler };
 }
 
 function addNumbers() {
@@ -34,19 +34,30 @@ function addNumbers() {
 
 // We can rename this function getTravelerTrips(traveler)
 // This function will spit out the travelers trips and the traveler object
-async function getAllTrips(traveler) {
+async function getTravelerTrips(traveler) {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips';
   let response = await fetch(url);
   let tripArr = await response.json();
   let trips = tripArr.trips;
+  let travelerTrips = [];
+
+  var i;
+  for (i = 0; i < trips.length; i++) {
+    let trip = trips[i];
+
+    if (traveler.id == trip.userID) {
+      travelerTrips.push(trip);
+    }
+  }
   // return traveler
   // return array travelerTrips (this is the loop logic from index.js josh)
   // return { travelerTrips, traveler }
-  return { trips };
+
+  return { travelerTrips, traveler };
 }
 
 // getTravelerDestinations(travelerTrips, traveler)
-async function getTravelerDestinations(travelerTrips) {
+async function getTravelerDestinations(travelerTrips, traveler) {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations';
   let response = await fetch(url);
   let destinationsResponse = await response.json();
@@ -62,13 +73,12 @@ async function getTravelerDestinations(travelerTrips) {
 
   }
   // return { travelerTrips, traveler, travelerDestinations }
-  return { travelerTrips, travelerDestinations }
+
+  return { travelerTrips, traveler, travelerDestinations }
 }
 
-async function getTripTotals(travelerDestinations, travelerTrips) {
-
-
-
+// Change this function name to getTravelerDashboardData
+async function getTripTotals(traveler, travelerDestinations, travelerTrips) {
   let lodgingCosts = [];
   let i;
   for (i = 0; i < travelerDestinations.length; i++) {
@@ -86,10 +96,14 @@ async function getTripTotals(travelerDestinations, travelerTrips) {
     flightsPlusLodging.push(lodgingCosts[i] + flightCosts[i])
   }
 
-  var totalAmountCustHasSpentTotal = flightsPlusLodging.reduce((accumulator, currentValue, currentIndex, array) => accumulator + currentValue) * 1.1;
+  var totalAmountCustHasSpentBeforeAgentFee = flightsPlusLodging.reduce(function (a, b) {
+    return a + b;
+  }, 0);
+  var totalAfterAgentFee = totalAmountCustHasSpentBeforeAgentFee * 1.1;
 
 
-  return { lodgingCosts, flightCosts, flightsPlusLodging, totalAmountCustHasSpentTotal }
+  // This should return traveler, trips, destinations, and everything else below
+  return { traveler, travelerTrips, travelerDestinations, lodgingCosts, flightCosts, flightsPlusLodging, totalAmountCustHasSpentBeforeAgentFee, totalAfterAgentFee }
 
 
 
@@ -118,4 +132,4 @@ async function getDestinationsForAgent() {
 
 
 
-export { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent }
+export { isValidTraveler, getSingleTraveler, getTravelerTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent }

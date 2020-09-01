@@ -19,8 +19,6 @@
   width: 100%;
 }
 
-
-
 .login-form {
   border-bottom: 3px solid var(--main-border-color);
   border-left: 3px solid var(--main-border-color);
@@ -31,6 +29,8 @@
   position: relative;
   text-align: center;
   width: 450px;
+  margin: auto;
+  margin-top: 3%;
 }
 
 .main-section {
@@ -81,6 +81,19 @@ button {
 i {
   background-color: var(--header-bg-color);
   color: var(--main-border-color);
+}
+
+.traveler-dashboard-js-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  margin: 5%;
+}
+
+.traveler-name {
+  grid-row-start: 1;
+  grid-row-end: 8;
 }
 
 @media (min-width: 376px max-width 768px) {
