@@ -84,16 +84,36 @@ i {
 }
 
 .traveler-dashboard-js-container {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-
+  // display: grid;
+  // grid-template-rows: 1fr 1fr 1fr 1fr;
+  // grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 5%;
 }
 
-.traveler-name {
-  grid-row-start: 1;
-  grid-row-end: 8;
+.travname {
+  color: var(--main-border-color);
+}
+
+.past-trips {
+  display: block;
+  flex-direction: column;
+
+  color: red;
+}
+
+.present-trips {
+  color: green;
+}
+
+.future-trips {
+  color: pink;
+}
+
+.amount-spent {
+  color: brown;
 }
 
 @media (min-width: 376px max-width 768px) {
