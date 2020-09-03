@@ -116,6 +116,11 @@ i {
   color: brown;
 }
 
+.destination-image {
+  width: 25%;
+  height: 25%;
+}
+
 @media (min-width: 376px max-width 768px) {
   body {
     display: flex;

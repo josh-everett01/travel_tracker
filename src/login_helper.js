@@ -44,17 +44,146 @@ function renderUpcomingTripsHeader() {
 }
 
 function filterUpcomingTrips(travelerTrips) {
+  let i;
+  let upcomingTripsArr = [];
+  var MyDate = new Date();
+  var MyDateString;
+  MyDateString = MyDate.getFullYear() + '/' + ('0' + (MyDate.getMonth() + 1)).slice(-2) + '/' + ('0' + MyDate.getDate()).slice(-2);
+  let today = MyDateString;
 
-  travelerTrips.forEach(trip =>
-    // if the trips date is greater than now
-    // shovel the trip in an array
-    // return that array
-    console.log(trip)
-  );
+
+  for (i = 0; i < travelerTrips.length; i++) {
+    let smallDate = new Date(travelerTrips[i].date);
+
+    let travDate = smallDate.getFullYear() + '/' + ('0' + (smallDate.getMonth() + 1)).slice(-2) + '/' + ('0' + smallDate.getDate()).slice(-2);
+
+    if (today < travDate) {
+
+      upcomingTripsArr.push(travelerTrips[i]);
+    }
+
+  }
+
+  return { upcomingTripsArr }
+  // travelerTrips.forEach(trip =>
+
+  // // if the trips date is greater than now
+  //   // shovel the trip in an array
+  //   // return that array
+  //   console.log(trip)
+  // );
+
 };
 
-// function filterPastTrips(trips) {}
+function getTodaysDate() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
 
+  let todaysDate = yyyy + mm + dd;
+  return todaysDate;
+}
+
+function formatTripsDate(travelerTrips) {
+  let date = travelerTrips;
+
+  let year = date.slice(0, 4);
+  let month = date.slice(5, 7);
+  let day = date.slice(8, 10);
+  let formattedDate = year + month + day;
+  return formattedDate;
+}
+// function filterPastTrips(trips) {}
+// function filterPastTrips(travelerTrips) {
+//   let pastTripsArr = [];
+//   let i;
+//   for (i = 0; i < travelerTrips.length; i++) {
+//     debugger;
+//     if (getTodaysDate() > formatTripsDate(travelerTrips[i].date)) {
+//       pastTripsArr.push(travelerTrips[i]);
+//     }
+//   }
+//   return { pastTripsArr }
+
+// };
+
+function renderTripDate(trip) {
+  let tripDate = trip.upcomingTripsArr[0].date;
+  let tripDateParagraph = document.createElement("paragraph");
+  tripDateParagraph.className = 'trip-date';
+  let tripDateText = document.createTextNode(`Trip Date: ${tripDate} `);
+  tripDateParagraph.appendChild(tripDateText);
+  document.getElementsByTagName("BODY")[0].appendChild(tripDateParagraph);
+
+}
+
+function renderTripDestination(trip, destinations) {
+  let i;
+  let destinationArr = [];
+  for (i = 0; i < trip.upcomingTripsArr.length; i++) {
+
+    if (trip.upcomingTripsArr[i].destinationID === destinations[i].id) {
+      let tripDestination = destinations[i].destination
+      let tripDestinationParagraph = document.createElement("paragraph");
+      tripDestinationParagraph.className = 'trip-destination';
+      let tripDestinationText = document.createTextNode(`Trip Destination: ${tripDestination}`);
+      tripDestinationParagraph.appendChild(tripDestinationText);
+      document.getElementsByTagName("BODY")[0].appendChild(tripDestinationParagraph);
+    }
+  }
+  ;
+}
+
+function renderTripStatus(trip) {
+  let tripStatus = trip.upcomingTripsArr[0].status;
+  let tripStatusParagraph = document.createElement("paragraph");
+  let tripStatusText = document.createTextNode(`Trip Status: ${tripStatus}`)
+  tripStatusParagraph.appendChild(tripStatusText);
+  document.getElementsByTagName("BODY")[0].appendChild(tripStatusParagraph);
+}
+
+function renderTripDuration(trip) {
+  let tripDuration = trip.upcomingTripsArr[0].duration;
+  let tripDurationParagraph = document.createElement("paragraph");
+  tripDurationParagraph.className = 'trip-duration';
+  let tripDurationText = document.createTextNode(`Trip Duration: ${tripDuration} days`);
+  tripDurationParagraph.appendChild(tripDurationText);
+  document.getElementsByTagName("BODY")[0].appendChild(tripDurationParagraph);
+
+}
+
+function renderDestinationImage(trip, destinations) {
+  let destinationImageArr = [];
+  let i;
+  for (i = 0; i < destinations.length; i++) {
+    if (trip.upcomingTripsArr[0].destinationID === destinations[i].id) {
+      let destinationImage = destinations[i].image
+      var img = document.createElement('img');
+      img.className = "destination-image"
+      img.src =
+        `${destinationImage}`;
+      document.getElementsByTagName("BODY")[0].appendChild(img);
+    }
+  }
+
+}
+
+function renderUpcomingTrips(trips, destinations) {
+  // var upcomingTripsArticleElement = document.createElement("article");                 // Create a <li> node
+  // var textnode = document.createTextNode("Water");         // Create a text node
+  // node.appendChild(textnode);                              // Append the text to <li>
+  // document.getElementById("myList").appendChild(node);     // Append <li> to <ul> with id="myList"
+  let i;
+  for (i = 0; i < trips.upcomingTripsArr.length; i++) {
+    renderTripDate(trips);
+    renderTripDestination(trips, destinations);
+    renderTripStatus(trips);
+    renderTripDuration(trips);
+    renderDestinationImage(trips, destinations);
+  }
+
+}
 // function renderTrips(trips, destinations) {
 // trips.forEach(trip => 
 // renderTripDate(trip)
@@ -69,14 +198,14 @@ function renderSuccessfulTravelerLogin(travelerDashboardData) {
   renderTravelerWelcome(travelerDashboardData.traveler);
   renderUpcomingTripsHeader();
   let upcomingTrips = filterUpcomingTrips(travelerDashboardData.travelerTrips);
+  // let pastTrips = filterPastTrips(travelerDashboardData.travelerTrips);
 
-  // filterPastTrips(travelerDashboardData.travelerTrips)
   // save the output to a variable
-
+  let destinations = travelerDashboardData.travelerDestinations
   // let destinations = travelerDashboardData.****
-  // renderTrips(upcomingTrips, destinations)
+  renderUpcomingTrips(upcomingTrips, destinations);
 
-  // renderPastTripsHeader(); 
+  // renderPastTripsHeader();  (CHALLENGE* Make renderTripsHeader function that takes custom argument of string and makes that the header)
   // renderTrips(pastTrips);
 
   // renderTotalSpent(*get this data from trav dashboard data*);
