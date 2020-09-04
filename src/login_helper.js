@@ -27,6 +27,7 @@ function renderSuccessfulAgencyLogin(agencyDashboardData) {
 
 function renderTravelerWelcome(traveler) {
   document.getElementById('login-form').style.display = 'none';
+  document.getElementById('footer').style.display = 'none';
   let welcomeHeader = document.createElement("h1");
   let headerText = document.createTextNode(`Hello, ${traveler.name}`);
   welcomeHeader.appendChild(headerText);
@@ -38,6 +39,16 @@ function renderUpcomingTripsHeader() {
   upcomingTripsSection.className = 'upcoming-trips';
   let upcomingTripsHeader = document.createElement("h3");
   let upcomingTripsHeaderText = document.createTextNode('Upcoming Trips: ');
+  upcomingTripsHeader.appendChild(upcomingTripsHeaderText);
+  upcomingTripsSection.appendChild(upcomingTripsHeader);
+  document.getElementsByTagName("BODY")[0].appendChild(upcomingTripsSection);
+}
+
+function renderPastTripsHeader() {
+  let upcomingTripsSection = document.createElement("section");
+  upcomingTripsSection.className = 'past-trips';
+  let upcomingTripsHeader = document.createElement("h3");
+  let upcomingTripsHeaderText = document.createTextNode('Past Trips: ');
   upcomingTripsHeader.appendChild(upcomingTripsHeaderText);
   upcomingTripsSection.appendChild(upcomingTripsHeader);
   document.getElementsByTagName("BODY")[0].appendChild(upcomingTripsSection);
@@ -94,93 +105,144 @@ function formatTripsDate(travelerTrips) {
   let formattedDate = year + month + day;
   return formattedDate;
 }
-// function filterPastTrips(trips) {}
-// function filterPastTrips(travelerTrips) {
-//   let pastTripsArr = [];
-//   let i;
-//   for (i = 0; i < travelerTrips.length; i++) {
-//     debugger;
-//     if (getTodaysDate() > formatTripsDate(travelerTrips[i].date)) {
-//       pastTripsArr.push(travelerTrips[i]);
-//     }
-//   }
-//   return { pastTripsArr }
 
-// };
+function filterPastTrips(travelerTrips) {
+  let i;
+  let pastTripsArr = [];
+  var MyDate = new Date();
+  var MyDateString;
+  MyDateString = MyDate.getFullYear() + '/' + ('0' + (MyDate.getMonth() + 1)).slice(-2) + '/' + ('0' + MyDate.getDate()).slice(-2);
+  let today = MyDateString;
+
+
+  for (i = 0; i < travelerTrips.length; i++) {
+    let smallDate = new Date(travelerTrips[i].date);
+
+    let travDate = smallDate.getFullYear() + '/' + ('0' + (smallDate.getMonth() + 1)).slice(-2) + '/' + ('0' + smallDate.getDate()).slice(-2);
+
+    if (today > travDate) {
+
+      pastTripsArr.push(travelerTrips[i]);
+    }
+
+  }
+
+  return { pastTripsArr }
+
+};
 
 function renderTripDate(trip) {
-  let tripDate = trip.upcomingTripsArr[0].date;
+  let tripDate = trip.date;
   let tripDateParagraph = document.createElement("paragraph");
   tripDateParagraph.className = 'trip-date';
   let tripDateText = document.createTextNode(`Trip Date: ${tripDate} `);
   tripDateParagraph.appendChild(tripDateText);
-  document.getElementsByTagName("BODY")[0].appendChild(tripDateParagraph);
+  // upcomingTripsSection.appendChild(tripDateParagraph);
+  if (document.getElementsByTagName("SECTION").length <= 1) {
+    document.getElementsByTagName("SECTION")[0].appendChild(tripDateParagraph);
+  }
+  else {
+    document.getElementsByTagName("SECTION")[1].appendChild(tripDateParagraph)
+  }
 
 }
 
 function renderTripDestination(trip, destinations) {
   let i;
   let destinationArr = [];
-  for (i = 0; i < trip.upcomingTripsArr.length; i++) {
 
-    if (trip.upcomingTripsArr[i].destinationID === destinations[i].id) {
+  for (i = 0; i < destinations.length; i++) {
+
+    if (trip.destinationID === destinations[i].id) {
+
       let tripDestination = destinations[i].destination
       let tripDestinationParagraph = document.createElement("paragraph");
       tripDestinationParagraph.className = 'trip-destination';
       let tripDestinationText = document.createTextNode(`Trip Destination: ${tripDestination}`);
       tripDestinationParagraph.appendChild(tripDestinationText);
-      document.getElementsByTagName("BODY")[0].appendChild(tripDestinationParagraph);
+
+      if (document.getElementsByTagName("SECTION").length === 1) {
+        document.getElementsByTagName("SECTION")[0].appendChild(tripDestinationParagraph);
+      }
+      else {
+        document.getElementsByTagName("SECTION")[1].appendChild(tripDestinationParagraph)
+      }
+
     }
   }
   ;
 }
 
 function renderTripStatus(trip) {
-  let tripStatus = trip.upcomingTripsArr[0].status;
+
+  let tripStatus = trip.status;
   let tripStatusParagraph = document.createElement("paragraph");
   let tripStatusText = document.createTextNode(`Trip Status: ${tripStatus}`)
   tripStatusParagraph.appendChild(tripStatusText);
-  document.getElementsByTagName("BODY")[0].appendChild(tripStatusParagraph);
+
+  if (document.getElementsByTagName("SECTION").length === 1) {
+    document.getElementsByTagName("SECTION")[0].appendChild(tripStatusParagraph);
+  }
+  else {
+    document.getElementsByTagName("SECTION")[1].appendChild(tripStatusParagraph)
+  }
 }
 
 function renderTripDuration(trip) {
-  let tripDuration = trip.upcomingTripsArr[0].duration;
+  let tripDuration = trip.duration;
   let tripDurationParagraph = document.createElement("paragraph");
   tripDurationParagraph.className = 'trip-duration';
   let tripDurationText = document.createTextNode(`Trip Duration: ${tripDuration} days`);
   tripDurationParagraph.appendChild(tripDurationText);
-  document.getElementsByTagName("BODY")[0].appendChild(tripDurationParagraph);
+
+  if (document.getElementsByTagName("SECTION").length === 1) {
+    document.getElementsByTagName("SECTION")[0].appendChild(tripDurationParagraph);
+  }
+  else {
+    document.getElementsByTagName("SECTION")[1].appendChild(tripDurationParagraph)
+  }
 
 }
 
 function renderDestinationImage(trip, destinations) {
-  let destinationImageArr = [];
   let i;
+
   for (i = 0; i < destinations.length; i++) {
-    if (trip.upcomingTripsArr[0].destinationID === destinations[i].id) {
+
+    if (trip.destinationID === destinations[i].id) {
       let destinationImage = destinations[i].image
       var img = document.createElement('img');
       img.className = "destination-image"
       img.src =
         `${destinationImage}`;
-      document.getElementsByTagName("BODY")[0].appendChild(img);
+      if (document.getElementsByTagName("SECTION").length === 1) {
+        document.getElementsByTagName("SECTION")[0].appendChild(img);
+      } else {
+        document.getElementsByTagName("SECTION")[1].appendChild(img)
+      }
     }
   }
-
 }
+
+
 
 function renderUpcomingTrips(trips, destinations) {
   // var upcomingTripsArticleElement = document.createElement("article");                 // Create a <li> node
   // var textnode = document.createTextNode("Water");         // Create a text node
   // node.appendChild(textnode);                              // Append the text to <li>
   // document.getElementById("myList").appendChild(node);     // Append <li> to <ul> with id="myList"
+
+  // trips.forEach(trip =>      *everything*)
   let i;
   for (i = 0; i < trips.upcomingTripsArr.length; i++) {
-    renderTripDate(trips);
-    renderTripDestination(trips, destinations);
-    renderTripStatus(trips);
-    renderTripDuration(trips);
-    renderDestinationImage(trips, destinations);
+    renderTripDate(trips.upcomingTripsArr[i]);
+
+    renderTripDestination(trips.upcomingTripsArr[i], destinations);
+
+    renderTripStatus(trips.upcomingTripsArr[i]);
+    renderTripDuration(trips.upcomingTripsArr[i]);
+    renderDestinationImage(trips.upcomingTripsArr[i], destinations);
+
   }
 
 }
@@ -193,6 +255,32 @@ function renderUpcomingTrips(trips, destinations) {
 //)
 //}
 
+function renderPastTrips(pastTrips, destinations) {
+  let i;
+
+  for (i = 0; i < pastTrips.pastTripsArr.length; i++) {
+    renderTripDate(pastTrips.pastTripsArr[i]);
+
+    renderTripDestination(pastTrips.pastTripsArr[i], destinations);
+    // renderTripStatus(pastTrips.pastTripsArr[i]);
+    renderTripDuration(pastTrips.pastTripsArr[i]);
+    renderDestinationImage(pastTrips.pastTripsArr[i], destinations);
+
+
+  }
+
+}
+
+function renderTotalSpent(travelerDashboardData) {
+  let totalAmount = travelerDashboardData.totalAfterAgentFee.toFixed(2);
+  let totalSpentParagraph = document.createElement("paragraph");
+  totalSpentParagraph.className = 'total-spent';
+  let totalSpentText = document.createTextNode(`Total Amount Spent: $${totalAmount}`);
+  totalSpentParagraph.appendChild(totalSpentText);
+  document.getElementsByTagName("section")[0].appendChild(totalSpentParagraph);
+
+}
+
 // change name to renderTravelerDashboard
 function renderSuccessfulTravelerLogin(travelerDashboardData) {
   renderTravelerWelcome(travelerDashboardData.traveler);
@@ -204,9 +292,13 @@ function renderSuccessfulTravelerLogin(travelerDashboardData) {
   let destinations = travelerDashboardData.travelerDestinations
   // let destinations = travelerDashboardData.****
   renderUpcomingTrips(upcomingTrips, destinations);
-
+  let pastTrips = filterPastTrips(travelerDashboardData.travelerTrips);
+  renderPastTripsHeader();
+  renderPastTrips(pastTrips, destinations);
   // renderPastTripsHeader();  (CHALLENGE* Make renderTripsHeader function that takes custom argument of string and makes that the header)
   // renderTrips(pastTrips);
+
+  renderTotalSpent(travelerDashboardData);
 
   // renderTotalSpent(*get this data from trav dashboard data*);
   // After everything above is working; go back and assign classnames to all HTML elements 

@@ -72,6 +72,8 @@ body {
   color: var(--main-txt-color);
   font-family: "Oxygen", sans-serif;
   font-size: 28px;
+  text-align: center;
+  align-content: center;
 }
 
 button {
@@ -83,14 +85,26 @@ i {
   color: var(--main-border-color);
 }
 
+.upcoming-trips {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.past-trips {
+  display: flex;
+  flex-direction: column;
+}
+
+p text {
+  margin: 10%;
+}
+
 .traveler-dashboard-js-container {
   // display: grid;
   // grid-template-rows: 1fr 1fr 1fr 1fr;
   // grid-template-columns: 1fr 1fr 1fr;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 5%;
+  // display: flex;
 }
 
 .travname {
@@ -98,12 +112,8 @@ i {
 }
 
 .past-trips {
-  display: block;
-  flex-direction: column;
-
-  color: red;
+  grid-column: 2;
 }
-
 .present-trips {
   color: green;
 }
@@ -119,6 +129,7 @@ i {
 .destination-image {
   width: 25%;
   height: 25%;
+  flex-flow: column;
 }
 
 @media (min-width: 376px max-width 768px) {
