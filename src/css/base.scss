@@ -71,9 +71,9 @@ body {
   background-color: var(--main-bg-color);
   color: var(--main-txt-color);
   font-family: "Oxygen", sans-serif;
-  font-size: 28px;
+  font-size: 1.3rem;
   text-align: center;
-  align-content: center;
+  margin: 0;
 }
 
 button {
@@ -85,26 +85,69 @@ i {
   color: var(--main-border-color);
 }
 
-.upcoming-trips {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+h3 {
+  grid-row: 1;
+  grid-column: 0;
 }
 
-.past-trips {
+.trip-date {
+  grid-row: 3;
+}
+
+.trip-destination {
+  grid-row: 4;
+}
+
+.trip-duration {
+  grid-row: 5;
+}
+
+.trip-status {
+  grid-row: 6;
+}
+
+.destination-image {
+  grid-row: 2;
+  width: 250px;
+  height: 200px;
+}
+.total-spent {
   display: flex;
-  flex-direction: column;
+  margin: auto;
+  margin-left: 40%;
+  grid-row: 0;
+}
+
+.container {
+  align-content: center;
+  place-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 2fr 0.1fr 0.1fr 0.1fr 0.1fr;
+  grid-gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100vw;
+  padding: 16px;
+  border: 2px solid var(--main-border-color);
+  margin: 3%;
 }
 
 p text {
-  margin: 10%;
+  margin: 5%;
 }
 
-.traveler-dashboard-js-container {
-  // display: grid;
-  // grid-template-rows: 1fr 1fr 1fr 1fr;
-  // grid-template-columns: 1fr 1fr 1fr;
-  // display: flex;
+.left-button {
+  z-index: 1;
+  margin-bottom: -150%;
+  margin-left: -250%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: black;
+}
+
+.right-button {
+  margin-right: auto;
 }
 
 .travname {
@@ -126,10 +169,13 @@ p text {
   color: brown;
 }
 
-.destination-image {
-  width: 25%;
-  height: 25%;
-  flex-flow: column;
+section:first-of-type {
+  align-content: center;
+  place-items: center;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 0.2fr 2fr 0.1fr 0.1fr 0.1fr 0.1fr;
+  grid-gap: 20px;
 }
 
 @media (min-width: 376px max-width 768px) {
