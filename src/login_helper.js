@@ -118,18 +118,25 @@ function filterPastTrips(travelerTrips) {
   return pastTripsArr;
 }
 
+function appendToSection(paragraph) {
+  if (document.getElementsByTagName("SECTION").length === 1) {
+    document
+      .getElementsByTagName("SECTION")[0]
+      .appendChild(paragraph);
+  } else {
+    document
+      .getElementsByTagName("SECTION")[1]
+      .appendChild(paragraph);
+  }
+}
+
 function renderTripDate(trip) {
   let tripDate = trip.date;
   let tripDateParagraph = document.createElement("paragraph");
   tripDateParagraph.className = "trip-date";
   let tripDateText = document.createTextNode(`Trip Date: ${tripDate} `);
   tripDateParagraph.appendChild(tripDateText);
-  // upcomingTripsSection.appendChild(tripDateParagraph);
-  if (document.getElementsByTagName("SECTION").length <= 1) {
-    document.getElementsByTagName("SECTION")[0].appendChild(tripDateParagraph);
-  } else {
-    document.getElementsByTagName("SECTION")[1].appendChild(tripDateParagraph);
-  }
+  appendToSection(tripDateParagraph);
 }
 
 function renderTripDestination(trip, destinations) {
@@ -144,15 +151,7 @@ function renderTripDestination(trip, destinations) {
         `Trip Destination: ${tripDestination}`
       );
       tripDestinationParagraph.appendChild(tripDestinationText);
-      if (document.getElementsByTagName("SECTION").length === 1) {
-        document
-          .getElementsByTagName("SECTION")[0]
-          .appendChild(tripDestinationParagraph);
-      } else {
-        document
-          .getElementsByTagName("SECTION")[1]
-          .appendChild(tripDestinationParagraph);
-      }
+      appendToSection(tripDestinationParagraph);
     }
   }
 }
@@ -163,16 +162,7 @@ function renderTripStatus(trip) {
   tripStatusParagraph.className = "trip-status";
   let tripStatusText = document.createTextNode(`Trip Status: ${tripStatus}`);
   tripStatusParagraph.appendChild(tripStatusText);
-
-  if (document.getElementsByTagName("SECTION").length === 1) {
-    document
-      .getElementsByTagName("SECTION")[0]
-      .appendChild(tripStatusParagraph);
-  } else {
-    document
-      .getElementsByTagName("SECTION")[1]
-      .appendChild(tripStatusParagraph);
-  }
+  appendToSection(tripStatusParagraph);
 }
 
 function renderTripDuration(trip) {
@@ -183,16 +173,7 @@ function renderTripDuration(trip) {
     `Trip Duration: ${tripDuration} days`
   );
   tripDurationParagraph.appendChild(tripDurationText);
-
-  if (document.getElementsByTagName("SECTION").length === 1) {
-    document
-      .getElementsByTagName("SECTION")[0]
-      .appendChild(tripDurationParagraph);
-  } else {
-    document
-      .getElementsByTagName("SECTION")[1]
-      .appendChild(tripDurationParagraph);
-  }
+  appendToSection(tripDurationParagraph);
 }
 
 function renderDestinationImage(trip, destinations) {
@@ -203,11 +184,7 @@ function renderDestinationImage(trip, destinations) {
       var img = document.createElement("img");
       img.className = "destination-image";
       img.src = `${destinationImage}`;
-      if (document.getElementsByTagName("SECTION").length === 1) {
-        document.getElementsByTagName("SECTION")[0].appendChild(img);
-      } else {
-        document.getElementsByTagName("SECTION")[1].appendChild(img);
-      }
+      appendToSection(img);
     }
   }
 }
