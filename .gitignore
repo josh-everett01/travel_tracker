@@ -84,3 +84,6 @@ typings/
 
 # DS_Store dot files
 *.DS_Store
+
+# dist folder
+dist/
