@@ -4,10 +4,8 @@ import {
   getSingleTraveler,
   getTravelerTrips,
   getTravelerDestinations,
-  getTravelerDashboardData,
-  getApprovedTripsForAgent,
-  getDestinationsForAgent,
 } from "./travel_tracker_service.js";
+import { prepareTravelerDashboardData } from "./traveler_dashboard_helper";
 import {
   isValidAgency,
   renderSuccessfulAgencyLogin,
@@ -34,11 +32,8 @@ button.onclick = function processLogin() {
             ) {
               var destinations = result.travelerDestinations;
               var trips = result.travelerTrips;
-              getTravelerDashboardData(traveler, destinations, trips).then(
-                function (result) {
-                  renderTravelerDashboard(result);
-                }
-              );
+              let travelerDashboardData = prepareTravelerDashboardData(traveler, destinations, trips)
+              renderTravelerDashboard(travelerDashboardData)
             });
           });
         });
