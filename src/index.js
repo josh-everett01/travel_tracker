@@ -1,6 +1,6 @@
 import './css/base.scss';
-import { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent } from './travel_tracker_service.js'
-import { isValidAgency, renderSuccessfulAgencyLogin, renderSuccessfulTravelerLogin, loginError, isValidPassword } from './login_helper.js';
+import { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getPendingTripsForAgent, getDestinationsForAgent } from './travel_tracker_service.js'
+import { isValidAgency, renderAgencyWelcome, renderSuccessfulTravelerLogin, loginError, isValidPassword } from './login_helper.js';
 import { getTripsArr, getTravelerInfo, matchTravToTrip } from './traveler_dashboard.js'
 
 let button = document.getElementById('submit');
@@ -93,62 +93,43 @@ button.onclick = function processLogin() {
 
       } else if
         (isValidAgency(usernameInput)) {
-        renderSuccessfulAgencyLogin(
-          getAllTrips().then(function (result) {
-            let i;
-            let pendingTripsArr = [];
-            for (i = 0; i < result.trips.length; i++) {
-              let pendingTrips = result.trips[i].status;
-              let toJson = JSON.stringify(result.trips[i]);
-              if (pendingTrips === 'pending') {
-                pendingTripsArr.push(`${toJson}`)
+        renderAgencyWelcome();
+        function renderTripsHeader() {
+          let pendingTripsSection = document.createElement("section");
+          pendingTripsSection.className = "container";
+          let pendingTripsHeader = document.createElement("h3");
+          let pendingTripsHeaderText = document.createTextNode('Pending Trips:');
+          pendingTripsHeader.appendChild(pendingTripsHeaderText);
+          pendingTripsSection.appendChild(pendingTripsHeader);
+          document.getElementsByTagName("BODY")[0].appendChild(pendingTripsSection);
+        }
+        renderTripsHeader();
 
-              }
+        function getTripDate(trip) {
+          let tripDate = trip.date;
+          return tripDate;
+        }
 
-            };
-            var node = document.createElement("div");
-            var textnode = document.createTextNode(pendingTripsArr);
-            node.appendChild(textnode);
+        function getTripLocation(trip) {
+          let tripLocation = trip.location;
+          return tripLocation
+        }
 
-            document.getElementById("test-Id").style.border = '3px solid white';
-            document.getElementById("test-Id").style.textAlign = 'center';
-            document.getElementById("test-Id").style.padding = '5%';
-            document.getElementById("test-Id").style.margin = '3%', '3%', '10%', '3%';
-            document.getElementById("test-Id").style.fontSize = '20px';
-            document.getElementById("test-Id").appendChild(node);
+        getPendingTripsForAgent().then(function (result) {
+          let pendingTrips = result;
+          let pendingTripInfo = [];
+          debugger;
+          let i; for (i = 0; i < pendingTrips.length; i++) {
+            getTripDate(pendingTrips[i]);
+            getTripLocation(pendingTrips[i], tripDate);
+          }
 
-            getApprovedTripsForAgent().then(function (result) {
-              let i;
-              let approvedTripsArr = [];
-              for (i = 0; i < result.trips.length; i++) {
-                let status = result.trips[i].status;
-                let approvedTrips = result.trips[i];
-                if (status === 'approved') { approvedTripsArr.push(approvedTrips) }
-              };
 
-              getDestinationsForAgent(approvedTripsArr).then(function (result) {
-                result;
-                approvedTripsArr;
-                let destinations = result;
-                let i;
-                for (i = 0; i < approvedTripsArr.length; i++) {
-                  let tripCostArray = [];
+        });
 
-                  debugger;
-
-                  let estimatedFlightCost = destinations.destinations[i].estimatedFlightCostPerPerson;
-                  let estimatedLodgingCost = destinations.destinations[i].estimatedLodgingCostPerDay;
-                  let tripCost = toString(estimatedFlightCost + estimatedLodgingCost);
-                  tripCostArray.push(tripCost);
-
-                }
-                console.log(tripCostArray);
-              })
-
-            })
-          })
-
-        );
+        // pending trips in a box
+        // total income generated this year (10% of user trip cost) in a box
+        // travelers on trips for todays date
       } else {
         loginError();
       }

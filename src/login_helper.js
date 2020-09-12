@@ -1,6 +1,8 @@
+import { getApprovedTripsForAgent } from "./travel_tracker_service";
+
 var correctPw = 'travel2020';
 var agentUn = 'agency';
-var usernameInput = document.getElementById('input-username');
+
 
 function isValidPassword(passwordInput) {
   if (passwordInput === correctPw) {
@@ -9,19 +11,16 @@ function isValidPassword(passwordInput) {
 }
 
 function isValidAgency(usernameInput) {
-  var downcasedUsernameInput = usernameInput.toLowerCase();
-  if (downcasedUsernameInput === agentUn) {
+  var usernameInput = document.getElementById('input-username');
+  var whatUsernameShouldBe = 'agency';
+  let agencyId = usernameInput.value.toLowerCase();
+  if (agencyId === whatUsernameShouldBe) {
+
     return true;
   }
 }
 
-function renderSuccessfulAgencyLogin(agencyDashboardData) {
-  document.getElementById('site-container').style.display = "none";
-  var h = document.createElement("H1");
-  var t = document.createTextNode("AGENT");
-  h.appendChild(t);
-  document.body.appendChild(h);
-}
+
 
 function renderSuccessfulTravelerLogin(travelerDashboardData) {
   // travelerDashboardData.destinations
@@ -50,8 +49,20 @@ function loginError() {
   clearLoginForm();
 }
 
+
+
+
+function renderAgencyWelcome() {
+  document.getElementById("login-form").style.display = "none";
+  document.getElementById("footer").style.display = "none";
+  let welcomeHeader = document.createElement("h1");
+  let headerText = document.createTextNode('Hello, AGENT');
+  welcomeHeader.appendChild(headerText);
+  document.getElementsByTagName("BODY")[0].appendChild(welcomeHeader);
+}
+
 export {
   isValidPassword, isValidAgency,
-  renderSuccessfulAgencyLogin, renderSuccessfulTravelerLogin,
+  renderAgencyWelcome, renderSuccessfulTravelerLogin,
   clearLoginForm, loginError
 };

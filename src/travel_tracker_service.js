@@ -34,7 +34,7 @@ function addNumbers() {
 
 // We can rename this function getTravelerTrips(traveler)
 // This function will spit out the travelers trips and the traveler object
-async function getAllTrips(traveler) {
+async function getAllTrips() {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips';
   let response = await fetch(url);
   let tripArr = await response.json();
@@ -98,12 +98,16 @@ async function getTripTotals(travelerDestinations, travelerTrips) {
 }
 
 
-async function getApprovedTripsForAgent() {
+async function getPendingTripsForAgent() {
   const url = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips';
+  let pendingTripsArr = [];
   let response = await fetch(url);
   let tripsResponse = await response.json();
   let trips = tripsResponse.trips;
-  return { trips };
+  let i;
+  for (i = 0; i < trips.length; i++) { if (trips[i].status === "pending") { pendingTripsArr.push(trips[i]) } }
+  console.log(pendingTripsArr);
+  return pendingTripsArr;
 }
 
 async function getDestinationsForAgent() {
@@ -111,11 +115,11 @@ async function getDestinationsForAgent() {
   let response = await fetch(url);
   let destinationsResponse = await response.json();
   let destinations = destinationsResponse.destinations;
-  return { destinations };
+  return destinations;
 }
 
 
 
 
 
-export { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getApprovedTripsForAgent, getDestinationsForAgent }
+export { isValidTraveler, getSingleTraveler, getAllTrips, getTravelerDestinations, getTripTotals, getPendingTripsForAgent, getDestinationsForAgent }
