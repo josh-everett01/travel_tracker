@@ -38,7 +38,9 @@ button.onclick = function processLogin() {
           });
         });
       } else if (isValidAgency(usernameInput)) {
-        renderSuccessfulAgencyLogin();
+        renderSuccessfulAgencyLogin(
+
+        );
       } else {
         loginError();
       }

@@ -65,9 +65,42 @@ async function getTravelerDestinations(travelerTrips, traveler) {
   return { travelerTrips, traveler, travelerDestinations };
 }
 
+
+async function getAllTripsForAgent() {
+  const url =
+    "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips";
+  let response = await fetch(url);
+  let awaitedResponse = await response.json();
+  let trips = awaitedResponse.trips;
+  let allTrips = [];
+  var i;
+  for (i = 0; i < trips.length; i++) {
+    let trip = trips[i];
+    allTrips.push(trip);
+  }
+  return allTrips;
+}
+
+async function getAllDestinationsForAgent(allTrips) {
+  const url =
+    "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations";
+  let response = await fetch(url);
+  let destinationsResponse = await response.json();
+  let destinations = destinationsResponse.destinations;
+  let allDestinationsArr = [];
+  let i;
+  for (i = 0; i < destinations.length; i++) {
+    allDestinationsArr.push(destinations[i])
+  }
+  let allDestinations = allDestinationsArr;
+  return allDestinations;
+}
+
 export {
   isValidTraveler,
   getSingleTraveler,
   getTravelerTrips,
   getTravelerDestinations,
+  getAllTripsForAgent,
+  getAllDestinationsForAgent
 };
