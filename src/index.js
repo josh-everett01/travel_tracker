@@ -32,7 +32,8 @@ button.onclick = function processLogin() {
             ) {
               var destinations = result.travelerDestinations;
               var trips = result.travelerTrips;
-              let travelerDashboardData = prepareTravelerDashboardData(traveler, destinations, trips)
+              let travelerDashboardData =
+                prepareTravelerDashboardData(traveler, destinations, trips)
               renderTravelerDashboard(travelerDashboardData)
             });
           });

@@ -17,7 +17,7 @@ function renderTripsHeader(title) {
   document.getElementsByTagName("BODY")[0].appendChild(upcomingTripsSection);
 }
 
-function renderSuccessfulAgencyLogin(agencyDashboardData) {
+function renderSuccessfulAgencyLogin() {
   document.getElementById("site-container").style.display = "none";
   var h = document.createElement("H1");
   var t = document.createTextNode("AGENT");
@@ -44,7 +44,6 @@ function renderTripDate(trip) {
 
 function renderTripDestination(trip, destinations) {
   let i;
-  let destinationArr = [];
   for (i = 0; i < destinations.length; i++) {
     if (trip.destinationID === destinations[i].id) {
       let tripDestination = destinations[i].destination;
@@ -154,7 +153,9 @@ function reduceFlightsPlusLodging(flightsPlusLodging) {
   ) {
     return flights + lodging;
   },
-    0);
+
+    0
+  );
   return flightsPlusLodgingReduced;
 }
 
