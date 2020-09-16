@@ -81,7 +81,7 @@ async function getAllTripsForAgent() {
   return allTrips;
 }
 
-async function getAllDestinationsForAgent(allTrips) {
+async function getAllDestinationsForAgent() {
   const url =
     "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations";
   let response = await fetch(url);
