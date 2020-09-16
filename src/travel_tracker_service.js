@@ -1,6 +1,7 @@
 async function isValidTraveler(usernameInput) {
   const userId = usernameInput.slice(8);
   const url =
+    // eslint-disable-next-line max-len
     "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers";
   let response = await fetch(url);
   let awaitRes = await response.json();
@@ -20,10 +21,12 @@ async function isValidTraveler(usernameInput) {
   return valid;
 }
 
-async function getSingleTraveler(travelerId) {
+async function getSingleTraveler() {
   let fullUsername = document.getElementById("input-username");
   const travelerIdNumber = fullUsername.value.slice(8);
-  const url = `https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${travelerIdNumber}`;
+  const url =
+    // eslint-disable-next-line max-len
+    `https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${travelerIdNumber}`;
   let response = await fetch(url);
   let traveler = await response.json();
   return { traveler };
@@ -40,7 +43,7 @@ async function getTravelerTrips(traveler) {
   for (i = 0; i < trips.length; i++) {
     let trip = trips[i];
 
-    if (traveler.id == trip.userID) {
+    if (traveler.id === trip.userID) {
       travelerTrips.push(trip);
     }
   }
@@ -49,6 +52,7 @@ async function getTravelerTrips(traveler) {
 
 async function getTravelerDestinations(travelerTrips, traveler) {
   const url =
+    // eslint-disable-next-line max-len
     "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations";
   let response = await fetch(url);
   let destinationsResponse = await response.json();

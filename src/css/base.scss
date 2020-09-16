@@ -1,4 +1,4 @@
-:root {
+html {
   --header-bg-color: #094479;
   --main-bg-color: #0b172a;
   --main-border-color: #bc4123;
@@ -10,13 +10,13 @@
 }
 
 body {
-  width: 100%;
   background-color: var(--main-bg-color);
   color: var(--main-txt-color);
   font-family: "Oxygen", sans-serif;
   font-size: 1.3rem;
-  text-align: center;
   margin: 0;
+  text-align: center;
+  width: 100%;
 }
 
 button {
@@ -24,8 +24,8 @@ button {
 }
 
 h3 {
-  grid-row: 1;
   grid-column: 0;
+  grid-row: 1;
 }
 
 i {
@@ -39,36 +39,32 @@ p text {
 
 section:first-of-type {
   align-content: center;
-  place-items: center;
   display: grid;
+  grid-gap: 20px;
   grid-template-columns: auto;
   grid-template-rows: 0.2fr 2fr 0.1fr 0.1fr 0.1fr 0.1fr;
-  grid-gap: 20px;
-}
-
-.amount-spent {
-  color: brown;
+  place-items: center;
 }
 
 .container {
   align-content: center;
-  place-items: center;
+  border: 2px solid var(--main-border-color);
   display: grid;
+  grid-gap: 20px;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 2fr 0.1fr 0.1fr 0.1fr 0.1fr;
-  grid-gap: 20px;
+  margin: 3%;
+  max-width: 100vw;
   overflow-x: auto;
   overflow-y: hidden;
-  max-width: 100vw;
   padding: 16px;
-  border: 2px solid var(--main-border-color);
-  margin: 3%;
+  place-items: center;
 }
 
 .destination-image {
   grid-row: 2;
-  width: 250px;
   height: 200px;
+  width: 250px;
 }
 
 .footer {
@@ -117,10 +113,6 @@ section:first-of-type {
   grid-column: 2;
 }
 
-.present-trips {
-  color: green;
-}
-
 .signin {
   left: 38%;
   position: absolute;
@@ -154,9 +146,9 @@ section:first-of-type {
 
 .total-spent {
   display: flex;
+  grid-row: 0;
   margin: auto;
   margin-left: 40%;
-  grid-row: 0;
 }
 
 .travname {

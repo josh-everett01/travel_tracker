@@ -109,7 +109,7 @@ function getTodaysTrips(trips) {
 }
 
 
-function renderSuccessfulAgencyLogin(agencyDashboardData) {
+function renderSuccessfulAgencyLogin() {
   renderAgentWelcome();
   getAllTripsForAgent().then(function (trips) {
     getAllDestinationsForAgent().then(function (destinations) {
@@ -151,7 +151,6 @@ function renderTripDate(trip) {
 
 function renderTripDestination(trip, destinations) {
   let i;
-  let destinationArr = [];
   for (i = 0; i < destinations.length; i++) {
     if (trip.destinationID === destinations[i].id) {
       let tripDestination = destinations[i].destination;
@@ -261,7 +260,9 @@ function reduceFlightsPlusLodging(flightsPlusLodging) {
   ) {
     return flights + lodging;
   },
-    0);
+
+    0
+  );
   return flightsPlusLodgingReduced;
 }
 
