@@ -90,5 +90,6 @@ export {
   renderSuccessfulAgencyLogin,
   renderTravelerDashboard,
   clearLoginForm,
-  loginError,
+  loginError, returnCurrentDate
 };
+
