@@ -1,3 +1,9 @@
+import {
+  getAllTripsForAgent,
+  getAllDestinationsForAgent,
+} from "./travel_tracker_service";
+import { returnCurrentDate } from "./login_helper";
+
 function renderTravelerWelcome(traveler) {
   document.getElementById("login-form").style.display = "none";
   document.getElementById("footer").style.display = "none";
@@ -17,12 +23,111 @@ function renderTripsHeader(title) {
   document.getElementsByTagName("BODY")[0].appendChild(upcomingTripsSection);
 }
 
+function renderAgentWelcome() {
+  document.getElementById("login-form").style.display = "none";
+  document.getElementById("footer").style.display = "none";
+  var welcomeHeader = document.createElement("H1");
+  var headerText = document.createTextNode("Welcome, AGENT");
+  welcomeHeader.appendChild(headerText);
+  document.body.appendChild(welcomeHeader);
+}
+
+function getPendingTrips(trips) {
+  let i;
+  let pendingTrips = [];
+  for (i = 0; i < trips.length; i++) {
+    if (trips[i].status === "pending") {
+      pendingTrips.push(trips[i]);
+    }
+  }
+  return pendingTrips;
+}
+
+function getLodgingCostsForAgent(destinations, trips) {
+  let approvedTrips = [];
+  let approvedTripsFlightPlusLodging = [];
+  let i;
+  for (i = 0; i < trips.length; i++) {
+    if (trips[i].status === "approved") {
+      approvedTrips.push(trips[i]);
+    }
+  }
+  let destinationIndex;
+  for (i = 0; i < approvedTrips.length; i++) {
+    for (
+      destinationIndex = 0;
+      destinationIndex < destinations.length;
+      destinationIndex++
+    ) {
+      if (
+        approvedTrips[i].destinationID === destinations[destinationIndex].id
+      ) {
+        approvedTripsFlightPlusLodging.push(
+          destinations[destinationIndex].estimatedLodgingCostPerDay +
+          destinations[destinationIndex].estimatedFlightCostPerPerson
+        );
+      }
+    }
+  }
+  let amountTravelersHaveSpent = approvedTripsFlightPlusLodging.reduce(
+    (lodgingCost, flightCost) => lodgingCost + flightCost,
+    0
+  );
+  let amountAgentEarned = amountTravelersHaveSpent * 0.1;
+  return amountAgentEarned;
+}
+
+function renderTotalEarned(amountAgentEarned) {
+  amountAgentEarned;
+  let totalAmount = amountAgentEarned.toFixed(2);
+  let totalEarnedParagraph = document.createElement("paragraph");
+  totalEarnedParagraph.className = "total-earned";
+  let totalEarnedText = document.createTextNode(
+    `Total Amount Earned: $${totalAmount}`
+  );
+  totalEarnedParagraph.appendChild(totalEarnedText);
+  document.querySelector("body").appendChild(totalEarnedParagraph);
+}
+
+function renderAgentTrips(pendingTrips, destinations) {
+  let i;
+  for (i = 0; i < pendingTrips.length; i++) {
+    renderDestinationImage(pendingTrips[i], destinations);
+    renderTripDate(pendingTrips[i]);
+    renderTripDestination(pendingTrips[i], destinations);
+    renderTripStatus(pendingTrips[i]);
+    renderTripDuration(pendingTrips[i]);
+  }
+}
+
+function getTodaysTrips(trips) {
+  let today = returnCurrentDate();
+  let i;
+  let todaysTripsArr = [];
+  for (i = 0; i < trips.length; i++) {
+    if (trips[i].date === today) {
+      todaysTripsArr.push(trips[i]);
+    }
+  }
+  let todaysTrips = todaysTripsArr;
+  return todaysTrips;
+}
+
 function renderSuccessfulAgencyLogin() {
-  document.getElementById("site-container").style.display = "none";
-  var h = document.createElement("H1");
-  var t = document.createTextNode("AGENT");
-  h.appendChild(t);
-  document.body.appendChild(h);
+  renderAgentWelcome();
+  getAllTripsForAgent().then(function (trips) {
+    getAllDestinationsForAgent().then(function (destinations) {
+      trips;
+      let amountAgentEarned = getLodgingCostsForAgent(destinations, trips);
+      renderTotalEarned(amountAgentEarned);
+      renderTripsHeader("Requested");
+      let pendingTrips = getPendingTrips(trips);
+      renderAgentTrips(pendingTrips, destinations);
+      renderTripsHeader("Today's");
+      let todaysTrips = getTodaysTrips(trips);
+      renderAgentTrips(todaysTrips, destinations);
+    });
+  });
 }
 
 function appendToSection(paragraph) {
@@ -153,9 +258,7 @@ function reduceFlightsPlusLodging(flightsPlusLodging) {
   ) {
     return flights + lodging;
   },
-
-    0
-  );
+    0);
   return flightsPlusLodgingReduced;
 }
 
@@ -170,9 +273,7 @@ function prepareTravelerDashboardData(
   let totalAmountCustHasSpentBeforeAgentFee = reduceFlightsPlusLodging(
     flightsPlusLodging
   );
-
   var totalAfterAgentFee = totalAmountCustHasSpentBeforeAgentFee * 1.1;
-
   return {
     traveler,
     travelerTrips,
