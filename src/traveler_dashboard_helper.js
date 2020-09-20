@@ -1,4 +1,7 @@
-import { getAllTripsForAgent, getAllDestinationsForAgent } from "./travel_tracker_service";
+import {
+  getAllTripsForAgent,
+  getAllDestinationsForAgent,
+} from "./travel_tracker_service";
 import { returnCurrentDate } from "./login_helper";
 
 function renderTravelerWelcome(traveler) {
@@ -31,42 +34,50 @@ function renderAgentWelcome() {
 
 function getPendingTrips(trips) {
   let i;
-  let pendingTripsArr = [];
+  let pendingTrips = [];
   for (i = 0; i < trips.length; i++) {
-    if (trips[i].status === 'pending') {
-      pendingTripsArr.push(trips[i])
+    if (trips[i].status === "pending") {
+      pendingTrips.push(trips[i]);
     }
   }
-  let pendingTrips = pendingTripsArr;
   return pendingTrips;
 }
 
 function getLodgingCostsForAgent(destinations, trips) {
-  let approvedTripsArr = [];
+  let approvedTrips = [];
   let approvedTripsFlightPlusLodging = [];
   let i;
   for (i = 0; i < trips.length; i++) {
     if (trips[i].status === "approved") {
-      approvedTripsArr.push(trips[i])
+      approvedTrips.push(trips[i]);
     }
   }
-
-  let j;
-  for (i = 0; i < approvedTripsArr.length; i++) {
-    for (j = 0; j < destinations.length; j++) {
-      if (approvedTripsArr[i].destinationID === destinations[j].id) {
-
-        approvedTripsFlightPlusLodging.push(destinations[j].estimatedLodgingCostPerDay + destinations[j].estimatedFlightCostPerPerson)
+  let destinationIndex;
+  for (i = 0; i < approvedTrips.length; i++) {
+    for (
+      destinationIndex = 0;
+      destinationIndex < destinations.length;
+      destinationIndex++
+    ) {
+      if (
+        approvedTrips[i].destinationID === destinations[destinationIndex].id
+      ) {
+        approvedTripsFlightPlusLodging.push(
+          destinations[destinationIndex].estimatedLodgingCostPerDay +
+          destinations[destinationIndex].estimatedFlightCostPerPerson
+        );
       }
     }
   }
-  let amountTravelersHaveSpent = approvedTripsFlightPlusLodging.reduce((lodgingCost, flightCost) => lodgingCost + flightCost, 0);
-  let amountAgentEarned = amountTravelersHaveSpent * .1;
-  return amountAgentEarned
+  let amountTravelersHaveSpent = approvedTripsFlightPlusLodging.reduce(
+    (lodgingCost, flightCost) => lodgingCost + flightCost,
+    0
+  );
+  let amountAgentEarned = amountTravelersHaveSpent * 0.1;
+  return amountAgentEarned;
 }
 
 function renderTotalEarned(amountAgentEarned) {
-
   amountAgentEarned;
   let totalAmount = amountAgentEarned.toFixed(2);
   let totalEarnedParagraph = document.createElement("paragraph");
@@ -96,7 +107,7 @@ function getTodaysTrips(trips) {
   let todaysTripsArr = [];
   for (i = 0; i < trips.length; i++) {
     if (trips[i].date === today) {
-      todaysTripsArr.push(trips[i])
+      todaysTripsArr.push(trips[i]);
     }
   }
   let todaysTrips = todaysTripsArr;
@@ -108,16 +119,16 @@ function renderSuccessfulAgencyLogin() {
   getAllTripsForAgent().then(function (trips) {
     getAllDestinationsForAgent().then(function (destinations) {
       trips;
-      let amountAgentEarned = getLodgingCostsForAgent(destinations, trips)
+      let amountAgentEarned = getLodgingCostsForAgent(destinations, trips);
       renderTotalEarned(amountAgentEarned);
       renderTripsHeader("Requested");
       let pendingTrips = getPendingTrips(trips);
       renderAgentTrips(pendingTrips, destinations);
-      renderTripsHeader("Today's")
+      renderTripsHeader("Today's");
       let todaysTrips = getTodaysTrips(trips);
-      renderAgentTrips(todaysTrips, destinations)
-    })
-  })
+      renderAgentTrips(todaysTrips, destinations);
+    });
+  });
 }
 
 function appendToSection(paragraph) {
@@ -263,9 +274,7 @@ function prepareTravelerDashboardData(
   let totalAmountCustHasSpentBeforeAgentFee = reduceFlightsPlusLodging(
     flightsPlusLodging
   );
-
   var totalAfterAgentFee = totalAmountCustHasSpentBeforeAgentFee * 1.1;
-
   return {
     traveler,
     travelerTrips,
@@ -296,4 +305,3 @@ export {
   reduceFlightsPlusLodging,
   prepareTravelerDashboardData,
 };
-

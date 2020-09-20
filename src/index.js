@@ -32,15 +32,17 @@ button.onclick = function processLogin() {
             ) {
               var destinations = result.travelerDestinations;
               var trips = result.travelerTrips;
-              let travelerDashboardData = prepareTravelerDashboardData(traveler, destinations, trips)
-              renderTravelerDashboard(travelerDashboardData)
+              let travelerDashboardData = prepareTravelerDashboardData(
+                traveler,
+                destinations,
+                trips
+              );
+              renderTravelerDashboard(travelerDashboardData);
             });
           });
         });
       } else if (isValidAgency(usernameInput)) {
-        renderSuccessfulAgencyLogin(
-
-        );
+        renderSuccessfulAgencyLogin();
       } else {
         loginError();
       }
@@ -49,4 +51,3 @@ button.onclick = function processLogin() {
     loginError();
   }
 };
-
