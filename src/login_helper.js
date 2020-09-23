@@ -61,6 +61,45 @@ function filterPastAndUpcomingTrips(travelerTrips) {
   return { pastTripsArr, upcomingTripsArr };
 }
 
+function renderTripRequestForm() {
+  renderTripsHeader('Request');
+  let tripRequestSection = document.getElementsByTagName("SECTION")[2];
+  let requestForm = document.createElement('form');
+  let tripDestinations = document.createElement('h3');
+  let h3Text = document.createTextNode('Where would you like to travel?');
+  let destinationsInput = document.createElement('input');
+  destinationsInput.type = 'text';
+  destinationsInput.placeholder = 'Search for Destinations...';
+  let numberOfTravelersHeader = document.createTextNode('How many people will be traveling?');
+  let numberOfTravelersH3 = document.createElement('h3');
+  let numberOfTravelers = document.createElement('select');
+  numberOfTravelers.name = 'number-of-travelers';
+  numberOfTravelers.id = 'number-of-travelers';
+  let optionOne = document.createElement('option');
+  optionOne.value = '1';
+  let numberOne = document.createTextNode('1');
+  numberOfTravelersH3.appendChild(numberOfTravelersHeader);
+  optionOne.appendChild(numberOne);
+  numberOfTravelers.appendChild(optionOne);
+  let optionTwo = document.createElement('option');
+  optionTwo.value = '2';
+  let numberTwo = document.createTextNode('2');
+  numberOfTravelersH3.appendChild(numberOfTravelersHeader);
+  optionOne.appendChild(numberOne);
+  optionTwo.appendChild(numberTwo);
+  // Make a function that loops to 10 and appends each option to the select list
+  numberOfTravelers.appendChild(optionOne);
+  numberOfTravelers.appendChild(optionTwo);
+  tripDestinations.appendChild(h3Text);
+  requestForm.appendChild(tripDestinations);
+  requestForm.appendChild(destinationsInput);
+  requestForm.appendChild(numberOfTravelersHeader);
+  requestForm.appendChild(numberOfTravelers);
+  tripRequestSection.appendChild(requestForm);
+
+
+}
+
 function renderTravelerDashboard(travelerDashboardData) {
   renderTravelerWelcome(travelerDashboardData.traveler);
   renderTotalSpent(travelerDashboardData);
@@ -70,6 +109,7 @@ function renderTravelerDashboard(travelerDashboardData) {
   renderTrips(trips.upcomingTripsArr, destinations);
   renderTripsHeader("Past");
   renderTrips(trips.pastTripsArr, destinations);
+  renderTripRequestForm(travelerDashboardData);
 }
 
 function clearLoginForm() {
