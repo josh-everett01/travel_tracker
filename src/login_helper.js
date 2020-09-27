@@ -5,6 +5,7 @@ import {
   renderTrips,
   renderTotalSpent,
 } from "./traveler_dashboard_helper";
+import { getAllDestinationsForAgent } from "./travel_tracker_service";
 
 function isValidPassword(passwordInput) {
   var correctPw = "travel2020";
@@ -61,6 +62,37 @@ function filterPastAndUpcomingTrips(travelerTrips) {
   return { pastTripsArr, upcomingTripsArr };
 }
 
+function renderTravelerTripRequestForm() {
+  getAllDestinationsForAgent().then(function (result) {
+    let destinationsArr = result;
+    let i;
+    let destinations = [];
+    for (i = 0; i < result.length; i++) { destinations.push(destinationsArr[i].destination) };
+    let searchBarLabel = document.createElement('label');
+    searchBarLabel.setAttribute('for', 'destination-choice');
+    let searchBarLabelText = document.createTextNode('Search for a Destination:')
+    searchBarLabel.appendChild(searchBarLabelText);
+    document.querySelectorAll('section')[2].setAttribute('id', 'request-form');
+    document.getElementById('request-form').appendChild(searchBarLabel);
+    let inputList = document.createElement("input");
+    inputList.setAttribute("list", "destination-choice");
+    // inputList.setAttribute("id", "destination-choice");
+    // inputList.setAttribute("name", "destination-choice");
+    document.getElementById("request-form").appendChild(inputList);
+    let dataList = document.createElement("datalist");
+    dataList.setAttribute("id", "destination-choice");
+    document.getElementById("request-form").appendChild(dataList);
+    for (i = 0; i < destinations.length; i++) {
+      let option = document.createElement("option");
+      option.setAttribute("value", `${destinations[i]}`);
+      // let optionText = document.createTextNode(`${destinations[i]}`)
+      // option.appendChild(optionText);
+      document.getElementById("destination-choice").appendChild(option);
+    }
+  })
+
+}
+
 function renderTravelerDashboard(travelerDashboardData) {
   renderTravelerWelcome(travelerDashboardData.traveler);
   renderTotalSpent(travelerDashboardData);
@@ -70,6 +102,8 @@ function renderTravelerDashboard(travelerDashboardData) {
   renderTrips(trips.upcomingTripsArr, destinations);
   renderTripsHeader("Past");
   renderTrips(trips.pastTripsArr, destinations);
+  renderTripsHeader("Request");
+  renderTravelerTripRequestForm()
 }
 
 function clearLoginForm() {
