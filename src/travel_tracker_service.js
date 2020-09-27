@@ -65,7 +65,7 @@ async function getTravelerDestinations(travelerTrips, traveler) {
   return { travelerTrips, traveler, travelerDestinations };
 }
 
-async function getAllTripsForAgent() {
+async function getAllTrips() {
   const baseUrl = "https://fe-apps.herokuapp.com/api/v1/travel-tracker";
   const agentTripsUrl = baseUrl + "/data/trips/trips";
   let response = await fetch(agentTripsUrl);
@@ -74,7 +74,7 @@ async function getAllTripsForAgent() {
   return allTrips;
 }
 
-async function getAllDestinationsForAgent() {
+async function getAllDestinations() {
   const baseUrl = "https://fe-apps.herokuapp.com/api/v1/travel-tracker";
   const agentDestinationsUrl = baseUrl + "/data/destinations/destinations";
   let response = await fetch(agentDestinationsUrl);
@@ -88,6 +88,6 @@ export {
   getSingleTraveler,
   getTravelerTrips,
   getTravelerDestinations,
-  getAllTripsForAgent,
-  getAllDestinationsForAgent,
+  getAllTrips,
+  getAllDestinations,
 };
