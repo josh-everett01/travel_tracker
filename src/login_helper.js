@@ -89,6 +89,29 @@ function renderTravelerTripRequestForm() {
       // option.appendChild(optionText);
       document.getElementById("destination-choice").appendChild(option);
     }
+
+    let numberOfTravelersLabel = document.createElement('label');
+    numberOfTravelersLabel.setAttribute('for', 'number-of-travelers');
+    let numberOfTravelersLabelText = document.createTextNode('Number of Travelers:')
+    numberOfTravelersLabel.appendChild(numberOfTravelersLabelText);
+    document.getElementById('request-form').appendChild(numberOfTravelersLabel);
+    let numberOfTravelersInput = document.createElement("input");
+    numberOfTravelersInput.setAttribute("list", "number-of-travelers");
+    document.getElementById("request-form").appendChild(numberOfTravelersInput);
+    let numberOfTravelersDataList = document.createElement("datalist");
+    numberOfTravelersDataList.setAttribute("id", "number-of-travelers");
+    document.getElementById("request-form").appendChild(numberOfTravelersDataList);
+    for (i = 0; i <= 20; i++) {
+      let number = document.createElement("option");
+      number.setAttribute("value", `${i}`);
+      document.getElementById('number-of-travelers').appendChild(number);
+    }
+
+    // let tripDurationLabel = document.createElement('label');
+    // tripDurationLabel.setAttribute('for', 'trip-duration');
+    // let tripDurationLabelText = document.createTextNode('Trip Duration(days):')
+    // TripDurationLabel.appendChild(numberOfTravelersLabelText);
+    // document.getElementById('request-form').appendChild(numberOfTravelersLabel);
   })
 
 }
