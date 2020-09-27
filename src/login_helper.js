@@ -58,7 +58,6 @@ function filterPastAndUpcomingTrips(travelerTrips) {
       pastTripsArr.push(travelerTrips[i]);
     }
   }
-
   return { pastTripsArr, upcomingTripsArr };
 }
 
@@ -67,7 +66,6 @@ function renderTravelerDashboard(travelerDashboardData) {
   renderTotalSpent(travelerDashboardData);
   renderTripsHeader("Upcoming");
   let trips = filterPastAndUpcomingTrips(travelerDashboardData.travelerTrips);
-
   let destinations = travelerDashboardData.travelerDestinations;
   renderTrips(trips.upcomingTripsArr, destinations);
   renderTripsHeader("Past");
@@ -91,4 +89,5 @@ export {
   renderTravelerDashboard,
   clearLoginForm,
   loginError,
+  returnCurrentDate,
 };
