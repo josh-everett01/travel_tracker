@@ -107,11 +107,35 @@ function renderTravelerTripRequestForm() {
       document.getElementById('number-of-travelers').appendChild(number);
     }
 
-    // let tripDurationLabel = document.createElement('label');
-    // tripDurationLabel.setAttribute('for', 'trip-duration');
-    // let tripDurationLabelText = document.createTextNode('Trip Duration(days):')
-    // TripDurationLabel.appendChild(numberOfTravelersLabelText);
-    // document.getElementById('request-form').appendChild(numberOfTravelersLabel);
+    let tripDurationLabel = document.createElement('label');
+    tripDurationLabel.setAttribute('for', 'trip-duration');
+    let tripDurationLabelText = document.createTextNode('Please select a start and end date:')
+    tripDurationLabel.appendChild(tripDurationLabelText);
+    document.getElementById('request-form').appendChild(tripDurationLabel);
+
+    let tripStartLabel = document.createElement('label');
+    tripStartLabel.setAttribute('for', 'trip-start');
+    document.getElementById('request-form').appendChild(tripStartLabel);
+    let startDateInput = document.createElement("input")
+    startDateInput.setAttribute("type", "date");
+    startDateInput.setAttribute("id", "start");
+    startDateInput.setAttribute("name", "trip-start")
+    startDateInput.setAttribute("value", "2020-09-27")
+    startDateInput.setAttribute("min", "2020-09-27")
+    startDateInput.setAttribute("max", "2021-12-31")
+    document.getElementById('request-form').appendChild(startDateInput);
+
+    let tripEndLabel = document.createElement('label');
+    tripEndLabel.setAttribute('for', 'trip-end');
+    document.getElementById('request-form').appendChild(tripEndLabel);
+    let endDateInput = document.createElement("input")
+    endDateInput.setAttribute("type", "date");
+    endDateInput.setAttribute("id", "end");
+    endDateInput.setAttribute("name", "trip-end")
+    endDateInput.setAttribute("value", "2020-09-27")
+    endDateInput.setAttribute("min", "2020-09-27")
+    endDateInput.setAttribute("max", "2023-12-31")
+    document.getElementById('request-form').appendChild(endDateInput);
   })
 
 }

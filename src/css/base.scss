@@ -159,6 +159,20 @@ section:first-of-type {
   margin-top: -20px;
 }
 
+#request-form {
+  display: grid;
+}
+
+#request-form input,
+label {
+  grid-row-start: 2;
+  grid-row-end: 4;
+}
+
+// #request-form input {
+//   grid-column: 3;
+// }
+
 @media (min-width: 376px max-width 768px) {
   body {
     display: flex;
