@@ -62,6 +62,10 @@ function filterPastAndUpcomingTrips(travelerTrips) {
   return { pastTripsArr, upcomingTripsArr };
 }
 
+// function calculateTripRequest() {
+//   alert('HEY');
+// }
+
 function renderTravelerTripRequestForm() {
   getAllDestinationsForAgent().then(function (result) {
     let destinationsArr = result;
@@ -73,10 +77,11 @@ function renderTravelerTripRequestForm() {
     let searchBarLabelText = document.createTextNode('Search for a Destination:')
     searchBarLabel.appendChild(searchBarLabelText);
     document.querySelectorAll('section')[2].setAttribute('id', 'request-form');
+    document.querySelectorAll('section')[2].setAttribute('class', 'container');
     document.getElementById('request-form').appendChild(searchBarLabel);
     let inputList = document.createElement("input");
     inputList.setAttribute("list", "destination-choice");
-    // inputList.setAttribute("id", "destination-choice");
+    inputList.setAttribute("id", "destination");
     // inputList.setAttribute("name", "destination-choice");
     document.getElementById("request-form").appendChild(inputList);
     let dataList = document.createElement("datalist");
@@ -97,11 +102,12 @@ function renderTravelerTripRequestForm() {
     document.getElementById('request-form').appendChild(numberOfTravelersLabel);
     let numberOfTravelersInput = document.createElement("input");
     numberOfTravelersInput.setAttribute("list", "number-of-travelers");
+    numberOfTravelersInput.setAttribute("id", "number-of-travs");
     document.getElementById("request-form").appendChild(numberOfTravelersInput);
     let numberOfTravelersDataList = document.createElement("datalist");
     numberOfTravelersDataList.setAttribute("id", "number-of-travelers");
     document.getElementById("request-form").appendChild(numberOfTravelersDataList);
-    for (i = 0; i <= 20; i++) {
+    for (i = 1; i <= 20; i++) {
       let number = document.createElement("option");
       number.setAttribute("value", `${i}`);
       document.getElementById('number-of-travelers').appendChild(number);
@@ -131,11 +137,24 @@ function renderTravelerTripRequestForm() {
     let endDateInput = document.createElement("input")
     endDateInput.setAttribute("type", "date");
     endDateInput.setAttribute("id", "end");
-    endDateInput.setAttribute("name", "trip-end")
-    endDateInput.setAttribute("value", "2020-09-27")
-    endDateInput.setAttribute("min", "2020-09-27")
-    endDateInput.setAttribute("max", "2023-12-31")
+    endDateInput.setAttribute("name", "trip-end");
+    endDateInput.setAttribute("value", "2020-09-27");
+    endDateInput.setAttribute("min", "2020-09-27");
+    endDateInput.setAttribute("max", "2023-12-31");
     document.getElementById('request-form').appendChild(endDateInput);
+
+    let tripRequestButton = document.createElement('button');
+    tripRequestButton.setAttribute("id", "trip-request-button");
+    tripRequestButton.onclick = function calculateTripRequest() {
+      let tripRequestData = [];
+      let tripRequestDestination = document.getElementById('destination').value;
+      let numberOfTravelers = document.getElementById('number-of-travs').value;
+      let tripRequestStartDate = document.getElementById('start').value;
+      let tripRequestEndDate = document.getElementById('end').value;
+      tripRequestData.push("Destination: " + tripRequestDestination, "Number of Travelers: " + numberOfTravelers, "Trip Start Date: " + tripRequestStartDate, "Trip End Date:" + tripRequestEndDate);
+      console.log(tripRequestData);
+    };
+    document.getElementById('request-form').appendChild(tripRequestButton);
   })
 
 }
