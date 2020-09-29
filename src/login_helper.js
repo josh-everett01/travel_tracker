@@ -6,6 +6,7 @@ import {
   renderTotalSpent,
 } from "./traveler_dashboard_helper";
 import {
+  getSingleTraveler,
   getAllDestinationsForAgent,
   getAllTripsForAgent,
 } from "./travel_tracker_service";
@@ -285,6 +286,40 @@ function renderTravelerTripRequestForm() {
               `Total Estimated Trip Cost: $${totalTripCost.toFixed(2)}`
             );
             document.querySelectorAll("section")[3].appendChild(totalCostNode);
+
+            let confirmTripRequestButton = document.createElement('button');
+            confirmTripRequestButton.setAttribute("id", "confirm-trip-request-button");
+            confirmTripRequestButton.textContent = "CONFIRM TRIP";
+            confirmTripRequestButton.onclick = function confirmTripRequest() {
+
+              getSingleTraveler(destinationInfo, tripRequestData).then(function (result) {
+                let traveler = result;
+                let userId = traveler.traveler.id
+                let tripRequestId = allTrips.length + 1;
+
+                const data = JSON.stringify({
+                  id: parseFloat(tripRequestId),
+                  userID: userId, destinationID: destinationInfo.id, travelers: parseFloat(tripRequestData[1].substring(21)), date: tripRequestStartDate.replace(/-/g, "/"), duration: daysBetween(tripRequestStartDate, tripRequestEndDate), status: 'pending', suggestedActivities: []
+                });
+
+                fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
+                  method: 'POST', // or 'PUT'
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: data,
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    console.log('Success:', data);
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+              })
+
+            }
+            document.querySelectorAll("section")[3].appendChild(confirmTripRequestButton);
           }
         }
       };
