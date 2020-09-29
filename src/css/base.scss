@@ -169,6 +169,19 @@ label {
   grid-row-end: 4;
 }
 
+#requested-trips {
+  display: flex;
+  flex-direction: column;
+}
+
+#trip-request-button {
+  color: #fff;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
 // #request-form input {
 //   grid-column: 3;
 // }

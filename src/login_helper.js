@@ -167,6 +167,7 @@ function renderTravelerTripRequestForm() {
 
       let tripRequestButton = document.createElement('button');
       tripRequestButton.setAttribute("id", "trip-request-button");
+      tripRequestButton.textContent = 'CALCULATE';
       tripRequestButton.onclick = function calculateTripRequest() {
         let tripRequestData = [];
         let tripRequestDestination = document.getElementById('destination').value;
@@ -188,7 +189,7 @@ function renderTravelerTripRequestForm() {
             let totalTripCost = costBeforeAgentFee + agentFee;
             document.getElementById('request-form').style.display = "none";
             renderTripsHeader("Your Requested");
-
+            document.querySelectorAll('section')[3].setAttribute('id', 'requested-trips')
             let destinationImage = destinationInfo.image;
             var img = document.createElement("img");
             img.className = "destination-image";
