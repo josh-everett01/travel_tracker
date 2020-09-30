@@ -159,6 +159,14 @@ section:first-of-type {
   margin-top: -20px;
 }
 
+.approve-button {
+  grid-row: 7;
+}
+
+.deny-button {
+  grid-row: 8;
+}
+
 #request-form {
   display: grid;
 }

@@ -72,9 +72,14 @@ function filterPastAndUpcomingTrips(travelerTrips) {
 
 function daysBetween(startDate, endDate) {
   let formattedStartDate = new Date(startDate);
-  formattedStartDate = new Date(formattedStartDate.getTime() + formattedStartDate.getTimezoneOffset() * 60000)
+  formattedStartDate = new Date(
+    formattedStartDate.getTime() +
+    formattedStartDate.getTimezoneOffset() * 60000
+  );
   let formattedEndDate = new Date(endDate);
-  formattedEndDate = new Date(formattedEndDate.getTime() + formattedEndDate.getTimezoneOffset() * 60000)
+  formattedEndDate = new Date(
+    formattedEndDate.getTime() + formattedEndDate.getTimezoneOffset() * 60000
+  );
 
   // The number of milliseconds in all UTC days (no DST)
   const oneDay = 1000 * 60 * 60 * 24;
@@ -261,9 +266,15 @@ function renderTravelerTripRequestForm() {
               .appendChild(numOfTravelersParagraph);
 
             let formattedStartDate = new Date(tripRequestStartDate);
-            formattedStartDate = new Date(formattedStartDate.getTime() + formattedStartDate.getTimezoneOffset() * 60000)
+            formattedStartDate = new Date(
+              formattedStartDate.getTime() +
+              formattedStartDate.getTimezoneOffset() * 60000
+            );
             let formattedEndDate = new Date(tripRequestEndDate);
-            formattedEndDate = new Date(formattedEndDate.getTime() + formattedEndDate.getTimezoneOffset() * 60000)
+            formattedEndDate = new Date(
+              formattedEndDate.getTime() +
+              formattedEndDate.getTimezoneOffset() * 60000
+            );
 
             let startDateParagraph = document.createElement("paragraph");
             let endDateParagraph = document.createElement("paragraph");
@@ -287,39 +298,57 @@ function renderTravelerTripRequestForm() {
             );
             document.querySelectorAll("section")[3].appendChild(totalCostNode);
 
-            let confirmTripRequestButton = document.createElement('button');
-            confirmTripRequestButton.setAttribute("id", "confirm-trip-request-button");
+            let confirmTripRequestButton = document.createElement("button");
+            confirmTripRequestButton.setAttribute(
+              "id",
+              "confirm-trip-request-button"
+            );
             confirmTripRequestButton.textContent = "CONFIRM TRIP";
             confirmTripRequestButton.onclick = function confirmTripRequest() {
+              getSingleTraveler(destinationInfo, tripRequestData).then(
+                function (result) {
+                  let traveler = result;
+                  let userId = traveler.traveler.id;
+                  let tripRequestId = allTrips.length + 1;
 
-              getSingleTraveler(destinationInfo, tripRequestData).then(function (result) {
-                let traveler = result;
-                let userId = traveler.traveler.id
-                let tripRequestId = allTrips.length + 1;
-
-                const data = JSON.stringify({
-                  id: parseFloat(tripRequestId),
-                  userID: userId, destinationID: destinationInfo.id, travelers: parseFloat(tripRequestData[1].substring(21)), date: tripRequestStartDate.replace(/-/g, "/"), duration: daysBetween(tripRequestStartDate, tripRequestEndDate), status: 'pending', suggestedActivities: []
-                });
-
-                fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
-                  method: 'POST', // or 'PUT'
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: data,
-                })
-                  .then(response => response.json())
-                  .then(data => {
-                    console.log('Success:', data);
-                  })
-                  .catch((error) => {
-                    console.error('Error:', error);
+                  const data = JSON.stringify({
+                    id: parseFloat(tripRequestId),
+                    userID: userId,
+                    destinationID: destinationInfo.id,
+                    travelers: parseFloat(tripRequestData[1].substring(21)),
+                    date: tripRequestStartDate.replace(/-/g, "/"),
+                    duration: daysBetween(
+                      tripRequestStartDate,
+                      tripRequestEndDate
+                    ),
+                    status: "pending",
+                    suggestedActivities: [],
                   });
-              })
 
-            }
-            document.querySelectorAll("section")[3].appendChild(confirmTripRequestButton);
+                  fetch(
+                    // eslint-disable-next-line max-len
+                    "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips",
+                    {
+                      method: "POST", // or 'PUT'
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: data,
+                    }
+                  )
+                    .then((response) => response.json())
+                    .then((data) => {
+                      console.log("Success:", data);
+                    })
+                    .catch((error) => {
+                      console.error("Error:", error);
+                    });
+                }
+              );
+            };
+            document
+              .querySelectorAll("section")[3]
+              .appendChild(confirmTripRequestButton);
           }
         }
       };

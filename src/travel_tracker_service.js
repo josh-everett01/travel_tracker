@@ -19,6 +19,13 @@ async function isValidTraveler(usernameInput) {
   return valid;
 }
 
+async function getAllTravelers() {
+  const url = "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers"
+  let response = await fetch(url);
+  let travelers = await response.json();
+  return travelers;
+}
+
 async function getSingleTraveler() {
   let fullUsername = document.getElementById("input-username");
   const travelerIdNumber = fullUsername.value.slice(8);
@@ -85,6 +92,7 @@ async function getAllDestinationsForAgent() {
 
 export {
   isValidTraveler,
+  getAllTravelers,
   getSingleTraveler,
   getTravelerTrips,
   getTravelerDestinations,
