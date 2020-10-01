@@ -167,6 +167,11 @@ section:first-of-type {
   grid-row: 8;
 }
 
+#agent-tools {
+  display: flex;
+  flex-direction: column;
+}
+
 #request-form {
   display: grid;
 }

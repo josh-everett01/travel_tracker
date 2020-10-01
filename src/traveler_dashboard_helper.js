@@ -1,9 +1,12 @@
 import {
   getAllTripsForAgent,
   getAllDestinationsForAgent,
-  getAllTravelers
+  getAllTravelers, getSingleTraveler
 } from "./travel_tracker_service";
-import { returnCurrentDate } from "./login_helper";
+import {
+  returnCurrentDate,
+  filterPastAndUpcomingTrips
+} from "./login_helper";
 
 function renderTravelerWelcome(traveler) {
   document.getElementById("login-form").style.display = "none";
@@ -219,6 +222,101 @@ function renderTravelerSearchBar() {
   })
 }
 
+function getSingleTravelerByName(travelers) {
+  let allTravelers = travelers.travelers;
+  let travelerName = document.getElementById('traveler').value;
+  let i;
+  for (i = 0; i < allTravelers.length; i++) {
+    if (travelerName === allTravelers[i].name) {
+      let traveler = allTravelers[i];
+      return traveler;
+    }
+  }
+}
+
+
+function prepareDashboardData(traveler, travelerTrips, travelerDestinations, destinations) {
+
+  let lodgingCosts = getLodgingCosts(travelerDestinations, travelerTrips);
+  let flightCosts = getFlightCosts(travelerDestinations, travelerTrips);
+  let flightsPlusLodging = addFlightandLodgingCosts(flightCosts, lodgingCosts);
+  let totalAmountCustHasSpentBeforeAgentFee = reduceFlightsPlusLodging(
+    flightsPlusLodging
+  );
+  var totalAfterAgentFee = totalAmountCustHasSpentBeforeAgentFee * 1.1;
+  return {
+    traveler,
+    travelerTrips,
+    travelerDestinations,
+    lodgingCosts,
+    flightCosts,
+    flightsPlusLodging,
+    totalAmountCustHasSpentBeforeAgentFee,
+    totalAfterAgentFee,
+    destinations
+  };
+}
+
+function renderTravelerPageForAgent(travelerInfo) {
+  document.getElementById('agent-tools').style.display = 'none';
+  renderTripsHeader(`${travelerInfo.traveler.name}'s`)
+  let travelerPage = document.querySelectorAll('section')[3];
+  travelerPage.setAttribute("id", "traveler-page")
+  renderTotalSpent(travelerInfo)
+
+  let trips = filterPastAndUpcomingTrips(travelerInfo.travelerTrips);
+
+  let destinations = travelerInfo.destinations;
+  renderTrips(trips.upcomingTripsArr, destinations);
+
+  renderTrips(trips.pastTripsArr, destinations);
+  debugger;
+  renderApproveAndDenyButtons(trips)
+
+}
+
+
+function renderShowTravelerButton(trips, destinations) {
+  document.getElementsByClassName('container')[2].setAttribute("id", "agent-tools")
+  let showTravelerButton = document.createElement('button');
+  showTravelerButton.setAttribute("id", "show-traveler-button");
+  showTravelerButton.textContent = "SHOW TRAVELER";
+
+  document.getElementById('agent-tools').appendChild(showTravelerButton)
+
+  showTravelerButton.onclick = function showTravelerInformation() {
+    trips;
+    destinations;
+    getAllTravelers().then(function (result) {
+      let travelers = result;
+      let traveler = getSingleTravelerByName(travelers);
+      let i;
+      let travelerTrips = [];
+      for (i = 0; i < trips.length; i++) {
+        if (traveler.id === trips[i].userID) {
+          travelerTrips.push(trips[i])
+        }
+      }
+      travelerTrips;
+      let travelerDestinations = []
+      for (i = 0; i < travelerTrips.length; i++) {
+        let destinationIndex;
+        for (destinationIndex = 0; destinationIndex < destinations.length; destinationIndex++) {
+          if (travelerTrips[i].destinationID === destinations[destinationIndex].id) {
+            travelerDestinations.push(destinations[i])
+          }
+        }
+        travelerDestinations;
+      }
+
+      let dashboardData = prepareDashboardData(traveler, travelerTrips, travelerDestinations, destinations);
+      renderTravelerPageForAgent(dashboardData);
+    })
+
+  }
+}
+
+
 function renderSuccessfulAgencyLogin() {
   renderAgentWelcome();
   getAllTripsForAgent().then(function (trips) {
@@ -235,13 +333,17 @@ function renderSuccessfulAgencyLogin() {
 
       renderTripsHeader("Agent Tools and Traveler")
       renderTravelerSearchBar()
-
+      renderShowTravelerButton(trips, destinations)
     });
   });
 }
 
 function appendToSection(paragraph) {
-  if (document.getElementsByTagName("SECTION").length === 1) {
+  if (document.getElementById('traveler-page')) {
+    document.getElementById('traveler-page').appendChild(paragraph);
+  }
+
+  else if (document.getElementsByTagName("SECTION").length === 1) {
     document.getElementsByTagName("SECTION")[0].appendChild(paragraph);
   } else {
     document.getElementsByTagName("SECTION")[1].appendChild(paragraph);
@@ -268,7 +370,12 @@ function renderTripDestination(trip, destinations) {
         `Trip Destination: ${tripDestination}`
       );
       tripDestinationParagraph.appendChild(tripDestinationText);
-      appendToSection(tripDestinationParagraph);
+      if (document.getElementById('traveler-page')) {
+        document.getElementById('traveler-page').appendChild(tripDestinationParagraph)
+      } else {
+
+        appendToSection(tripDestinationParagraph);
+      }
     }
   }
 }
@@ -294,20 +401,37 @@ function renderTripDuration(trip) {
 }
 
 function renderDestinationImage(trip, destinations) {
-  let i;
-  for (i = 0; i < destinations.length; i++) {
-    if (trip.destinationID === destinations[i].id) {
-      let destinationImage = destinations[i].image;
-      var img = document.createElement("img");
-      img.className = "destination-image";
-      img.src = `${destinationImage}`;
-      appendToSection(img);
+  if (document.getElementById('traveler-page')) {
+    let index;
+    for (index = 0; index < destinations.length; index++) {
+      if (trip.destinationID === destinations[index].id) {
+
+        let destinationImage = destinations[index].image;
+        var img = document.createElement("img");
+        img.className = "destination-image";
+        img.src = `${destinationImage}`;
+        appendToSection(img);
+      }
+    }
+  } else {
+
+    let i;
+    for (i = 0; i < destinations.length; i++) {
+      if (trip.destinationID === destinations[i].id) {
+
+        let destinationImage = destinations[i].image;
+        var image = document.createElement("img");
+        image.className = "destination-image";
+        image.src = `${destinationImage}`;
+        appendToSection(image);
+      }
     }
   }
 }
 
 function renderTrips(trips, destinations) {
   let i;
+
   for (i = 0; i < trips.length; i++) {
     renderDestinationImage(trips[i], destinations);
     renderTripDate(trips[i]);
@@ -325,8 +449,15 @@ function renderTotalSpent(travelerDashboardData) {
     `Total Amount Spent: $${totalAmount}`
   );
   totalSpentParagraph.appendChild(totalSpentText);
-  document.querySelector("body").appendChild(totalSpentParagraph);
+
+  if (document.getElementById('traveler-page')) {
+    document.getElementById('traveler-page').appendChild(totalSpentParagraph)
+  }
+  else {
+    document.querySelector("body").appendChild(totalSpentParagraph);
+  }
 }
+
 
 function getLodgingCosts(travelerDestinations, travelerTrips) {
   let lodgingCosts = [];

@@ -66,10 +66,6 @@ function filterPastAndUpcomingTrips(travelerTrips) {
   return { pastTripsArr, upcomingTripsArr };
 }
 
-// function calculateTripRequest() {
-//   alert('HEY');
-// }
-
 function daysBetween(startDate, endDate) {
   let formattedStartDate = new Date(startDate);
   formattedStartDate = new Date(
@@ -388,4 +384,5 @@ export {
   clearLoginForm,
   loginError,
   returnCurrentDate,
+  filterPastAndUpcomingTrips
 };
