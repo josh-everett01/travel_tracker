@@ -98,59 +98,130 @@ function renderTotalEarned(amountAgentEarned) {
 function renderApproveAndDenyButtons(pendingTrip, destinations) {
   destinations;
   let approveButton = document.createElement('button');
-  approveButton.setAttribute("id", `approve-button-${pendingTrip.id}`)
-  approveButton.setAttribute("class", 'approve-button')
-  approveButton.textContent = 'APPROVE';
-  let denyButton = document.createElement('button');
-  denyButton.setAttribute("id", `deny-button-${pendingTrip.id}`)
-  denyButton.setAttribute("class", 'deny-button')
-  denyButton.textContent = 'KEEP AS PENDING';
-  appendToSection(approveButton);
-  appendToSection(denyButton);
-  document.getElementById(`approve-button-${pendingTrip.id}`).onclick = function approveTrip() {
-    destinations;
-    pendingTrip;
-    const data = { id: pendingTrip.id, status: 'approved', suggestedActivities: [] };
+  if (document.getElementById('traveler-page')) {
+    let i;
+    for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+      if (pendingTrip.upcomingTripsArr[i].status === 'pending') {
+        approveButton.setAttribute("id", `approve-button-${pendingTrip.upcomingTripsArr[i].id}`)
+        approveButton.setAttribute("class", 'approve-button')
+        approveButton.textContent = 'APPROVE';
+        let denyButton = document.createElement('button');
+        denyButton.setAttribute("id", `deny-button-${pendingTrip.upcomingTripsArr[i].id}`)
+        denyButton.setAttribute("class", 'deny-button')
+        denyButton.textContent = 'KEEP AS PENDING';
+        appendToSection(approveButton);
+        appendToSection(denyButton);
+        approveButton.onclick = function approveTrip() {
+          destinations;
+          pendingTrip;
+          let i;
+          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+            const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'approved', suggestedActivities: [] };
 
-    fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
+
+            fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+              method: 'POST', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+              .then(response => response.json())
+              .then(data => {
+                alert('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+          }
+        };
+
+        denyButton.onclick = function denyTrip() {
+          destinations;
+          pendingTrip;
+          let i;
+          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+
+            const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'pending', suggestedActivities: [] };
+
+            fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+              method: 'POST', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+
+          }
+        };
+
+
+
+      }
+    }
+  } else {
+    approveButton.setAttribute("id", `approve-button-${pendingTrip.id}`)
+    approveButton.setAttribute("class", 'approve-button')
+    approveButton.textContent = 'APPROVE';
+    let denyButton = document.createElement('button');
+    denyButton.setAttribute("id", `deny-button-${pendingTrip.id}`)
+    denyButton.setAttribute("class", 'deny-button')
+    denyButton.textContent = 'KEEP AS PENDING';
+    appendToSection(approveButton);
+    appendToSection(denyButton);
+    document.getElementById(`approve-button-${pendingTrip.id}`).onclick = function approveTrip() {
+      destinations;
+      pendingTrip;
+      debugger;
+      const data = { id: pendingTrip.id, status: 'approved', suggestedActivities: [] };
+
+      fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
 
 
-  };
-  document.getElementById(`deny-button-${pendingTrip.id}`).onclick = function denyTrip() {
-    destinations;
-    pendingTrip;
-    const data = { id: pendingTrip.id, status: 'pending', suggestedActivities: [] };
+    };
+    document.getElementById(`deny-button-${pendingTrip.id}`).onclick = function denyTrip() {
+      destinations;
+      pendingTrip;
+      const data = { id: pendingTrip.id, status: 'pending', suggestedActivities: [] };
 
-    fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
+      fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
 
 
-  };
+    };
+  }
 
 }
 
