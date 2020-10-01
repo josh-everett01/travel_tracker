@@ -270,7 +270,7 @@ function renderTravelerPageForAgent(travelerInfo) {
   renderTrips(trips.upcomingTripsArr, destinations);
 
   renderTrips(trips.pastTripsArr, destinations);
-  debugger;
+
   renderApproveAndDenyButtons(trips)
 
 }
