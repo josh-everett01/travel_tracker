@@ -1,8 +1,11 @@
 const path = require('path');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: '/Users/joshuaeverett/workspace/projects/prof_projects/travel_tracker/src/index.js',
+  entry: {
+    index: './src/index.js'
+  },
   output: {
     // eslint-disable-next-line no-undef
     path: path.resolve(__dirname, 'dist'),
