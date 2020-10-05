@@ -22,6 +22,7 @@ body {
 button {
   background-color: var(--main-border-color);
   border-radius: 20px;
+  color: var(--main-txt-color);
 }
 
 h3 {
@@ -51,6 +52,10 @@ section:first-of-type {
   place-items: center;
 }
 
+.approve-button {
+  grid-row: 7;
+}
+
 .container {
   align-content: center;
   border: 2px solid var(--main-border-color);
@@ -64,6 +69,10 @@ section:first-of-type {
   overflow-y: hidden;
   padding: 16px;
   place-items: center;
+}
+
+.deny-button {
+  grid-row: 8;
 }
 
 .destination-image {
@@ -93,12 +102,12 @@ section:first-of-type {
   border-radius: 2%;
   border-right: 3px solid var(--main-border-color);
   border-top: 50px solid var(--main-border-color);
+  margin: auto;
+  margin-top: 3%;
   padding-bottom: 20px;
   position: relative;
   text-align: center;
   width: 450px;
-  margin: auto;
-  margin-top: 3%;
 }
 
 .main-section {
@@ -130,6 +139,17 @@ section:first-of-type {
   text-align: center;
 }
 
+.total-spent {
+  display: flex;
+  grid-row: 0;
+  margin: auto;
+  margin-left: 40%;
+}
+
+.travname {
+  color: var(--main-border-color);
+}
+
 .trip-date {
   grid-row: 3;
 }
@@ -146,19 +166,13 @@ section:first-of-type {
   grid-row: 6;
 }
 
-.total-spent {
-  display: flex;
-  grid-row: 0;
-  margin: auto;
-  margin-left: 40%;
-}
-
-.travname {
-  color: var(--main-border-color);
-}
-
 .username {
   margin-top: -20px;
+}
+
+#agent-tools {
+  display: flex;
+  flex-direction: column;
 }
 
 #confirm-trip-request-button {
@@ -176,7 +190,7 @@ section:first-of-type {
 
 #requested-trips {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 
 #start {
