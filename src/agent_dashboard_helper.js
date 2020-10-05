@@ -127,7 +127,8 @@ function renderApproveAndDenyButtons(pendingTrip, destinations) {
   let approveButton = document.createElement("button");
   if (document.getElementById("traveler-page")) {
     let i;
-    for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+    for (i = 0; i < pendingTrip.pastTripsArr.length + pendingTrip.upcomingTripsArr.length; i++) {
+
       if (pendingTrip.upcomingTripsArr[i].status === "pending") {
         approveButton.setAttribute(
           "id",
@@ -220,7 +221,6 @@ function renderApproveAndDenyButtons(pendingTrip, destinations) {
     document.getElementById(
       `approve-button-${pendingTrip.id}`
     ).onclick = function approveTrip() {
-      debugger;
       destinations;
       pendingTrip;
       const data = {
@@ -364,7 +364,7 @@ function renderTravelerPageForAgent(travelerInfo) {
   let destinations = travelerInfo.destinations;
   dashboard_helper.renderTrips(trips.upcomingTripsArr, destinations);
   dashboard_helper.renderTrips(trips.pastTripsArr, destinations);
-  renderApproveAndDenyButtons(trips)
+  renderApproveAndDenyButtons(trips, destinations)
 }
 
 function renderShowTravelerButton(trips, destinations) {
