@@ -95,6 +95,7 @@ function renderTotalEarned(amountAgentEarned) {
 }
 
 function renderAgentTrips(pendingTrips, destinations) {
+
   let i;
   for (i = 0; i < pendingTrips.length; i++) {
     dashboard_helper.renderDestinationImage(pendingTrips[i], destinations);
@@ -102,7 +103,141 @@ function renderAgentTrips(pendingTrips, destinations) {
     dashboard_helper.renderTripDestination(pendingTrips[i], destinations);
     dashboard_helper.renderTripStatus(pendingTrips[i]);
     dashboard_helper.renderTripDuration(pendingTrips[i]);
+    if (pendingTrips.length > 5) {
+      renderApproveAndDenyButtons(pendingTrips[i], destinations)
+    }
   }
 }
+
+function renderApproveAndDenyButtons(pendingTrip, destinations) {
+  destinations;
+  let approveButton = document.createElement('button');
+  if (document.getElementById('traveler-page')) {
+    let i;
+    for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+      if (pendingTrip.upcomingTripsArr[i].status === 'pending') {
+        approveButton.setAttribute("id", `approve-button-${pendingTrip.upcomingTripsArr[i].id}`)
+        approveButton.setAttribute("class", 'approve-button')
+        approveButton.textContent = 'APPROVE';
+        let denyButton = document.createElement('button');
+        denyButton.setAttribute("id", `deny-button-${pendingTrip.upcomingTripsArr[i].id}`)
+        denyButton.setAttribute("class", 'deny-button')
+        denyButton.textContent = 'KEEP AS PENDING';
+        dashboard_helper.appendToSection(approveButton);
+        dashboard_helper.appendToSection(denyButton);
+        approveButton.onclick = function approveTrip() {
+          destinations;
+          pendingTrip;
+          let i;
+          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+            const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'approved', suggestedActivities: [] };
+
+
+            fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+              method: 'POST', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+              .then(response => response.json())
+              .then(data => {
+                alert('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+          }
+        };
+
+        denyButton.onclick = function denyTrip() {
+          destinations;
+          pendingTrip;
+          let i;
+          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+
+            const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'pending', suggestedActivities: [] };
+
+            fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+              method: 'POST', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+
+          }
+        };
+
+
+
+      }
+    }
+  } else {
+
+    approveButton.setAttribute("id", `approve-button-${pendingTrip.id}`)
+    approveButton.setAttribute("class", 'approve-button')
+    approveButton.textContent = 'APPROVE';
+    let denyButton = document.createElement('button');
+    denyButton.setAttribute("id", `deny-button-${pendingTrip.id}`)
+    denyButton.setAttribute("class", 'deny-button')
+    denyButton.textContent = 'KEEP AS PENDING';
+    dashboard_helper.appendToSection(approveButton);
+    dashboard_helper.appendToSection(denyButton);
+    document.getElementById(`approve-button-${pendingTrip.id}`).onclick = function approveTrip() {
+      destinations;
+      pendingTrip;
+      const data = { id: pendingTrip.id, status: 'approved', suggestedActivities: [] };
+
+      fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+
+    };
+    document.getElementById(`deny-button-${pendingTrip.id}`).onclick = function denyTrip() {
+      destinations;
+      pendingTrip;
+      const data = { id: pendingTrip.id, status: 'pending', suggestedActivities: [] };
+
+      fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+
+    };
+  }
+
+}
+
 
 export { renderSuccessfulAgencyLogin };

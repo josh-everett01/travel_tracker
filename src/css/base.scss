@@ -51,6 +51,10 @@ section:first-of-type {
   place-items: center;
 }
 
+.approve-button {
+  grid-row: 7;
+}
+
 .container {
   align-content: center;
   border: 2px solid var(--main-border-color);
@@ -64,6 +68,10 @@ section:first-of-type {
   overflow-y: hidden;
   padding: 16px;
   place-items: center;
+}
+
+.deny-button {
+  grid-row: 8;
 }
 
 .destination-image {
