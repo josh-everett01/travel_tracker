@@ -62,8 +62,11 @@ function returnCurrentDate() {
 function appendToSection(paragraph) {
   if (document.getElementsByTagName("SECTION").length === 1) {
     document.getElementsByTagName("SECTION")[0].appendChild(paragraph);
-  } else {
+  } else if (document.getElementsByTagName("SECTION").length === 2) {
     document.getElementsByTagName("SECTION")[1].appendChild(paragraph);
+  } else if (document.getElementsByTagName("SECTION").length === 4) {
+
+    document.getElementsByTagName("SECTION")[3].appendChild(paragraph);
   }
 }
 

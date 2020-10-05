@@ -47,6 +47,13 @@ async function getTravelerTrips(traveler) {
   return { travelerTrips, traveler };
 }
 
+async function getAllTravelers() {
+  const url = "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers"
+  let response = await fetch(url);
+  let travelers = await response.json();
+  return travelers;
+}
+
 async function getTravelerDestinations(travelerTrips, traveler) {
   const baseUrl = "https://fe-apps.herokuapp.com/api/v1/travel-tracker";
   const travelerDestinationsUrl = baseUrl + "/data/destinations/destinations";
@@ -90,4 +97,5 @@ export {
   getTravelerDestinations,
   getAllTrips,
   getAllDestinations,
+  getAllTravelers
 };

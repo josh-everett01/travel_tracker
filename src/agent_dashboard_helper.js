@@ -1,5 +1,6 @@
 import * as travel_tracker_service from "./travel_tracker_service";
 import * as dashboard_helper from "./dashboard_helper";
+import * as traveler_dashboard_helper from "./traveler_dashboard_helper"
 
 function renderAgentWelcome() {
   document.getElementById("login-form").style.display = "none";
@@ -31,6 +32,11 @@ function renderSuccessfulAgencyLogin() {
       renderAmountAgentEarned(trips, destinations);
       dashboard_helper.renderTripsHeader("Requested");
       renderPendingAndTodaysTrips(trips, destinations);
+
+      dashboard_helper.renderTripsHeader("Agent Tools and Traveler")
+      renderTravelerSearchBar()
+      renderShowTravelerButton(trips, destinations)
+
     });
   });
 }
@@ -110,75 +116,77 @@ function renderAgentTrips(pendingTrips, destinations) {
 }
 
 function renderApproveAndDenyButtons(pendingTrip, destinations) {
+
   destinations;
   let approveButton = document.createElement('button');
   if (document.getElementById('traveler-page')) {
+
     let i;
-    for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
-      if (pendingTrip.upcomingTripsArr[i].status === 'pending') {
-        approveButton.setAttribute("id", `approve-button-${pendingTrip.upcomingTripsArr[i].id}`)
-        approveButton.setAttribute("class", 'approve-button')
-        approveButton.textContent = 'APPROVE';
-        let denyButton = document.createElement('button');
-        denyButton.setAttribute("id", `deny-button-${pendingTrip.upcomingTripsArr[i].id}`)
-        denyButton.setAttribute("class", 'deny-button')
-        denyButton.textContent = 'KEEP AS PENDING';
-        dashboard_helper.appendToSection(approveButton);
-        dashboard_helper.appendToSection(denyButton);
-        approveButton.onclick = function approveTrip() {
-          destinations;
-          pendingTrip;
-          let i;
-          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
-            const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'approved', suggestedActivities: [] };
+
+    for (i = 0; i < destinations.length; i++) {
+      approveButton.setAttribute("id", `approve-button-${pendingTrip.upcomingTripsArr[i].id}`)
+      approveButton.setAttribute("class", 'approve-button')
+      approveButton.textContent = 'APPROVE';
+      let denyButton = document.createElement('button');
+      denyButton.setAttribute("id", `deny-button-${pendingTrip.upcomingTripsArr[i].id}`)
+      denyButton.setAttribute("class", 'deny-button')
+      denyButton.textContent = 'KEEP AS PENDING';
+      dashboard_helper.appendToSection(approveButton);
+      dashboard_helper.appendToSection(denyButton);
+      approveButton.onclick = function approveTrip() {
+        destinations;
+        pendingTrip;
+        let i;
+        for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+          const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'approved', suggestedActivities: [] };
 
 
-            fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
-              method: 'POST', // or 'PUT'
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
+          fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+            method: 'POST', // or 'PUT'
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+            .then(response => response.json())
+            .then(data => {
+              alert('Success:', data);
             })
-              .then(response => response.json())
-              .then(data => {
-                alert('Success:', data);
-              })
-              .catch((error) => {
-                console.error('Error:', error);
-              });
-          }
-        };
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+      };
 
-        denyButton.onclick = function denyTrip() {
-          destinations;
-          pendingTrip;
-          let i;
-          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
+      denyButton.onclick = function denyTrip() {
+        destinations;
+        pendingTrip;
+        let i;
+        for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
 
-            const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'pending', suggestedActivities: [] };
+          const data = { id: pendingTrip.upcomingTripsArr[i].id, status: 'pending', suggestedActivities: [] };
 
-            fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
-              method: 'POST', // or 'PUT'
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
+          fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+            method: 'POST', // or 'PUT'
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
             })
-              .then(response => response.json())
-              .then(data => {
-                console.log('Success:', data);
-              })
-              .catch((error) => {
-                console.error('Error:', error);
-              });
+            .catch((error) => {
+              console.error('Error:', error);
+            });
 
-          }
-        };
+        }
+      };
 
 
 
-      }
+
     }
   } else {
 
@@ -238,6 +246,166 @@ function renderApproveAndDenyButtons(pendingTrip, destinations) {
   }
 
 }
+
+function renderTravelerSearchBar() {
+  travel_tracker_service.getAllTravelers().then(function (result) {
+    let travelers = [];
+    let travelersArray = result;
+
+    let i;
+    for (i = 0; i < travelersArray.travelers.length; i++) {
+      travelers.push(travelersArray.travelers[i].name);
+    }
+    let travSearchBarLabel = document.createElement("label");
+    travSearchBarLabel.setAttribute("for", "traveler-list");
+    let travSearchBarLabelText = document.createTextNode(
+      "Search for a Traveler:"
+    );
+    travSearchBarLabel.appendChild(travSearchBarLabelText);
+    document
+      .querySelectorAll("section")[2]
+      .setAttribute("id", "agent-tools");
+    document
+      .querySelectorAll("section")[2]
+      .setAttribute("class", "container");
+    document.getElementById("agent-tools").appendChild(travSearchBarLabel);
+    let inputList = document.createElement("input");
+    inputList.setAttribute("list", "traveler-list");
+    inputList.setAttribute("id", "traveler");
+    document.getElementById("agent-tools").appendChild(inputList);
+    let dataList = document.createElement("datalist");
+    dataList.setAttribute("id", "traveler-list");
+    document.getElementById("agent-tools").appendChild(dataList);
+
+    for (i = 0; i < travelers.length; i++) {
+      let option = document.createElement("option");
+      option.setAttribute("value", `${travelers[i]}`);
+      // let optionText = document.createTextNode(`${destinations[i]}`)
+      // option.appendChild(optionText);
+      document.getElementById("traveler-list").appendChild(option);
+    }
+
+  })
+}
+
+function getSingleTravelerByName(travelers) {
+  let allTravelers = travelers.travelers;
+  let travelerName = document.getElementById('traveler').value;
+  let i;
+  for (i = 0; i < allTravelers.length; i++) {
+    if (travelerName === allTravelers[i].name) {
+      let traveler = allTravelers[i];
+      return traveler;
+    }
+  }
+}
+
+
+function prepareDashboardData(traveler, travelerTrips, travelerDestinations, destinations) {
+
+  let lodgingCosts = traveler_dashboard_helper.getLodgingCosts(travelerDestinations, travelerTrips);
+  let flightCosts = traveler_dashboard_helper.getFlightCosts(travelerDestinations, travelerTrips);
+  let flightsPlusLodging = traveler_dashboard_helper.addFlightandLodgingCosts(flightCosts, lodgingCosts);
+  let totalAmountCustHasSpentBeforeAgentFee = traveler_dashboard_helper.reduceFlightsPlusLodging(
+    flightsPlusLodging
+  );
+  var totalAfterAgentFee = totalAmountCustHasSpentBeforeAgentFee * 1.1;
+  return {
+    traveler,
+    travelerTrips,
+    travelerDestinations,
+    lodgingCosts,
+    flightCosts,
+    flightsPlusLodging,
+    totalAmountCustHasSpentBeforeAgentFee,
+    totalAfterAgentFee,
+    destinations
+  };
+}
+
+function createButtonAndClearTravelerPage(trips) {
+  let alltrips = trips.pastTripsArr.concat(trips.upcomingTripsArr)
+  let travsPendingTripsButton = document.createElement('button');
+  travsPendingTripsButton.setAttribute('id', 'travs-pending-trips-button')
+  travsPendingTripsButton.onclick = function showTravsPendingTrips() {
+    document.getElementById('traveler-page').innerHTML = '';
+
+  }
+  document.getElementById('traveler-page').appendChild(travsPendingTripsButton)
+
+}
+
+function showpendingTrips(trips, destinations, travelerInfo) {
+  if (document.getElementById('traveler-page').innerHTML !== "") {
+    console.log('no')
+    return;
+  } else
+    if (document.getElementById('traveler-page').innerHTML === "") {
+      console.log('yes')
+    }
+}
+
+
+function renderTravelerPageForAgent(travelerInfo) {
+  document.getElementById('agent-tools').style.display = 'none';
+  dashboard_helper.renderTripsHeader(`${travelerInfo.traveler.name}'s`)
+  let travelerPage = document.querySelectorAll('section')[3];
+  travelerPage.setAttribute("id", "traveler-page")
+  traveler_dashboard_helper.renderTotalSpent(travelerInfo)
+
+  let trips = traveler_dashboard_helper.filterPastAndUpcomingTrips(travelerInfo.travelerTrips);
+
+  let destinations = travelerInfo.destinations;
+  dashboard_helper.renderTrips(trips.upcomingTripsArr, destinations);
+
+  dashboard_helper.renderTrips(trips.pastTripsArr, destinations);
+
+  createButtonAndClearTravelerPage(trips)
+  showpendingTrips(trips, destinations, travelerInfo)
+
+}
+
+
+function renderShowTravelerButton(trips, destinations) {
+  document.getElementsByClassName('container')[2].setAttribute("id", "agent-tools")
+  let showTravelerButton = document.createElement('button');
+  showTravelerButton.setAttribute("id", "show-traveler-button");
+  showTravelerButton.textContent = "SHOW TRAVELER";
+
+  document.getElementById('agent-tools').appendChild(showTravelerButton)
+
+  showTravelerButton.onclick = function showTravelerInformation() {
+    trips;
+    destinations;
+    travel_tracker_service.getAllTravelers().then(function (result) {
+      let travelers = result;
+      let traveler = getSingleTravelerByName(travelers);
+      let i;
+      let travelerTrips = [];
+      for (i = 0; i < trips.length; i++) {
+        if (traveler.id === trips[i].userID) {
+          travelerTrips.push(trips[i])
+        }
+      }
+      travelerTrips;
+      let travelerDestinations = []
+      for (i = 0; i < travelerTrips.length; i++) {
+        let destinationIndex;
+        for (destinationIndex = 0; destinationIndex < destinations.length; destinationIndex++) {
+          if (travelerTrips[i].destinationID === destinations[destinationIndex].id) {
+            travelerDestinations.push(destinations[i])
+          }
+        }
+        travelerDestinations;
+      }
+
+      let dashboardData = prepareDashboardData(traveler, travelerTrips, travelerDestinations, destinations);
+      renderTravelerPageForAgent(dashboardData);
+    })
+
+  }
+}
+
 
 
 export { renderSuccessfulAgencyLogin };
