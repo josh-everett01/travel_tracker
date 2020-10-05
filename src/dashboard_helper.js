@@ -36,14 +36,13 @@ function getPendingTrips(trips) {
 function getTodaysTrips(trips) {
   let today = returnCurrentDate();
   let i;
-  let todaysTripsArr = [];
   for (i = 0; i < trips.length; i++) {
     if (trips[i].date === today) {
-      todaysTripsArr.push(trips[i]);
+      let todaysTrips = trips[i];
+      return { todaysTrips };
     }
   }
-  let todaysTrips = todaysTripsArr;
-  return todaysTrips;
+
 }
 
 function returnCurrentDate() {
@@ -60,12 +59,27 @@ function returnCurrentDate() {
 }
 
 function appendToSection(paragraph) {
-  if (document.getElementsByTagName("SECTION").length === 1) {
+  if (document.getElementById('traveler-page')) {
+    document.getElementById('traveler-page').appendChild(paragraph);
+  }
+
+  else if (document.getElementsByTagName("SECTION").length === 1) {
     document.getElementsByTagName("SECTION")[0].appendChild(paragraph);
-  } else {
-    document.getElementsByTagName("SECTION")[1].appendChild(paragraph);
+  } else if (document.getElementsByTagName("SECTION").length < 1) {
+    document.querySelector('body').appendChild(paragraph);
+  } else if (document.querySelectorAll('section')[1].innerText === "Today's Trips:") {
+    let todaysTripsSection = document.querySelectorAll('section')[1]
+    todaysTripsSection.setAttribute("id", "todays-trips")
+    document.getElementById('todays-trips').appendChild(paragraph)
+  }
+  else if (document.querySelectorAll('section').length === 2 && document.querySelectorAll('section')[1].innerText.includes("Today's Trips")) {
+    document.getElementById('todays-trips').appendChild(paragraph)
+  }
+  else if (document.querySelectorAll('section')[1].innerText.includes('Past Trips')) {
+    document.querySelectorAll('section')[1].appendChild(paragraph)
   }
 }
+
 
 function renderTripDate(trip) {
   let tripDate = trip.date;
@@ -87,6 +101,10 @@ function createAndAppendTripDestination(tripDestination) {
   let tripDestinationText = document.createTextNode(
     `Trip Destination: ${tripDestination}`
   );
+  if (document.getElementById('todays-trips')) {
+    tripDestinationParagraph.appendChild(tripDestinationText);
+    document.getElementById('todays-trips').appendChild(tripDestinationParagraph)
+  }
   appendDestination(tripDestinationParagraph, tripDestinationText);
 }
 
@@ -106,7 +124,15 @@ function renderTripStatus(trip) {
   tripStatusParagraph.className = "trip-status";
   let tripStatusText = document.createTextNode(`Trip Status: ${tripStatus}`);
   tripStatusParagraph.appendChild(tripStatusText);
-  appendToSection(tripStatusParagraph);
+
+  if (document.querySelectorAll('section').length === 2 && document.querySelectorAll('section')[1].innerText.includes("Today's Trips")) {
+
+    let todaysTripsSection = document.querySelectorAll('section')[1]
+    todaysTripsSection.setAttribute("id", "todays-trips")
+    document.getElementById('todays-trips').appendChild(tripStatusParagraph)
+  } else {
+    appendToSection(tripStatusParagraph);
+  }
 }
 
 function renderTripDuration(trip) {
@@ -117,7 +143,14 @@ function renderTripDuration(trip) {
     `Trip Duration: ${tripDuration} days`
   );
   tripDurationParagraph.appendChild(tripDurationText);
-  appendToSection(tripDurationParagraph);
+
+  if (document.querySelectorAll('section').length === 2 && document.querySelectorAll('section')[1].innerText.includes("Today's Trips")) {
+    document.getElementById('todays-trips').appendChild(tripDurationParagraph)
+  }
+  else {
+
+    appendToSection(tripDurationParagraph);
+  }
 }
 
 function renderDestinationImage(trip, destinations) {

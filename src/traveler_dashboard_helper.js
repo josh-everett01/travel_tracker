@@ -90,7 +90,8 @@ function renderTotalSpent(travelerDashboardData) {
     `Total Amount Spent: $${totalAmount}`
   );
   totalSpentParagraph.appendChild(totalSpentText);
-  document.querySelector("body").appendChild(totalSpentParagraph);
+  dashboard_helper.appendToSection(totalSpentParagraph)
+  // document.querySelector("body").appendChild(totalSpentParagraph);
 }
 
 function getLodgingCosts(travelerDestinations, travelerTrips) {

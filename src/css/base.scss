@@ -22,6 +22,7 @@ body {
 button {
   background-color: var(--main-border-color);
   border-radius: 20px;
+  color: var(--main-txt-color);
 }
 
 h3 {
@@ -49,6 +50,14 @@ section:first-of-type {
   grid-template-columns: auto;
   grid-template-rows: 0.2fr 2fr 0.1fr 0.1fr 0.1fr 0.1fr;
   place-items: center;
+}
+
+.approve-button {
+  grid-row: 7;
+}
+
+.deny-button {
+  grid-row: 8;
 }
 
 .container {
@@ -161,6 +170,11 @@ section:first-of-type {
   margin-top: -20px;
 }
 
+#agent-tools {
+  display: flex;
+  flex-direction: column;
+}
+
 #confirm-trip-request-button {
   color: var(--main-txt-color);
 }
@@ -176,7 +190,10 @@ section:first-of-type {
 
 #requested-trips {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+}
+
+#show-traveler-button {
 }
 
 #start {
