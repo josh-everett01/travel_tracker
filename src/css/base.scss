@@ -106,7 +106,6 @@ section:first-of-type {
   padding: 10%;
   background-position: bottom;
   border: 1px solid var(--main-txt-color);
-  border-radius: 10px;
 }
 
 #home-page {
@@ -344,6 +343,7 @@ img {
 
   #h1-div {
     margin-top: 15%;
+    width: 100%;
   }
   #login-form input {
     padding: 5%;
@@ -361,6 +361,8 @@ img {
     position: fixed;
     bottom: 0;
     left: 0;
+  }
+  #submit {
   }
 
   .header-section h1 {
