@@ -3,9 +3,10 @@ import * as dashboard_helper from "./dashboard_helper";
 import * as traveler_dashboard_helper from "./traveler_dashboard_helper"
 
 function renderAgentWelcome() {
-  document.getElementById("login-form").style.display = "none";
+  // document.getElementById("login-form").style.display = "none";
   document.getElementById("footer").style.display = "none";
   var welcomeHeader = document.createElement("H1");
+  welcomeHeader.className = "welcome-header"
   var headerText = document.createTextNode("Welcome, AGENT");
   welcomeHeader.appendChild(headerText);
   document.body.appendChild(welcomeHeader);
@@ -21,6 +22,12 @@ function renderPendingAndTodaysTrips(trips, destinations) {
   renderAgentTrips(pendingTrips, destinations);
   dashboard_helper.renderTripsHeader("Today's");
   let todaysTrips = dashboard_helper.getTodaysTrips(trips);
+  if (todaysTrips.todaysTrips.length === 0) {
+    let noTravelersTextNode = document.createTextNode('There are no travelers on Trips Today');
+    let noTravelersH1 = document.createElement('h1');
+    noTravelersH1.appendChild(noTravelersTextNode)
+    document.querySelectorAll('section')[1].appendChild(noTravelersH1);
+  }
   if (todaysTrips.todaysTrips.length > 0) {
     renderAgentTrips(todaysTrips, destinations);
   }
@@ -293,6 +300,7 @@ function renderTravelerSearchBar() {
       travelers.push(travelersArray.travelers[i].name);
     }
     let travSearchBarLabel = document.createElement("label");
+    travSearchBarLabel.id = "trav-search-bar-label";
     travSearchBarLabel.setAttribute("for", "traveler-list");
     let travSearchBarLabelText = document.createTextNode(
       "Search for a Traveler:"
@@ -306,6 +314,7 @@ function renderTravelerSearchBar() {
       .setAttribute("class", "container");
     document.getElementById("agent-tools").appendChild(travSearchBarLabel);
     let inputList = document.createElement("input");
+    inputList.setAttribute('placeholder', 'Enter traveler name')
     inputList.setAttribute("list", "traveler-list");
     inputList.setAttribute("id", "traveler");
     document.getElementById("agent-tools").appendChild(inputList);
