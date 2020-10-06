@@ -1,12 +1,16 @@
 import "./css/base.scss";
+import * as styling from "./styling_helper"
 import * as travel_tracker_service from "./travel_tracker_service.js";
 import * as traveler_dashboard_helper from "./traveler_dashboard_helper";
 import * as agent_dashboard_helper from "./agent_dashboard_helper";
 import * as login_helper from "./login_helper";
 
-let button = document.getElementById("submit");
+document.querySelector('body').onload = styling.styleHomePage();
 
+let button = document.getElementById("submit");
 button.onclick = function processLogin() {
+  document.getElementById('home-page').style.display = 'none';
+  document.getElementById('home-page-h1').style.display = 'none';
   let usernameInput = document.getElementById("input-username").value;
   let passwordInput = document.getElementById("input-password").value;
   if (login_helper.isValidPassword(passwordInput)) {
@@ -50,3 +54,4 @@ button.onclick = function processLogin() {
     login_helper.loginError();
   }
 };
+

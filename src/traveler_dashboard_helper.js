@@ -74,9 +74,10 @@ function filterPastAndUpcomingTrips(travelerTrips) {
 }
 
 function renderTravelerWelcome(traveler) {
-  document.getElementById("login-form").style.display = "none";
+  // document.getElementById("login-form").style.display = "none";
   document.getElementById("footer").style.display = "none";
   let welcomeHeader = document.createElement("h1");
+  welcomeHeader.id = "welcome-header"
   let headerText = document.createTextNode(`Hello, ${traveler.name}`);
   welcomeHeader.appendChild(headerText);
   document.getElementsByTagName("BODY")[0].appendChild(welcomeHeader);
