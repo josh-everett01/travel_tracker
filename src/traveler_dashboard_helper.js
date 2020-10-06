@@ -80,7 +80,10 @@ function renderTravelerWelcome(traveler) {
   welcomeHeader.className = "welcome-header"
   let headerText = document.createTextNode(`Hello, ${traveler.name}`);
   welcomeHeader.appendChild(headerText);
-  document.getElementsByTagName("BODY")[0].appendChild(welcomeHeader);
+  document.getElementById('home-page-h1').style.display = "initial";
+  document.getElementById('home-page-h1').innerHTML = `Hello, ${traveler.name}`;
+  document.getElementById('h1-div').style.marginTop = "100px"
+  // document.getElementsByTagName("BODY")[0].appendChild(welcomeHeader);
 }
 
 function renderTotalSpent(travelerDashboardData) {

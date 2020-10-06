@@ -22,6 +22,7 @@ function styleHomePage() {
     document.getElementById('test-id').appendChild(homePage)
     for (let i = 0; i < destinations.length; i++) {
       let imageAndNameDiv = document.createElement('div');
+      imageAndNameDiv.onclick = "href", "alert(HEY)";
       imageAndNameDiv.className = "image-and-name-div";
       let destinationImage = destinations[i].image;
       var img = document.createElement("img");

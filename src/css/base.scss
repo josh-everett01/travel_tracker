@@ -1,13 +1,13 @@
 html {
-  --header-bg-color: #094479;
-  --main-bg-color: #0b172a;
-  --main-border-color: #bc4123;
-  --main-txt-color: #fff;
+  // --header-bg-color: #094479;
+  // --main-bg-color: #0b172a;
+  // --main-border-color: #bc4123;
+  // --main-txt-color: #fff;
 
-  // --header-bg-color: #fff;
-  // --main-bg-color: #fff;
-  // --main-border-color: #fff;
-  // --main-txt-color: #000;
+  --header-bg-color: #fff;
+  --main-bg-color: #fff;
+  --main-border-color: #fff;
+  --main-txt-color: #000;
 }
 
 * {
@@ -45,7 +45,7 @@ h3 {
 
 i {
   background-color: var(--header-bg-color);
-  color: var(--main-border-color);
+  color: var(--main-txt-color);
 }
 
 label {
@@ -95,17 +95,18 @@ section:first-of-type {
 }
 
 #h1-div {
-  background-image: url("https://www.tripsavvy.com/thmb/DsNMsTK7rWd9lHbsflopA_-s0SI=/950x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/the-world-famous-night-scene-of-hong-kong-city-skyline-with-busy-water-traffic-navigate-across-victoria-harbour-837125558-5b0a22408023b90036755e0a.jpg");
-  background-size: 100%;
-  width: 100%;
-  padding: 10%;
-  background-position: center;
-
-  // background picture when main color is white
-  // background-image: url("https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp");
-  // background-size: cover;
+  // background-image: url("https://www.tripsavvy.com/thmb/DsNMsTK7rWd9lHbsflopA_-s0SI=/950x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/the-world-famous-night-scene-of-hong-kong-city-skyline-with-busy-water-traffic-navigate-across-victoria-harbour-837125558-5b0a22408023b90036755e0a.jpg");
+  // background-size: 100%;
+  // width: 100%;
   // padding: 10%;
-  // background-position: bottom;
+  // background-position: center;
+
+  background-image: url("https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp");
+  background-size: cover;
+  padding: 10%;
+  background-position: bottom;
+  border: 1px solid var(--main-txt-color);
+  border-radius: 10px;
 }
 
 #home-page {
@@ -153,6 +154,7 @@ img {
   justify-content: space-around;
   text-align: center;
   width: 100%;
+  border-bottom: 1px solid var(--main-txt-color);
 }
 
 #show-traveler-button {
@@ -260,6 +262,7 @@ img {
   display: flex;
   grid-row: 0;
   margin: auto;
+  margin-top: 2%;
   margin-left: 40%;
 }
 
@@ -338,8 +341,12 @@ img {
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
   }
+
+  #h1-div {
+    margin-top: 15%;
+  }
   #login-form input {
-    padding: 3%;
+    padding: 5%;
   }
 
   login-form {
@@ -371,17 +378,28 @@ img {
     margin: 3%;
     justify-content: space-evenly;
   }
+
+  .total-spent {
+    margin: 0;
+    margin-top: 2%;
+  }
 }
 
 @media (max-width: 375px) {
   img {
-    height: 100%;
-    width: 100%;
+    height: 95%;
+    width: 95%;
+  }
+
+  .home-destination-name {
+    margin-top: 50px;
+    grid-column: 1;
   }
 
   body {
     display: grid;
     place-items: center;
+    grid-auto-rows: 1fr auto;
     grid-template-columns: 1fr;
     font-size: 0.7rem;
   }
@@ -399,19 +417,24 @@ img {
     position: absolute;
   }
 
+  #h1-div {
+    margin-top: 10%;
+  }
+
   #header-section {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr;
   }
   #login-form input {
-    padding: 3%;
+    margin: 0;
   }
 
   #login-form button {
-    width: 50%;
+    // width: 50%;
+    margin-right: 5%;
   }
 
   #home-page-h1 {
@@ -431,7 +454,6 @@ img {
 
   #login-form {
     display: flex;
-
     justify-content: center;
     grid-row: 2;
     grid-column: 1;

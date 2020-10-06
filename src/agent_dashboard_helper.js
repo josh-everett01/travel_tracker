@@ -8,8 +8,11 @@ function renderAgentWelcome() {
   var welcomeHeader = document.createElement("H1");
   welcomeHeader.className = "welcome-header"
   var headerText = document.createTextNode("Welcome, AGENT");
-  welcomeHeader.appendChild(headerText);
-  document.body.appendChild(welcomeHeader);
+  document.getElementById('home-page-h1').innerHTML = "Welcome, AGENT";
+  document.getElementById('home-page-h1').style.display = "initial";
+  document.getElementById('h1-div').style.marginTop = "100px"
+  // welcomeHeader.appendChild(headerText);
+  // document.body.appendChild(welcomeHeader);
 }
 
 function renderAmountAgentEarned(trips, destinations) {
@@ -100,7 +103,7 @@ function renderTotalEarned(amountAgentEarned) {
   amountAgentEarned;
   let totalAmount = amountAgentEarned.toFixed(2);
   let totalEarnedParagraph = document.createElement("paragraph");
-  totalEarnedParagraph.className = "total-earned";
+  totalEarnedParagraph.className = "total-spent";
   let totalEarnedText = document.createTextNode(
     `Total Amount Earned: $${totalAmount}`
   );
