@@ -36,12 +36,14 @@ function getPendingTrips(trips) {
 function getTodaysTrips(trips) {
   let today = returnCurrentDate();
   let i;
+  let todaysTrips = [];
   for (i = 0; i < trips.length; i++) {
     if (trips[i].date === today) {
-      let todaysTrips = trips[i];
-      return { todaysTrips };
+
+      todaysTrips.push(trips[i]);
     }
   }
+  return { todaysTrips };
 
 }
 

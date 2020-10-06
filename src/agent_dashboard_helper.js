@@ -21,7 +21,9 @@ function renderPendingAndTodaysTrips(trips, destinations) {
   renderAgentTrips(pendingTrips, destinations);
   dashboard_helper.renderTripsHeader("Today's");
   let todaysTrips = dashboard_helper.getTodaysTrips(trips);
-  renderAgentTrips(todaysTrips, destinations);
+  if (todaysTrips.todaysTrips.length > 0) {
+    renderAgentTrips(todaysTrips, destinations);
+  }
 }
 
 function renderSuccessfulAgencyLogin() {
@@ -100,6 +102,7 @@ function renderTotalEarned(amountAgentEarned) {
 }
 
 function renderAgentTrips(pendingTrips, destinations) {
+
   if (pendingTrips.length === undefined) {
     let todaysTrips = pendingTrips.todaysTrips;
     dashboard_helper.renderDestinationImage(todaysTrips, destinations);
@@ -126,63 +129,64 @@ function renderApproveAndDenyButtons(pendingTrip, destinations) {
   destinations;
   let approveButton = document.createElement("button");
   if (document.getElementById("traveler-page")) {
+
     let i;
-    for (i = 0; i < pendingTrip.pastTripsArr.length + pendingTrip.upcomingTripsArr.length; i++) {
+    for (i = 0; i < pendingTrip.length; i++) {
+      let approveButton = document.createElement("button");
+      approveButton.setAttribute(
+        "id",
+        `approve-button-${pendingTrip[i].id}`
+      );
+      approveButton.setAttribute("class", "approve-button");
+      approveButton.textContent = "APPROVE";
+      let denyButton = document.createElement("button");
+      denyButton.setAttribute(
+        "id",
+        `deny-button-${pendingTrip[i].id}`
+      );
+      denyButton.setAttribute("class", "deny-button");
+      denyButton.textContent = "KEEP AS PENDING";
+      dashboard_helper.appendToSection(approveButton);
+      dashboard_helper.appendToSection(denyButton);
+      approveButton.onclick = function approveTrip() {
+        destinations;
+        pendingTrip;
+        let i;
+        for (i = 0; i < pendingTrip.length; i++) {
+          const data = {
+            id: pendingTrip[i].id,
+            status: "approved",
+            suggestedActivities: [],
+          };
 
-      if (pendingTrip.upcomingTripsArr[i].status === "pending") {
-        approveButton.setAttribute(
-          "id",
-          `approve-button-${pendingTrip.upcomingTripsArr[i].id}`
-        );
-        approveButton.setAttribute("class", "approve-button");
-        approveButton.textContent = "APPROVE";
-        let denyButton = document.createElement("button");
-        denyButton.setAttribute(
-          "id",
-          `deny-button-${pendingTrip.upcomingTripsArr[i].id}`
-        );
-        denyButton.setAttribute("class", "deny-button");
-        denyButton.textContent = "KEEP AS PENDING";
-        dashboard_helper.appendToSection(approveButton);
-        dashboard_helper.appendToSection(denyButton);
-        approveButton.onclick = function approveTrip() {
-          destinations;
-          pendingTrip;
-          let i;
-          for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
-            const data = {
-              id: pendingTrip.upcomingTripsArr[i].id,
-              status: "approved",
-              suggestedActivities: [],
-            };
+          fetch(
+            "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip",
+            {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              alert("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        }
 
-            fetch(
-              "https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip",
-              {
-                method: "POST", // or 'PUT'
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              }
-            )
-              .then((response) => response.json())
-              .then((data) => {
-                alert("Success:", data);
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
-          }
-        };
 
         denyButton.onclick = function denyTrip() {
+          debugger;
           destinations;
           pendingTrip;
           let i;
           for (i = 0; i < pendingTrip.upcomingTripsArr.length; i++) {
             const data = {
-              id: pendingTrip.upcomingTripsArr[i].id,
+              id: pendingTrip[i].id,
               status: "pending",
               suggestedActivities: [],
             };
@@ -360,11 +364,21 @@ function renderTravelerPageForAgent(travelerInfo) {
   let travelerPage = document.querySelectorAll('section')[3];
   travelerPage.setAttribute("id", "traveler-page")
   traveler_dashboard_helper.renderTotalSpent(travelerInfo)
-  let trips = traveler_dashboard_helper.filterPastAndUpcomingTrips(travelerInfo.travelerTrips);
+
+  let pendingTrips = [];
+  let approvedTrips = [];
+  for (let i = 0; i < travelerInfo.travelerTrips.length; i++) {
+    if (travelerInfo.travelerTrips[i].status === 'pending') { pendingTrips.push(travelerInfo.travelerTrips[i]) }
+    else if (travelerInfo.travelerTrips[i].status === 'approved') {
+      approvedTrips.push(travelerInfo.travelerTrips[i])
+    }
+  }
+
+
   let destinations = travelerInfo.destinations;
-  dashboard_helper.renderTrips(trips.upcomingTripsArr, destinations);
-  dashboard_helper.renderTrips(trips.pastTripsArr, destinations);
-  renderApproveAndDenyButtons(trips, destinations)
+  dashboard_helper.renderTrips(pendingTrips, destinations);
+  dashboard_helper.renderTrips(approvedTrips, destinations);
+  renderApproveAndDenyButtons(pendingTrips, destinations)
 }
 
 function renderShowTravelerButton(trips, destinations) {
