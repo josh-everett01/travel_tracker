@@ -9,13 +9,16 @@ function styleHomePage() {
 
     let destinations = result;
     let homePage = document.createElement('div');
+    let h1Div = document.createElement('div');
+    h1Div.id = "h1-div"
     homePage.className = "home-page";
     homePage.id = "home-page";
     let homePageH1 = document.createElement('h1');
     homePageH1.id = "home-page-h1";
     let h1Text = document.createTextNode('Where would you like to go?')
     homePageH1.appendChild(h1Text)
-    document.getElementById('test-id').appendChild(homePageH1)
+    h1Div.appendChild(homePageH1)
+    document.getElementById('test-id').appendChild(h1Div)
     document.getElementById('test-id').appendChild(homePage)
     for (let i = 0; i < destinations.length; i++) {
       let imageAndNameDiv = document.createElement('div');

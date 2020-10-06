@@ -3,6 +3,11 @@ html {
   --main-bg-color: #0b172a;
   --main-border-color: #bc4123;
   --main-txt-color: #fff;
+
+  // --header-bg-color: #fff;
+  // --main-bg-color: #fff;
+  // --main-border-color: #fff;
+  // --main-txt-color: #000;
 }
 
 * {
@@ -87,6 +92,20 @@ section:first-of-type {
   flex-direction: column;
   margin: 1%;
   text-align: center;
+}
+
+#h1-div {
+  background-image: url("https://www.tripsavvy.com/thmb/DsNMsTK7rWd9lHbsflopA_-s0SI=/950x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/the-world-famous-night-scene-of-hong-kong-city-skyline-with-busy-water-traffic-navigate-across-victoria-harbour-837125558-5b0a22408023b90036755e0a.jpg");
+  background-size: 100%;
+  width: 100%;
+  padding: 10%;
+  background-position: center;
+
+  // background picture when main color is white
+  // background-image: url("https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp");
+  // background-size: cover;
+  // padding: 10%;
+  // background-position: bottom;
 }
 
 #home-page {
