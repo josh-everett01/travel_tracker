@@ -82,7 +82,7 @@ function renderTravelerWelcome(traveler) {
   welcomeHeader.appendChild(headerText);
   document.getElementById('home-page-h1').style.display = "initial";
   document.getElementById('home-page-h1').innerHTML = `Hello, ${traveler.name}`;
-  document.getElementById('h1-div').style.marginTop = "100px"
+  document.getElementById('h1-div').style.marginTop = "70px"
   // document.getElementsByTagName("BODY")[0].appendChild(welcomeHeader);
 }
 

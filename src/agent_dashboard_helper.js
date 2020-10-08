@@ -6,13 +6,12 @@ function renderAgentWelcome() {
   // document.getElementById("login-form").style.display = "none";
   document.getElementById("footer").style.display = "none";
   var welcomeHeader = document.createElement("H1");
-  welcomeHeader.className = "welcome-header"
-  var headerText = document.createTextNode("Welcome, AGENT");
+  welcomeHeader.className = "welcome-header";
   document.getElementById('home-page-h1').innerHTML = "Welcome, AGENT";
   document.getElementById('home-page-h1').style.display = "initial";
-  document.getElementById('h1-div').style.marginTop = "100px"
-  // welcomeHeader.appendChild(headerText);
-  // document.body.appendChild(welcomeHeader);
+  document.getElementById('h1-div').style.marginTop = "70px"
+  document.getElementById('h1-div').style.backgroundPosition = "bottom center";
+
 }
 
 function renderAmountAgentEarned(trips, destinations) {
