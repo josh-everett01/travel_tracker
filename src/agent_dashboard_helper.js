@@ -10,7 +10,20 @@ function renderAgentWelcome() {
   document.getElementById('home-page-h1').innerHTML = "Welcome, AGENT";
   document.getElementById('home-page-h1').style.display = "initial";
   document.getElementById('h1-div').style.marginTop = "70px"
-  document.getElementById('h1-div').style.backgroundPosition = "bottom center";
+  document.getElementById('home-page-h1').style.padding = "0 10% 0 10%"
+
+  function myFunction(x) {
+    if (x.matches) { // If media query matches
+      document.getElementById('h1-div').style.marginTop = "-250px"
+    } else {
+      return
+    }
+  }
+
+  var x = window.matchMedia("(max-width: 375px)")
+  myFunction(x) // Call listener function at run time
+  x.addListener(myFunction) // Attach listener function on state changes
+  // document.getElementById('h1-div').style.backgroundPosition = "bottom center";
 
 }
 

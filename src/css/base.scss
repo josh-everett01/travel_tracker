@@ -1,9 +1,4 @@
 html {
-  // --header-bg-color: #094479;
-  // --main-bg-color: #0b172a;
-  // --main-border-color: #bc4123;
-  // --main-txt-color: #fff;
-
   --header-bg-color: #fff;
   --main-bg-color: #fff;
   --main-border-color: #fff;
@@ -18,19 +13,10 @@ body {
   background-color: var(--main-bg-color);
   color: var(--main-txt-color);
   font-family: "Open Sans", sans-serif;
-  // font-family: "Oxygen", sans-serif;
   font-size: 1.3rem;
   margin: 0;
   text-align: center;
   width: 100%;
-}
-
-.approve-button {
-  grid-row: 7;
-}
-
-.deny-button {
-  grid-row: 8;
 }
 
 button {
@@ -47,6 +33,14 @@ h3 {
 i {
   background-color: var(--header-bg-color);
   color: var(--main-txt-color);
+}
+
+img {
+  height: 300px;
+  width: 350px;
+  margin: 3%;
+  border: 1px solid var(--main-txt-color);
+  border-radius: 20px;
 }
 
 label {
@@ -66,6 +60,10 @@ section:first-of-type {
   place-items: center;
 }
 
+.approve-button {
+  grid-row: 7;
+}
+
 .container {
   align-content: center;
   border: 2px solid var(--main-border-color);
@@ -81,58 +79,14 @@ section:first-of-type {
   place-items: center;
 }
 
+.deny-button {
+  grid-row: 8;
+}
+
 .destination-image {
   grid-row: 2;
   height: 225px;
   width: 275px;
-  margin: 3%;
-}
-
-.image-and-name-div {
-  display: flex;
-  flex-direction: column;
-  margin: 1%;
-  text-align: center;
-}
-
-#h1-div {
-  // background-image: url("https://www.tripsavvy.com/thmb/DsNMsTK7rWd9lHbsflopA_-s0SI=/950x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/the-world-famous-night-scene-of-hong-kong-city-skyline-with-busy-water-traffic-navigate-across-victoria-harbour-837125558-5b0a22408023b90036755e0a.jpg");
-  // background-size: 100%;
-  // width: 100%;
-  // padding: 10%;
-  // background-position: center;
-
-  background-image: url("https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp");
-  background-size: cover;
-  padding: 10%;
-  background-position: bottom;
-  border: 1px solid var(--main-txt-color);
-  opacity: 88%;
-}
-
-#home-page {
-  justify-content: center;
-  margin: 5%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-#home-page-h1 {
-  margin-top: 11%;
-  margin-bottom: -5%;
-  color: #fff;
-  opacity: 10%;
-}
-
-img {
-  height: 300px;
-  width: 350px;
-  margin: 3%;
-  border: 1px solid var(--main-txt-color);
-  border-radius: 20px;
-}
-
-.home-destination-name {
   margin: 3%;
 }
 
@@ -161,55 +115,20 @@ img {
   border-bottom: 1px solid var(--main-txt-color);
 }
 
-#show-traveler-button {
-  grid-row: 4;
-  grid-column: 2;
-}
-
-#trav-search-bar-label {
-  grid-row: 2;
-  grid-column: 2;
-}
-
-#traveler {
-  grid-row: 3;
-  grid-column: 2;
-}
-
-#agent-tools {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  flex-direction: column;
-}
-
-.welcome-header {
-  margin-top: 11%;
-}
-#welcome-header {
-  margin-top: 11%;
-}
-
 .header-section h1 {
   grid-row: 1;
   grid-column: 2;
 }
 
-#login-form {
-  justify-content: center;
-  grid-row: 1;
-  grid-column: 3;
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
+.home-destination-name {
   margin: 3%;
-  justify-content: space-evenly;
 }
 
-#input-username {
-}
-
-#login-form input {
-  padding: 3%;
+.image-and-name-div {
+  display: flex;
+  flex-direction: column;
+  margin: 1%;
+  text-align: center;
 }
 
 .main-section {
@@ -218,19 +137,13 @@ img {
   place-items: center;
 }
 
-.password {
-  // margin-top: 10px;
-}
-
 .past-trips {
   grid-column: 2;
 }
 
-// .signin {
-//   left: 38%;
-//   position: absolute;
-//   top: -45px;
-// }
+.welcome-header {
+  margin-top: 11%;
+}
 
 .submit {
   color: var(--main-txt-color);
@@ -238,12 +151,18 @@ img {
   height: 50%;
   margin-top: 4.5%;
   border-radius: 10px;
-  // border-radius: 20px;
-  // color: var(--main-txt-color);
-  // cursor: pointer;
-  // margin-top: 20px;
-  // outline: none;
-  // text-align: center;
+}
+
+.total-spent {
+  display: flex;
+  grid-row: 2;
+  margin: auto;
+  margin-top: 2%;
+  margin-left: 40%;
+}
+
+.travname {
+  color: var(--main-border-color);
 }
 
 .trip-date {
@@ -262,20 +181,67 @@ img {
   grid-row: 6;
 }
 
-.total-spent {
+#agent-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  flex-direction: column;
+}
+
+#h1-div {
+  background-image: url("https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp");
+  background-size: cover;
+  background-position: bottom;
+  border: 1px solid var(--main-txt-color);
+  opacity: 88%;
+  padding: 10%;
+}
+
+#home-page {
+  justify-content: center;
+  margin: 5%;
   display: flex;
-  grid-row: 0;
-  margin: auto;
-  margin-top: 2%;
-  margin-left: 40%;
+  flex-wrap: wrap;
 }
 
-.travname {
-  color: var(--main-border-color);
+#home-page-h1 {
+  margin-top: 11%;
+  margin-bottom: -5%;
+  color: #fff;
+  opacity: 10%;
 }
 
-.username {
-  // margin-top: -20px;
+#login-form {
+  justify-content: center;
+  grid-row: 1;
+  grid-column: 3;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  margin: 3%;
+  justify-content: space-evenly;
+}
+
+#login-form input {
+  padding: 3%;
+}
+
+#show-traveler-button {
+  grid-row: 4;
+  grid-column: 2;
+}
+
+#traveler {
+  grid-row: 3;
+  grid-column: 2;
+}
+
+#trav-search-bar-label {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+#welcome-header {
+  margin-top: 11%;
 }
 
 #confirm-trip-request-button {
@@ -294,11 +260,6 @@ img {
 #requested-trips {
   display: flex;
   flex-direction: column;
-}
-
-.header-section h1 {
-  grid-row: 1;
-  grid-column: 2;
 }
 
 #login-form {
@@ -321,15 +282,15 @@ img {
 }
 
 @media (min-width: 376px) and (max-width: 768px) {
-  img {
-    height: 350px;
-    width: 400px;
-  }
-
   body {
     display: grid;
     font-size: 18px;
     place-items: center;
+  }
+
+  img {
+    height: 350px;
+    width: 400px;
   }
 
   .footer {
@@ -338,28 +299,9 @@ img {
     position: absolute;
   }
 
-  #header-section {
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  #h1-div {
-    margin-top: 15%;
-    width: 100%;
-  }
-  #login-form input {
-    padding: 5%;
-  }
-
-  login-form {
-    width: 745px;
-  }
-
-  #home-page-h1 {
-    padding-top: 2%;
+  .header-section h1 {
+    grid-row: 1;
+    grid-column: 1;
   }
 
   #footer {
@@ -367,12 +309,23 @@ img {
     bottom: 0;
     left: 0;
   }
-  #submit {
+
+  #h1-div {
+    margin-top: 10%;
+    width: 100%;
   }
 
-  .header-section h1 {
-    grid-row: 1;
-    grid-column: 1;
+  #header-section {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1rem;
+  }
+
+  #home-page-h1 {
+    padding-top: 2%;
   }
 
   #login-form {
@@ -386,36 +339,32 @@ img {
     justify-content: space-evenly;
   }
 
-  .total-spent {
-    margin: 0;
-    margin-top: 2%;
+  #login-form input {
+    padding: 3%;
+  }
+
+  #submit {
+    margin-left: 5px;
+    padding: 5px;
   }
 }
 
 @media (max-width: 375px) {
-  img {
-    height: 95%;
-    width: 95%;
-  }
-
-  .home-destination-name {
-    margin-top: 50px;
-    grid-column: 1;
-  }
-
   body {
     display: grid;
     place-items: center;
     grid-auto-rows: 1fr auto;
     grid-template-columns: 1fr;
-    font-size: 0.7rem;
-  }
-  input {
-    width: 75%;
+    font-size: 1rem;
   }
 
-  .welcome-header {
-    margin-top: 10%;
+  img {
+    height: 95%;
+    width: 95%;
+  }
+
+  input {
+    width: 75%;
   }
 
   .footer {
@@ -424,8 +373,33 @@ img {
     position: absolute;
   }
 
-  #h1-div {
+  .header-section h1 {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .home-destination-name {
+    margin-top: 50px;
+    grid-column: 1;
+  }
+
+  .total-spent {
+    margin: 0;
+  }
+
+  .welcome-header {
     margin-top: 10%;
+  }
+
+  #footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+
+  #h1-div {
+    margin-top: 20%;
+    // border: none;
   }
 
   #header-section {
@@ -435,7 +409,8 @@ img {
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr;
   }
-  #login-form input {
+
+  #home-page {
     margin: 0;
   }
 
@@ -444,31 +419,25 @@ img {
     margin-right: 5%;
   }
 
+  #login-form input {
+    margin: 0;
+  }
+
+  #home-page {
+    display: grid;
+  }
+
   #home-page-h1 {
-    padding-top: 25%;
-  }
-
-  #footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-  }
-
-  .header-section h1 {
-    grid-row: 1;
-    grid-column: 1;
+    padding-top: 20%;
   }
 
   #login-form {
     display: flex;
-    justify-content: center;
-    grid-row: 2;
     grid-column: 1;
-    place-items: center;
-    display: flex;
-    width: 100%;
+    grid-row: 2;
     justify-content: space-evenly;
     margin: 3%;
-    justify-content: space-evenly;
+    place-items: center;
+    width: 100%;
   }
 }
