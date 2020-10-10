@@ -1,29 +1,26 @@
-import * as travel_tracker_service from "./travel_tracker_service";
-import * as dashboard_helper from "./dashboard_helper";
+import * as travelTrackerService from "./travel_tracker_service";
+import * as dashboardHelper from "./dashboard_helper";
 
 function renderTripRequestButton() {
   let tripRequestButton = document.createElement("button");
   tripRequestButton.setAttribute("id", "trip-request-button");
   tripRequestButton.textContent = "CALCULATE";
-  dashboard_helper.appendToRequestForm(tripRequestButton);
+  dashboardHelper.appendToRequestForm(tripRequestButton);
 }
 
 function renderRequestFormElements(destinationsArr, allTrips) {
-  dashboard_helper.renderNumberOfTravelersInput();
-  dashboard_helper.renderDateSelectInputs();
+  dashboardHelper.renderNumberOfTravelersInput();
+  dashboardHelper.renderDateSelectInputs();
   renderTripRequestButton();
-  dashboard_helper.createOnClickFunctionAndRenderTrip(
-    destinationsArr,
-    allTrips
-  );
+  dashboardHelper.createOnClickFunctionAndRenderTrip(destinationsArr, allTrips);
 }
 
 function renderTravelerTripRequestForm() {
-  travel_tracker_service.getAllTrips().then(function (result) {
+  travelTrackerService.getAllTrips().then(function (result) {
     let allTrips = result;
-    travel_tracker_service.getAllDestinations().then(function (result) {
+    travelTrackerService.getAllDestinations().then(function (result) {
       let destinationsArr = result;
-      dashboard_helper.renderDestinationSearchBar(allTrips, destinationsArr);
+      dashboardHelper.renderDestinationSearchBar(allTrips, destinationsArr);
       renderRequestFormElements(destinationsArr, allTrips);
     });
   });
@@ -32,14 +29,14 @@ function renderTravelerTripRequestForm() {
 function renderTopSectionOfDashboard(travelerDashboardData) {
   renderTravelerWelcome(travelerDashboardData.traveler);
   renderTotalSpent(travelerDashboardData);
-  dashboard_helper.renderTripsHeader("Upcoming");
+  dashboardHelper.renderTripsHeader("Upcoming");
 }
 
 function renderTripsAndRequestForm(trips, destinations) {
-  dashboard_helper.renderTrips(trips.upcomingTripsArr, destinations);
-  dashboard_helper.renderTripsHeader("Past");
-  dashboard_helper.renderTrips(trips.pastTripsArr, destinations);
-  dashboard_helper.renderTripsHeader("Request");
+  dashboardHelper.renderTrips(trips.upcomingTripsArr, destinations);
+  dashboardHelper.renderTripsHeader("Past");
+  dashboardHelper.renderTrips(trips.pastTripsArr, destinations);
+  dashboardHelper.renderTripsHeader("Request");
   renderTravelerTripRequestForm();
 }
 
@@ -55,7 +52,7 @@ function makePastAndUpcomingTripsArrays(travelerTrips, today) {
   let pastTripsArr = [];
   for (let i = 0; i < travelerTrips.length; i++) {
     let smallDate = new Date(travelerTrips[i].date);
-    let travDate = dashboard_helper.returnTravDate(smallDate);
+    let travDate = dashboardHelper.returnTravDate(smallDate);
     if (today < travDate) {
       upcomingTripsArr.push(travelerTrips[i]);
     } else {
@@ -66,7 +63,7 @@ function makePastAndUpcomingTripsArrays(travelerTrips, today) {
 }
 
 function filterPastAndUpcomingTrips(travelerTrips) {
-  let today = dashboard_helper.returnCurrentDate();
+  let today = dashboardHelper.returnCurrentDate();
   let tripsArray = makePastAndUpcomingTripsArrays(travelerTrips, today);
   let pastTripsArr = tripsArray.pastTripsArr;
   let upcomingTripsArr = tripsArray.upcomingTripsArr;
@@ -90,7 +87,7 @@ function renderTotalSpent(travelerDashboardData) {
     `Total Amount Spent: $${totalAmount}`
   );
   totalSpentParagraph.appendChild(totalSpentText);
-  document.querySelector("body").appendChild(totalSpentParagraph);
+  dashboardHelper.appendToSection(totalSpentParagraph);
 }
 
 function getLodgingCosts(travelerDestinations, travelerTrips) {
