@@ -734,6 +734,27 @@ function confirmAndPostTrip(destination, tripRequestData, allTrips) {
   removeConfirmedTripAndClearSearchForm();
 }
 
+function setLogOutButtonAttribute(logOutButton) {
+  logOutButton.id = "log-out-button";
+  logOutButton.className = "button";
+  logOutButton.innerHTML = "LOGOUT";
+}
+
+function appendLogOutButtonAndSetOnClick(logOutButton) {
+  document.querySelector("body").append(logOutButton);
+  document.getElementById("log-out-button").onclick = function () {
+    document.getElementById(
+      "log-out-button"
+    ).onclick = window.location.reload();
+  };
+}
+
+function renderLogOutButton() {
+  let logOutButton = document.createElement("button");
+  setLogOutButtonAttribute(logOutButton);
+  appendLogOutButtonAndSetOnClick(logOutButton);
+}
+
 export {
   renderTripsHeader,
   getPendingTrips,
@@ -758,4 +779,5 @@ export {
   appendToRequestForm,
   renderNumberOfTravelersInput,
   createOnClickFunctionAndRenderTrip,
+  renderLogOutButton,
 };

@@ -1,5 +1,6 @@
 import * as travelTrackerService from "./travel_tracker_service";
 import * as dashboardHelper from "./dashboard_helper";
+import * as styling from "./styling_helper";
 
 function renderTripRequestButton() {
   let tripRequestButton = document.createElement("button");
@@ -27,6 +28,7 @@ function renderTravelerTripRequestForm() {
 }
 
 function renderTopSectionOfDashboard(travelerDashboardData) {
+  dashboardHelper.renderLogOutButton();
   renderTravelerWelcome(travelerDashboardData.traveler);
   renderTotalSpent(travelerDashboardData);
   dashboardHelper.renderTripsHeader("Upcoming");
@@ -71,12 +73,13 @@ function filterPastAndUpcomingTrips(travelerTrips) {
 }
 
 function renderTravelerWelcome(traveler) {
-  document.getElementById("login-form").style.display = "none";
   document.getElementById("footer").style.display = "none";
   let welcomeHeader = document.createElement("h1");
-  let headerText = document.createTextNode(`Hello, ${traveler.name}`);
-  welcomeHeader.appendChild(headerText);
-  document.getElementsByTagName("BODY")[0].appendChild(welcomeHeader);
+  welcomeHeader.className = "welcome-header";
+  document.getElementById(
+    "home-page-h1"
+  ).innerHTML = `Hello, <br> ${traveler.name}`;
+  styling.travelerMediaQuery();
 }
 
 function renderTotalSpent(travelerDashboardData) {
