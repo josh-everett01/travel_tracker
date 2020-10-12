@@ -1,14 +1,18 @@
 import * as travelTrackerService from "./travel_tracker_service";
 import * as dashboardHelper from "./dashboard_helper";
 import * as travelerDashboardHelper from "./traveler_dashboard_helper";
+import * as styling from "./styling_helper";
+
+function setAgentPage() {
+  document.getElementById("footer").style.display = "none";
+  document.getElementById("home-page-h1").innerHTML = "Welcome, AGENT";
+  document.getElementById("home-page-h1").id = "agent-header";
+}
 
 function renderAgentWelcome() {
-  document.getElementById("login-form").style.display = "none";
-  document.getElementById("footer").style.display = "none";
-  var welcomeHeader = document.createElement("H1");
-  var headerText = document.createTextNode("Welcome, AGENT");
-  welcomeHeader.appendChild(headerText);
-  document.body.appendChild(welcomeHeader);
+  setAgentPage();
+  styling.agentMediaQuery();
+  styling.agentMediaQuery768();
 }
 
 function renderAmountAgentEarned(trips, destinations) {
@@ -16,14 +20,31 @@ function renderAmountAgentEarned(trips, destinations) {
   renderTotalEarned(amountAgentEarned);
 }
 
+function checkForNoTravelers(todaysTrips) {
+  if (todaysTrips.todaysTrips.length === 0) {
+    let noTravelersTextNode = document.createTextNode(
+      "There are no travelers on Trips Today"
+    );
+    let noTravelersH1 = document.createElement("h1");
+    noTravelersH1.appendChild(noTravelersTextNode);
+    document.querySelectorAll("section")[1].appendChild(noTravelersH1);
+  }
+}
+
+function renderTravelersOnTripsToday(todaysTrips, destinations) {
+  if (todaysTrips.todaysTrips.length > 0) {
+    renderAgentTrips(todaysTrips, destinations);
+  }
+}
+
 function renderPendingAndTodaysTrips(trips, destinations) {
   let pendingTrips = dashboardHelper.getPendingTrips(trips);
   renderAgentTrips(pendingTrips, destinations);
   dashboardHelper.renderTripsHeader("Today's");
+  document.getElementsByClassName("container")[1].id = "todays-trips";
   let todaysTrips = dashboardHelper.getTodaysTrips(trips);
-  if (todaysTrips.todaysTrips.length > 0) {
-    renderAgentTrips(todaysTrips, destinations);
-  }
+  checkForNoTravelers(todaysTrips);
+  renderTravelersOnTripsToday(todaysTrips, destinations);
 }
 
 function renderTopHalfOfAgentDashboard(trips, destinations) {
@@ -39,6 +60,7 @@ function renderBottomHalfOfAgentDashboard(trips, destinations) {
 }
 
 function renderSuccessfulAgencyLogin() {
+  dashboardHelper.renderLogOutButton();
   renderAgentWelcome();
   travelTrackerService.getAllTrips().then(function (trips) {
     travelTrackerService.getAllDestinations().then(function (destinations) {
@@ -116,7 +138,7 @@ function renderTotalEarned(amountAgentEarned) {
   amountAgentEarned;
   let totalAmount = amountAgentEarned.toFixed(2);
   let totalEarnedParagraph = document.createElement("paragraph");
-  totalEarnedParagraph.className = "total-earned";
+  totalEarnedParagraph.className = "total-spent";
   let totalEarnedText = document.createTextNode(
     `Total Amount Earned: $${totalAmount}`
   );
