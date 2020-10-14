@@ -96,12 +96,10 @@ function styleTravelerPage() {
   document.getElementById("home-page-h1").style.marginTop = "0";
   document.getElementById("h1-div").style.padding = "20%";
   document.getElementById("h1-div").style.marginTop = "-5%";
-  document.getElementById('h1-div').style.gridAutoColumns = "1fr 1fr 1fr";
-  placeLogOutButton()
-  styleLogOutButton()
-  document.getElementById('h1-div').style.gridTemplateRows = "1fr .1fr 1fr";
-  document.getElementById('home-page-h1').style.gridRow = "3"
-
+  placeLogOutButton();
+  styleLogOutButton();
+  document.getElementById("h1-div").style.gridTemplateRows = "1fr 1fr";
+  document.getElementById("home-page-h1").style.gridRow = "2";
 }
 
 function travelerMediaQuery() {
@@ -118,25 +116,60 @@ function travelerMediaQuery() {
 }
 
 function placeLogOutButton() {
-  let logOutButton = document.getElementById('log-out-button');
-  document.getElementById('h1-div').appendChild(logOutButton);
+  let logOutButton = document.getElementById("log-out-button");
+  document.getElementById("h1-div").appendChild(logOutButton);
+}
 
+function setH1Style() {
+  document.getElementById("h1-div").style.marginTop = "0";
+  document.getElementById("h1-div").style.padding = "15%";
+  document.getElementById("home-page-h1").style.padding = "2%";
+  document.getElementById("home-page-h1").style.borderRadius = "0 0 20px 20px";
+}
+
+function setLogInFormStyle() {
+  document.getElementById("log-out-button").style.padding = "1%";
+  document.getElementById("log-out-button").style.marginTop = "25px";
+  document.getElementById("log-out-button").style.marginLeft = "5px";
+  document.getElementById("login-form").style.marginRight = "5%";
+}
+
+function styleTravelerPageFor768() {
+  setH1Style();
+  setLogInFormStyle();
+}
+
+function travelerMediaQuery768() {
+  function myFunction(y) {
+    if (y.matches) {
+      styleTravelerPageFor768();
+    } else {
+      return;
+    }
+  }
+  var y = window.matchMedia("(max-width: 768px)");
+  myFunction(y);
+  y.addListener(myFunction);
 }
 
 function styleLogOutButton() {
-  let logOutButton = document.getElementById('log-out-button');
-  logOutButton.style.height = "fit-content"
-  document.getElementById('h1-div').style.gridTemplateRows = "1fr"
+  let logOutButton = document.getElementById("log-out-button");
+  logOutButton.style.height = "fit-content";
+  document.getElementById("h1-div").style.gridTemplateRows = "1fr";
 }
 
-function styleAgentPage() {
-  placeLogOutButton()
+function styleAgentHeader() {
   document.getElementById("header-section").style.display = "none";
-  styleLogOutButton()
+  styleLogOutButton();
   document.getElementById("h1-div").style.padding = "15%";
   document.getElementById("agent-header").style.padding = "2%";
   document.getElementById("agent-header").style.display = "flex";
   document.getElementById("agent-header").style.borderRadius = "0 0 20px 20px";
+}
+
+function styleAgentPage() {
+  placeLogOutButton();
+  styleAgentHeader();
 }
 
 function agentMediaQuery() {
@@ -152,12 +185,23 @@ function agentMediaQuery() {
   x.addListener(myFunction);
 }
 
-function styleAgentPageFor768() {
-  document.getElementById("header-section").style.display = "none";
+function styleAgentH1andHeader() {
   document.getElementById("h1-div").style.marginTop = "0";
   document.getElementById("h1-div").style.padding = "15%";
   document.getElementById("agent-header").style.padding = "2%";
   document.getElementById("agent-header").style.borderRadius = "0 0 20px 20px";
+}
+
+function styleAgentLogOutButton() {
+  document.getElementById("log-out-button").style.padding = "1%";
+  document.getElementById("log-out-button").style.marginTop = "25px";
+  document.getElementById("log-out-button").style.marginLeft = "5px";
+  document.getElementById("login-form").style.marginRight = "5%";
+}
+
+function styleAgentPageFor768() {
+  styleAgentH1andHeader();
+  styleAgentLogOutButton();
 }
 
 function agentMediaQuery768() {
@@ -176,6 +220,7 @@ function agentMediaQuery768() {
 export {
   styleHomePage,
   travelerMediaQuery,
+  travelerMediaQuery768,
   agentMediaQuery,
   agentMediaQuery768,
 };

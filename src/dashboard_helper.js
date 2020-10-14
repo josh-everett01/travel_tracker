@@ -742,7 +742,6 @@ function setLogOutButtonAttribute(logOutButton) {
 
 function appendLogOutButtonAndSetOnClick(logOutButton) {
   document.getElementById("login-form").append(logOutButton);
-  // document.getElementById('login-form').style.gridColumn = '1';
   document.getElementById("log-out-button").onclick = function () {
     document.getElementById(
       "log-out-button"

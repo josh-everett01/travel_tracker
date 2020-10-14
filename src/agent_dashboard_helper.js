@@ -147,7 +147,6 @@ function renderTotalEarned(amountAgentEarned) {
 }
 
 function renderTrips(todaysTrips, destinations) {
-  debugger;
   dashboardHelper.renderDestinationImage(todaysTrips, destinations);
   dashboardHelper.renderTripDate(todaysTrips);
   dashboardHelper.renderTripDestination(todaysTrips, destinations);
@@ -167,11 +166,11 @@ function renderPendingTrips(pendingTrip, destinations) {
 
 function renderAgentTrips(pendingTrips, destinations) {
   if (pendingTrips.length === undefined) {
-    let todaysTrips = pendingTrips.todaysTrips
+    let todaysTrips = pendingTrips.todaysTrips;
     let i;
     for (i = 0; i < todaysTrips.length; i++) {
-      renderTrips(todaysTrips[i], destinations)
-    };
+      renderTrips(todaysTrips[i], destinations);
+    }
   } else {
     let i;
     for (i = 0; i < pendingTrips.length; i++) {
@@ -345,7 +344,7 @@ function renderTravelerSearchBar() {
       option.setAttribute("value", `${travelers[i]}`);
       document.getElementById("traveler-list").appendChild(option);
     }
-    document.getElementById('traveler').placeholder = "Enter traveler name";
+    document.getElementById("traveler").placeholder = "Enter traveler name";
   });
 }
 

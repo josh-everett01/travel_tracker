@@ -80,6 +80,7 @@ function renderTravelerWelcome(traveler) {
     "home-page-h1"
   ).innerHTML = `Hello, ${traveler.name}`;
   styling.travelerMediaQuery();
+  styling.travelerMediaQuery768()
 }
 
 function renderTotalSpent(travelerDashboardData) {
