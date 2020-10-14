@@ -110,8 +110,22 @@ function travelerMediaQuery() {
   x.addListener(myFunction);
 }
 
+function placeLogOutButton() {
+  let logOutButton = document.getElementById('log-out-button');
+  document.getElementById('h1-div').appendChild(logOutButton);
+
+}
+
+function styleLogOutButton() {
+  let logOutButton = document.getElementById('log-out-button');
+  logOutButton.style.height = "fit-content"
+  document.getElementById('h1-div').style.gridTemplateRows = "1fr"
+}
+
 function styleAgentPage() {
+  placeLogOutButton()
   document.getElementById("header-section").style.display = "none";
+  styleLogOutButton()
   document.getElementById("h1-div").style.padding = "15%";
   document.getElementById("agent-header").style.padding = "2%";
   document.getElementById("agent-header").style.display = "flex";

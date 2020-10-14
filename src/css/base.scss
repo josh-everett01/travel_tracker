@@ -834,7 +834,7 @@ section:first-of-type {
   #agent-header {
     color: var(--main-bg-color);
     margin-top: 10%;
-    // grid-row: 1;
+    grid-row: 2;
   }
 
   #agent-tools {
@@ -846,6 +846,8 @@ section:first-of-type {
 
   #h1-div {
     border-radius: 0 0 20px 20px;
+    display: grid;
+    grid-template-rows: 1fr 0.3fr;
   }
 
   #header-section {
@@ -854,7 +856,7 @@ section:first-of-type {
     font-size: x-small;
     grid-row: 1;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 0.25fr;
     margin: 0;
     padding: 0;
   }
@@ -869,6 +871,12 @@ section:first-of-type {
     border-radius: 0 0 20px 20px;
     font-size: revert;
     margin-top: 25%;
+  }
+
+  #log-out-button {
+    grid-row: 1;
+    grid-column: 1;
+    margin-top: -15%;
   }
 
   #login-form {
