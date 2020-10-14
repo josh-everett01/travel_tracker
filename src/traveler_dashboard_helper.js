@@ -78,7 +78,7 @@ function renderTravelerWelcome(traveler) {
   welcomeHeader.className = "welcome-header";
   document.getElementById(
     "home-page-h1"
-  ).innerHTML = `Hello, <br> ${traveler.name}`;
+  ).innerHTML = `Hello, ${traveler.name}`;
   styling.travelerMediaQuery();
 }
 
