@@ -1,88 +1,148 @@
-## Travel Tracker
+# Travel Tracker
 
-### Overview
+> Travel Tracker is a web application which manages and tracks different trips for users and travel agents, by consuming and posting to an external API.
 
-Travel Tracker is an application which manages and tracks different trips for
-users and travel agents, by consuming and posting to an external API.
-This is a project made by [Joshua Everett](https://github.com/josh-everett01).
-This project implements HTML / CSS for the main skeleton design and styling, and
-uses JavaScript to authorize user login, make calls to the API, and to populate
-travelers / trips information on the user dashboard.
+[Travel Tracker Live Link](https://josh-everett01.github.io/travel_tracker/)
+This project was created by [Joshua Everett](https://github.com/josh-everett01)
 
-#### Login
+## Table of contents
 
-**Upon opening / navigating to the project:**
-The user sees a login screen which
-accepts a username based on either a traveler or an agent of a travel agency.
-When a traveler logs in a fetch call is made to the API to verify the travelers
-ID against the ID's in the Array of travelers.
+- [Overview](#overview)
+- [Setup](#setup)
+- [Tech Stack](#tech-stack)
+- [Learning Objectives](#learning-objectives)
+- [Credits](#credits)
+- [Contact](#contact)
 
-#### Traveler Dashboard
+## Overview
 
-**If a traveler logs in they see a dashboard page showing them:**
+Travel Tracker utilizes the fetch API to gather data from multiple endpoints:
+[Travelers](https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers)
+[Trips (POST request adds / updates trip, DELETE request deletes trip)](https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips)
+[Destinations](https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations)
 
-- All trips taken (past, present, upcoming, and pending)
-- Total amount of money spent on trips this year (This
-  is calculated from the trips data and includes a 10%
-  agent fee)
+This project was created using an agile workflow implementing the issues being moved along a [Project Board](https://github.com/josh-everett01/travel_tracker/projects/1), and included a process in which I acted as a Junior Developer submitting pull requests at each iteration of the project. The Pull Request would then be reviewed by a Senior Developer who would offer instruction on areas that I needed to correct or restructure. I would then go back and correct the areas needing correcting, and the process would be repeated until that issue was complete.
 
-#### Agent Dashboard
+This project is based on the open source Turing School curriculum located at: (https://frontend.turing.io/projects/travel-tracker.html)
 
-**If an agent logs in they see a dashboard page showing them:**
+A user is able to login as either an agent or traveler, and then they are able to view trips, make trip requests, and approve / delete trip requests depending on who is logged in.
 
-- New trip requests (a users pending trips)
-- Total income generated this year (will be 10% of user
-  trip cost)
-- Travelers on trips for today's date
-
-#### Traveler Interaction
-
-**A traveler who is logged in is able to make a trip request:**
-
-- Select a date, duration, number of travelers
-- Choose from a list of destinations
-  After making these selections, they see an estimated
-  cost (including a 10% travel agent fee) for the trip.
-- Once they submit the trip request, it will show on
-  their dashboard as “pending” so that the travel agency
-  can approve or deny it.
-
-#### Agent Interaction
-
-**An agent who is logged in is able to:**
-
-- See and approve / deny trip requests
-- Search for any user by name
-- View their:
-  _ name
-  _ a list of all of their trips
-  _ The total amount they’ve spent (including
-  10% agent cut)
-  _ Approve a trip request for that user - Delete an
-  upcoming trip for that user
-
-### Setup
-
-**Git Setup**
+#### To login as an agent use the following login information:
 
 ```
-$ git clone git@github.com:josh-everett01/travel_tracker.git
-
+Username: agency
+Password: travel2020
 ```
 
-### Production Links
+#### As an agent who is logged in you will:
 
-###### [Frontend Interface](https://github.com/josh-everett01/travel_tracker)
+- See any pending trips
+- Be able to approve any pending trips
+- See any trips happening on today's date
+- Be able to search for a traveler and then approve or delete any trips for that traveler
 
-### Versions
+##### To approve a pending trip:
 
-`npm 6.14.7`
+1. Locate the trip you would like to approve in the PENDING TRIPS section
+2. Click APPROVE
+3. You will see a SUCCESS message
+4. The trip will no longer be in the PENDING TRIPS section upon refreshing and logging back in as agent OR logging out and logging back in as agent
 
-### Tech Stack
+##### To search for a traveler and approve / delete pending trip:
+
+1. Search for the traveler by name in the search field
+2. Click SHOW TRAVELER
+3. Any PENDING trips will be shown first in the list of this travelers trips
+4. To APPROVE the trip, click APPROVE
+5. To DELETE the trip, click DELETE
+6. Depending on the choice above the trip will now be showing as either APPROVED in the travelers list of UPCOMING TRIPS or will no longer be showing at all if it was DELETED
+
+#### To login as any one of 50 travelers use the following login information:
+
+```
+Username: traveler1 (1 represents any valid traveler ID from the Travelers
+Endpoint)
+(https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers)
+Password: travel2020
+```
+
+#### As a logged in traveler, you will:
+
+- See your upcoming trips
+- See your past trips
+- Be able to make a trip request
+
+##### To create a trip request:
+
+1. Fill in the appropriate fields (destination, number of travelers, start date, and end date) and click CALCULATE
+2. The trip information will then be displayed on the screen. Click CONFIRM to send the post request to the API.
+3. The requested trip will be shown in your PENDING TRIPS section the next time you login.
+4. Refresh the page and log back in OR click LOGOUT and then log back as the same traveler to see the new trip in the PENDING TRIPS section
+
+![Initial Styling of project](https://i.imgur.com/RSSlSew.png)
+
+## Setup
+
+```
+- Fork and/or clone this repo from the Travel Tracker Repo from:									(https://github.com/josh-everett01/travel_tracker)
+- Navigate to the directory in your terminal
+- $ npm install
+- $ npm run start
+- You should see a message in your terminal along the lines of:
+"Project is running at http://localhost:8080/"
+- Open your browser to http://localhost:8080/
+- You should now be able to see and interact with the project
+```
+
+## Tech Stack
 
 - JavaScript
-- HTML5/CSS3/SCSS
+- Sass / CSS3
+- HTML5
+- Webpack - Version 4.31
+- GitHub Pages
+- Hound Code Reviewer for Pull Requests
 
-### Project Boards
+## Learning Objectives
 
-###### [Travel Tracker Project Board](https://github.com/josh-everett01/travel_tracker/projects/1)
+#### The purpose of my building this project was to build an application that would:
+
+##### - Facilitate the movement of data to-and-from an API endpoint
+
+- This was done by using JavaScript to authenticate user login, to fetch trip/destination data, and to post / delete trips via their appropriate endpoints.
+
+##### - Display the data to a user
+
+- To do this I created a User Interface that allowed the data to be rendered visibily for the user to view and understand. This was done using HTML / CSS / and JavaScript.
+
+##### - Allow the user to interact with the data
+
+- Once a user logs in via a login form they are then able to interact with the data by either making a trip request as a traveler or having the ability to approve pending trips, search for a traveler, and approve / deny trips for a traveler as an agent.
+
+##### - Be fully responsive on all devices
+
+- This was done by using media queries to make sure the page is rendered correctly when viewed on different devices.
+
+##### - Facilitate my better understanding of some of the concepts associated with having a job in the web development field
+
+- This was done by using a project board to keep track of the tasks associated with the project and to track the progress of the project. Every task had an issue created and that issue would then go through the process of being checked out, worked on, reviewed, and then approved to be merged into the project.
+
+- I would reach out to either an online group or a mentor for guidance when I reached a point where I could not progress any further due to not being able to find the answer on my own.
+
+- Through this project I have learned how to use git to my advantage in many ways. Most notably and what took the most practice was my learning to squash my commits into one clean-and-readable commit and then rebase to master. This helps the reviewer when reviewing pull requests.
+
+## Credits
+
+#### I would not have been able to finish this project without the assistance of:
+
+[Rob Stringer](https://github.com/Mycobee) reviewing pull requests, and providing support and guidance on all aspects of this project.
+[Colin McDonnell](https://github.com/colinmcdonnell) providing support and guidance with multiple JavaScript and CSS issues during this project.
+The group @ [JavaScript Tutoring](https://javascripttutoring.slack.com) providing support and offered assistance during this project.
+[Mozilla JavaScript Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[W3 Schools JavaScript Documentation](https://www.w3schools.com/js/default.asp)
+The Contributors to the [Turing Schools Open Source Curriculum](https://frontend.turing.io/projects/travel-tracker.html)
+The contributors to the [Turing Schools Webpack Starter Kit](https://github.com/turingschool-examples/webpack-starter-kit)
+
+## Contact
+
+Created by [Joshua Everett](https://jeverett.tech) - feel free to contact me!
