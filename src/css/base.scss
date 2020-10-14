@@ -650,6 +650,10 @@ section:first-of-type {
     padding: 2%;
   }
 
+  h1 {
+    margin-top: 10px;
+  }
+
   img {
     height: 95%;
     width: 95%;
@@ -668,11 +672,6 @@ section:first-of-type {
     display: none;
     left: 34%;
     position: absolute;
-  }
-
-  .header-section h1 {
-    grid-column: 1;
-    grid-row: 1;
   }
 
   .home-destination-name {
@@ -712,6 +711,8 @@ section:first-of-type {
 
   #h1-div {
     border-radius: 0 0 20px 20px;
+    display: grid;
+    grid-template-rows: 1fr 0.3fr;
   }
 
   #header-section {
@@ -734,7 +735,7 @@ section:first-of-type {
   #home-page-h1 {
     border-radius: 0 0 20px 20px;
     font-size: revert;
-    margin-top: 25%;
+    margin-top: 35%;
   }
 
   #login-form {
@@ -753,6 +754,12 @@ section:first-of-type {
 
   #login-form input {
     margin: 0;
+  }
+
+  #log-out-button {
+    grid-row: 1;
+    grid-column: 1;
+    margin-top: -15%;
   }
 
   #todays-trips {
@@ -870,7 +877,7 @@ section:first-of-type {
   #home-page-h1 {
     border-radius: 0 0 20px 20px;
     font-size: revert;
-    margin-top: 25%;
+    margin-top: 35%;
   }
 
   #log-out-button {

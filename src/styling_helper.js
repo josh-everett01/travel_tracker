@@ -95,6 +95,13 @@ function styleTravelerPage() {
   document.getElementById("home-page-h1").style.borderRadius = "0 0 20px 20px";
   document.getElementById("home-page-h1").style.marginTop = "0";
   document.getElementById("h1-div").style.padding = "20%";
+  document.getElementById("h1-div").style.marginTop = "-5%";
+  document.getElementById('h1-div').style.gridAutoColumns = "1fr 1fr 1fr";
+  placeLogOutButton()
+  styleLogOutButton()
+  document.getElementById('h1-div').style.gridTemplateRows = "1fr .1fr 1fr";
+  document.getElementById('home-page-h1').style.gridRow = "3"
+
 }
 
 function travelerMediaQuery() {
@@ -105,7 +112,7 @@ function travelerMediaQuery() {
       return;
     }
   }
-  var x = window.matchMedia("(max-width: 375px)");
+  var x = window.matchMedia("(max-width: 425px)");
   myFunction(x);
   x.addListener(myFunction);
 }
@@ -140,7 +147,7 @@ function agentMediaQuery() {
       return;
     }
   }
-  var x = window.matchMedia("(max-width: 375px)");
+  var x = window.matchMedia("(max-width: 425px)");
   myFunction(x);
   x.addListener(myFunction);
 }
