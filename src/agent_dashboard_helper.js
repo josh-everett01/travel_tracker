@@ -167,7 +167,10 @@ function renderPendingTrips(pendingTrip, destinations) {
 function renderAgentTrips(pendingTrips, destinations) {
   if (pendingTrips.length === undefined) {
     let todaysTrips = pendingTrips.todaysTrips;
-    renderTrips(todaysTrips, destinations);
+    let i;
+    for (i = 0; i < todaysTrips.length; i++) {
+      renderTrips(todaysTrips[i], destinations);
+    }
   } else {
     let i;
     for (i = 0; i < pendingTrips.length; i++) {
@@ -341,6 +344,7 @@ function renderTravelerSearchBar() {
       option.setAttribute("value", `${travelers[i]}`);
       document.getElementById("traveler-list").appendChild(option);
     }
+    document.getElementById("traveler").placeholder = "Enter traveler name";
   });
 }
 

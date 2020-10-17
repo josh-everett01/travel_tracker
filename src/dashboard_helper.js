@@ -741,7 +741,7 @@ function setLogOutButtonAttribute(logOutButton) {
 }
 
 function appendLogOutButtonAndSetOnClick(logOutButton) {
-  document.querySelector("body").append(logOutButton);
+  document.getElementById("login-form").append(logOutButton);
   document.getElementById("log-out-button").onclick = function () {
     document.getElementById(
       "log-out-button"
