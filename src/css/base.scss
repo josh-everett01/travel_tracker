@@ -247,7 +247,7 @@ section:first-of-type {
 }
 
 #login-form input {
-  padding: 3%;
+  padding: 5%;
 }
 
 #log-out-button {
@@ -615,7 +615,7 @@ section:first-of-type {
   }
 
   #login-form input {
-    padding: 3%;
+    padding: 5%;
   }
 
   #submit {
@@ -665,6 +665,10 @@ section:first-of-type {
 
   p {
     text-align: center;
+  }
+
+  .approve-button {
+    padding: 3%;
   }
 
   .footer {
