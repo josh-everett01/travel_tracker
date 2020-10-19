@@ -98,7 +98,7 @@ function styleTravelerPage() {
   document.getElementById("h1-div").style.marginTop = "-5%";
   placeLogOutButton();
   styleLogOutButton();
-  document.getElementById("h1-div").style.gridTemplateRows = "1fr 1fr";
+  document.getElementById("h1-div").style.gridTemplateRows = "1fr";
   document.getElementById("home-page-h1").style.gridRow = "2";
 }
 
@@ -110,7 +110,7 @@ function travelerMediaQuery() {
       return;
     }
   }
-  var x = window.matchMedia("(max-width: 4255px)");
+  var x = window.matchMedia("(max-width: 425px)");
   myFunction(x);
   x.addListener(myFunction);
 }
