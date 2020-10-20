@@ -647,7 +647,7 @@ section:first-of-type {
   }
 
   button {
-    padding: 2%;
+    padding: 3%;
   }
 
   h1 {
@@ -668,7 +668,7 @@ section:first-of-type {
   }
 
   .approve-button {
-    padding: 3%;
+    width: 25%;
   }
 
   .footer {
@@ -764,6 +764,19 @@ section:first-of-type {
     grid-row: 1;
     grid-column: 1;
     margin-top: -15%;
+  }
+
+  #request-form {
+    text-align: center;
+  }
+
+  #request-form button {
+    padding: 0%;
+    padding: 5px;
+  }
+
+  #request-form input {
+    margin: 5%;
   }
 
   #todays-trips {
